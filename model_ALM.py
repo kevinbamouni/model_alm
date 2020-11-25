@@ -1,18 +1,12 @@
 # To add a new cell, type '# %%'
 # To add a new markdown cell, type '# %% [markdown]'
-
 import pandas as pd
 import uuid
 import numpy as np
 
-pd.set_option("display.max_rows", None, "display.max_columns", None)
-pd.set_option('display.max_colwidth', 199)  # or 199
-
-
 Date_t0="31/12/2019" # Jour j de projection
 N = 40 # Nombre d'années de projections
 mp_path = "/Users/kevinbamouni/Documents/mp.csv"
-
 
 mp = pd.read_csv(mp_path)
 
@@ -177,7 +171,7 @@ def get_rachat_dyn_partiel_et_total(mp):
 # Etape 1 de la projection : Calculer les primes et les chargements sur prime
 def calcul_des_primes(mp):
     # Nombre de versements
-    mp.loc[mp.prime > 0,"nb_vers"] = nb_contr
+    mp.loc[mp.prime > 0,"nb_vers"] = mp.nb_contr
     
     # Calcul les primes de l'annee
     mp.pri_brut = mp.prime * mp.nb_contr # primes brutes
@@ -205,7 +199,7 @@ def calcul_des_taux_min(mp):
 
 
 def calcul_des_proba_de_flux(mp, table_de_mortalite, table_de_rachat_total):
-    return mp
+    return pass
 
 
 def calcul_des_prestation(mp,t):
@@ -253,10 +247,8 @@ def calcul_des_prestation(mp,t):
     
     # Total des mouvement des nombres de contrats
     mp['nb_sortie'] = mp['nb_ech'] + mp['nb_dc'] + mp['nb_rach_tot'] # nombre de sorties
-    mp['nb_debut'] = mp['nb_contr']
-    mp['nb_contr_fin'] = mp['nb_debut'] - mp['nb_sortie'] # nombre de contrats en cours en fin d'annee
-    mp['nb_contr_moy'] = (mp['nb_debut'] + mp['nb_contr_fin']) / 2  # nombre de contrats moyen
-    
+    mp['nb_contr_fin'] = mp['nb_contr'] - mp['nb_sortie'] # nombre de contrats en cours en fin d'annee
+    mp['nb_contr_moy'] = (mp['nb_contr'] + mp['nb_contr_fin']) / 2  # nombre de contrats moyen
     
 
 #Vieillissement d'une ligne de MP d'un an
