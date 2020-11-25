@@ -47,6 +47,7 @@ variables_de_calculs = ['qx_rach_part_dyn',
         'tx_tech_se',
         'tx_an', 
         'tx_se',
+        'tx_soc',
         'rev_stock_brut',
         'rev_stock_nette',
         'enc_charg_stock',
@@ -151,16 +152,23 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir):
 
 
 def get_proba_deces(mp):
+    """
+        # TODO : Implémenter le calcul des qx (décès) à partir de la table de mortalité
+    """
     mp['qx_dc'] = 0.0025
     return mp
 
 def get_proba_rachat_total(mp):
-    #TODO : Implementer la probabilite de charchat total via la table des hypothèse de rachat totaux
+    """
+        # TODO : Implementer la probabilite de charchat total via la table des hypothèse de rachat totaux
+    """
+    
     mp['qx_rach_tot'] = 0.00025
     return mp
 
 def get_rachat_dyn_partiel_et_total(mp):
-    """Rachats dynamiques totaux et partiels. Rachat partiel exprimé en % de la PM: soit 2.5% .
+    """
+        # TODO : Implémenter les Rachats dynamiques totaux et partiels.
     """
     #TODO : loi de rachat dynamique : total et partiel.
     mp['qx_rach_tot_dyn'] = 0.0025
@@ -185,7 +193,7 @@ def calcul_des_primes(mp):
 def calcul_des_taux_min(mp):
     """
      Fonction de calcul des taux techniques et tmg min pour chaque ligne de MP.
-     //TODO : calcul des taux min à revoir potentiellement
+     # TODO : calcul des taux techniques et TMG min à revoir potentiellement
     """ 
     # calcul du taux technique    
     mp.tx_tech_an = np.maximum(mp.tech, 0)
@@ -198,8 +206,12 @@ def calcul_des_taux_min(mp):
     return mp
 
 
-def calcul_des_proba_de_flux(mp, table_de_mortalite, table_de_rachat_total):
-    return pass
+def calcul_des_taux_de_prel_sociaux(mp):
+    """
+        #TODO : calcul des taux de prelevement sociaux A revoir potentiellement
+    """
+    mp['tx_soc'] = 0.05
+    return mp
 
 
 def calcul_des_prestation(mp,t):
@@ -242,13 +254,34 @@ def calcul_des_prestation(mp,t):
     mp['rev_rach_part'] = mp['rach_part'] * mp['tx_se']  # revalorisation au taux minimum
     
     # Total des prestations
-    mp['prest'] <- mp['rach_mass'] + mp['ech'] + mp['rach_tot'] + mp['dc'] + mp['rach_part'] # total prestations
-    mp['rev_prest'] <- mp['rev_ech'] + mp['rev_rach_tot'] + mp['rev_dc'] + mp['rev_rach_part'] # total revalorisation des prestations
+    mp['prest'] = mp['rach_mass'] + mp['ech'] + mp['rach_tot'] + mp['dc'] + mp['rach_part'] # total prestations
+    mp['rev_prest'] = mp['rev_ech'] + mp['rev_rach_tot'] + mp['rev_dc'] + mp['rev_rach_part'] # total revalorisation des prestations
     
     # Total des mouvement des nombres de contrats
     mp['nb_sortie'] = mp['nb_ech'] + mp['nb_dc'] + mp['nb_rach_tot'] # nombre de sorties
     mp['nb_contr_fin'] = mp['nb_contr'] - mp['nb_sortie'] # nombre de contrats en cours en fin d'annee
     mp['nb_contr_moy'] = (mp['nb_contr'] + mp['nb_contr_fin']) / 2  # nombre de contrats moyen
+
+    # Calcul du taux de chargement sur encours
+    # Applique une limite sur le chargement sur encours selon la valeur de l'indicatrice
+    # permettant les taux negatifs.
+    mp['chgt_enc'] = np.minimum(mp['chgt_enc'], mp['tx_an'] / (1 + mp['tx_an'])) * mp['ind_chgt_enc_pos'] + mp['chgt_enc'] * (1 - mp['ind_chgt_enc_pos'])
+
+    # Calcul des chargements sur encours
+    mp['enc_charg'] = (mp['prest'] + mp['rev_prest']) * mp['chgt_enc'] / 2
+
+    # Calcul de la revalorisation nette des prestations avec capitalisation sur un semestre
+    mp['rev_prest_nette'] = mp['rev_prest'] - mp['enc_charg']
+
+    # Calcul des autres chargements et des prelevements sociaux
+    mp = calcul_des_taux_de_prel_sociaux(mp) # calcul de tx_soc
+    mp['rach_charg'] = (mp['rach_tot'] + mp['rach_part'] + mp['rev_rach_tot'] + mp['rev_rach_part']) * mp['chgt_rach']
+    mp['soc_prest'] = np.maximum(0, mp['rev_prest_nette']) * mp['tx_soc'] # prelevements sociaux
+
+    # Calcul des interets techniques sur prestations
+    mp['it_tech_prest'] = mp['prest'] * mp['tx_tech_se']
+
+    return mp
     
 
 #Vieillissement d'une ligne de MP d'un an
