@@ -72,7 +72,7 @@ variables_de_calculs = ['qx_rach_part_dyn',
 # mp.loc[mp.age<18,"age"]=18
 # mp.to_csv(mp_path, sep=',', encoding='utf-8', index=False)
 
-def initialisation_des_mp(df_mp, list_colonnes_a_enrichir):
+def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
     Input : Dataframe du représentant le fichier de Model point en input
@@ -124,29 +124,40 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir):
             it_tech_stock : un vecteur contenant les interets techniques sur stock de l'annee (nul en cas de typage RetraiteEuroRest).
             it_tech : un vecteur contenant les interets techniques sur stock et sur prestations de l'annee (nul en cas de typage RetraiteEuroRest).
             bes_tx_cible : un vecteur contenant le besoin de financement de l'annee pour atteindre le taux cible de chaque assure.
-            qx_rach_tot_dyn
-            qx_rach_part_dyn
-            nb_vers
-            pri_brut
-            pri_net
-            pri_chgt
+            qx_rach_tot_dyn : qx rachat total dynamique
+            qx_rach_part_dyn : qx rachat partiel dynamique
+            nb_vers : Nombre de versement de primes
+            pri_brut : prime brut
+            pri_net : prime net
+            pri_chgt : chargement sur prime
     """
-    #initialisation de t à 0.
-    df_mp['t'] = 0
     
     # creation d'un identifiant unique pour chaque ligne de mp.
-    df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
-    
-    # 0 : Calcul des proba des flux
-    # 1 : Calcul des flux de prestation
-    # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
-    # 3 : Taux minimum à servir par Model Point :
-    # 4 : Calcul des primes projetées
-    # 5 : Calcul de la PM
-    # 6 : Calcul de la revalo de la PM avec pb
-    
-    for x in list_colonnes_a_enrichir:
-        df_mp[x]= None
+    if t==0 :
+        #initialisation de t à 0.
+        df_mp['t'] = t
+        df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
+
+        for x in list_colonnes_a_enrichir:
+            df_mp[x]= None
+
+    elif t==1:
+        df_mp = df_mp.loc[mp.t == (t-1),:]
+        #initialisation de t.
+        df_mp['t'] = t
+
+    elif t>=2:
+        df_mp = df_mp.loc[mp.t == (t-1),:]
+        #initialisation de t.
+        df_mp['t'] = t
+        
+        # 0 : Calcul des proba des flux
+        # 1 : Calcul des flux de prestation
+        # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
+        # 3 : Taux minimum à servir par Model Point :
+        # 4 : Calcul des primes projetées
+        # 5 : Calcul de la PM
+        # 6 : Calcul de la revalo de la PM avec pb
     
     return df_mp
 
