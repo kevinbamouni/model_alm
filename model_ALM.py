@@ -4,13 +4,23 @@ import pandas as pd
 import uuid
 import numpy as np
 
+#
+# Variable à configurer :
+#
 Date_t0="31/12/2019" # Jour j de projection
 N = 40 # Nombre d'années de projections
-mp_path = "/Users/kevinbamouni/Documents/mp.csv"
+mp_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/mp.csv"
+tm_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/th_dc_00_02.csv"
+rach_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/table_rachat.csv"
 
+# Chargement des input.
 mp = pd.read_csv(mp_path)
+tm = pd.read_csv(tm_path)
+rach = pd.read_csv(rach_path)
 
 mp.iloc[1:10,:]
+tm.iloc[1:10,:]
+rach.iloc[1:10,:]
 
 variables_de_calculs = ['qx_rach_part_dyn', 
         'qx_rach_tot_dyn',
@@ -119,19 +129,19 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
     return df_mp
 
 
-def get_proba_deces(mp):
+def get_proba_deces(tm, age):
     """
-        # TODO : Implémenter le calcul des qx (décès) à partir de la table de mortalité
+        calcul des qx (décès) à partir de la table de mortalité
     """
-    mp['qx_dc'] = 0.0025
-    return mp
+    return tm.loc[tm.age == age,'qx']
 
-def get_proba_rachat_total(mp):
+
+def get_proba_rachat_total(rach, anc, age):
     """
-        # TODO : Implementer la probabilite de charchat total via la table des hypothèse de rachat totaux
+        calcul de la probabilite de rachat total via la table des hypothèse de rachat totaux
     """
-    mp['qx_rach_tot'] = 0.00025
-    return mp
+    return rach.loc[(rach.age == age) & (rach.anc == anc),'taux_rachat']
+
 
 def get_rachat_dyn_partiel_et_total(mp):
     """
@@ -191,7 +201,7 @@ def calcul_des_taux_de_prel_sociaux(mp):
     return mp
 
 
-def calcul_des_prestation(mp,t):
+def calcul_des_prestation(mp,t, rach, tm):
     """ 
         Calcul des prestations en année t de projection : 
             - Prestation avec revalorisation pour rachat total :
@@ -219,7 +229,8 @@ def calcul_des_prestation(mp,t):
     # Calcul des flux  rachats totaux
     # Taux de rachat incluant les rachats structurels et conjoncturels
     mp = get_rachat_dyn_partiel_et_total(mp) # calcul de qx_rach_tot_dyn et de qx_rach_part_dyn
-    mp = get_proba_rachat_total(mp) # calcul de qx_rach_tot
+    # mp = get_proba_rachat_total(mp) # calcul de qx_rach_tot
+    mp['qx_rach_tot'] = mp.apply(lambda x: get_proba_rachat_total(rach, x['anc'], x['age']), axis=1)
     mp['qx_rach_tot_glob'] = np.maximum(0, np.minimum(1, mp['qx_rach_tot'] + mp['qx_rach_tot_dyn'])) * (1 - mp['ind_ech']) # 1 si le contrat n'est pas a terme
     mp['nb_rach_tot'] = mp['nb_contr'] * mp['qx_rach_tot_glob']
     mp['rach_tot'] = mp['pm_deb'] * mp['qx_rach_tot_glob'] # Flux de rachats totaux
@@ -227,7 +238,8 @@ def calcul_des_prestation(mp,t):
     
     # Calcul des flux de deces
     # Taux de deces sur la population des non rachetes
-    mp = get_proba_deces(mp) # calcul de qx_dc
+    # mp = get_proba_deces(mp) # calcul de qx_dc
+    mp['qx_dc'] = mp.apply(lambda x: get_proba_deces(tm, x['age']), axis=1)
     mp['qx_dc_rach'] = mp['qx_dc'] * (1 - mp['qx_rach_tot_glob'])
     mp['dc'] = mp['pm_deb'] * mp['qx_dc_rach'] * mp['ind_ech'] # Flux de rachats totaux
     mp['rev_dc'] = mp['dc'] * mp['tx_se'] # revalorisation au taux minimum
