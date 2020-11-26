@@ -50,3 +50,14 @@ Colonnes enrichies :
             pri_brut : prime brut
             pri_net : prime net
             pri_chgt : chargement sur prime
+
+
+Etape de calcul :
+
+    # 0 : Calcul des proba des flux
+    # 1 : Calcul des flux de prestation
+    # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
+    # 3 : Taux minimum à servir par Model Point :
+    # 4 : Calcul des primes projetées
+    # 5 : Calcul de la PM
+    # 6 : Calcul de la revalo de la PM avec pb

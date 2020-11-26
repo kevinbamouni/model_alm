@@ -101,6 +101,7 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
             df_mp[x]= None
 
         df_mp.rename(columns={"pm": "pm_fin"})
+        df_mp.rename(columns={"nb_contr": "nb_contr_fin"})
 
     elif t==1:
         df_mp = df_mp.loc[mp.t == (t-1),:]
@@ -109,6 +110,7 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
+        df_mp['nb_contr'] = df_mp['nb_contr_fin']
 
     elif t>=2:
         df_mp = df_mp.loc[mp.t == (t-1),:]
@@ -117,16 +119,9 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
+        df_mp['nb_contr'] = df_mp['nb_contr_fin']
 
-        # 0 : Calcul des proba des flux
-        # 1 : Calcul des flux de prestation
-        # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
-        # 3 : Taux minimum à servir par Model Point :
-        # 4 : Calcul des primes projetées
-        # 5 : Calcul de la PM
-        # 6 : Calcul de la revalo de la PM avec pb
-    
-    return df_mp
+        return df_mp
 
 
 def get_proba_deces(tm, age):
