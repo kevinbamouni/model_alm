@@ -66,7 +66,9 @@ variables_de_calculs = ['qx_rach_part_dyn',
         'nb_vers',
         'pri_brut',
         'pri_net',
-        'pri_chgt']
+        'pri_chgt',
+        'pm_deb',
+        'pm_moy']
 
 
 # mp.loc[mp.age<18,"age"]=18
@@ -76,60 +78,7 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
     Input : Dataframe du représentant le fichier de Model point en input
-    Output : Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run.
-            
-            Colonnes enrichies :
-            
-            ech : un vecteur contenant les flux de sortie en echeance de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            ind_ech : indicatrice de sortie en echeance : 1 si vrai 0 si faux.
-            rach_tot : un vecteur contenant les flux de rachat totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            dc : un vecteur contenant les flux de deces de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rach_part : un vecteur contenant les flux de rachat partiel de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rente : le flux annuel de rente par model point : nul si l'objet est de type EpEuroInd.
-            prest : un vecteur contenant les flux prestations de l'annee (renseigne que l'objet x soit de type RetraiteEuroRest ou EpEuroInd).
-            rev_ech : un vecteur contenant la revalorisation des echeances de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rev_rach_tot : un vecteur contenant la revalorisation des rachats totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rev_dc : un vecteur contenant la revalorisation des deces de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rev_rach_part : un vecteur contenant la revalorisation des rachats partiels de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rev_prest : un vecteur contenant la revalorisation brute des prestations de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rev_prest_nette : un vecteur contenant la revalorisation des prestations nette de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            enc_charg : un vecteur contenant les chargements sur l'encours de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            rach_charg : un vecteur contenant les chargements sur les rachats de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            soc_prest : un vecteur contenant les prelevements sociaux sur prestations de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            it_tech_prest : un vecteur contenant les interets techniques sur prestations de l'annee. : nul si l'objet est de type RetraiteEuroRest.
-            arr_charg : un vecteur contenant les chargements sur arrerages. : nul si l'objet est de type EpEuroInd.
-            nb_ech : un vecteur contenant le nombre de sorties en echeance de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            nb_rach_tot : un vecteur contenant le nombre de rachats totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-            nb_dc : un vecteur contenant le nombre de deces de l'annee
-            nb_sortie : un vecteur contenant le nombre de sorties de l'annee
-            nb_contr_fin : un vecteur contenant le nombre de contrats en cours en fin d'annee
-            nb_contr_moy : un vecteur contenant la moyenne du nombre de contrats sur l'annee.
-            tx_cible_an : un vecteur contenant les taux cible de l'annee
-            tx_cible_se : un vecteur contenant les taux cible de l'annee sur base semestrielle
-            tx_tech_an : un vecteur contenant les taux de technique de l'annee
-            tx_tech_se : un vecteur contenant les taux de technique de l'annee sur base semestrielle
-            tx_an : un vecteur contenant les taux de revalorisation minimum de l'annee
-            tx_se : un vecteur contenant les taux de revalorisation minimum de l'annee exprimes en semestriel.
-            rev_stock_brut_ap_pb : un vecteur contenant la revalorisation brute de l'annee appliquee au PM
-            rev_stock_nette_ap_pb : un vecteur contenant la revalorisation nette de l'annee appliquee au PM. Elle peut etre negative pour des contrats a taux negatif.
-            enc_charg_stock_ap_pb : un vecteur contenant les montants de chargement sur encours de l'annee calcules pour le stock de PM
-            soc_stock_ap_pb : un vecteur contenant les prelevements sociaux de l'annee
-            rev_stock_brut : un vecteur contenant la revalorisation minimale ##' brute de l'annee appliquee au PM (nul en cas de typage RetraiteEuroRest).
-            rev_stock_nette : un vecteur contenant la revalorisation minimale ##' nette de l'annee appliquee au PM (nul en cas de typage RetraiteEuroRest).
-            enc_charg_stock : un vecteur contenant les chargement sur encours de l'annee, calcules en prenant en compte la revalorisation minimale (nul en cas de typage RetraiteEuroRest).
-            enc_charg_base_th : un vecteur contenant les chargements sur encours theoriques de l'annee, evalues sur la base de la PM non revalorisees (nul en cas de typage RetraiteEuroRest).
-            enc_charg_rmin_th : un vecteur contenant les chargements sur encours theoriques de l'annee, evalues sur la seule base de la revalorisation minimale des PM (nul en cas de typage RetraiteEuroRest).
-            base_enc_th : un vecteur contenant l'assiette de calcul des chargements sur encours de l'annee (nul en cas de typage RetraiteEuroRest).
-            soc_stock : un vecteur contenant le prelevements sociaux de l'annee (nul en cas de typage RetraiteEuroRest).
-            it_tech_stock : un vecteur contenant les interets techniques sur stock de l'annee (nul en cas de typage RetraiteEuroRest).
-            it_tech : un vecteur contenant les interets techniques sur stock et sur prestations de l'annee (nul en cas de typage RetraiteEuroRest).
-            bes_tx_cible : un vecteur contenant le besoin de financement de l'annee pour atteindre le taux cible de chaque assure.
-            qx_rach_tot_dyn : qx rachat total dynamique
-            qx_rach_part_dyn : qx rachat partiel dynamique
-            nb_vers : Nombre de versement de primes
-            pri_brut : prime brut
-            pri_net : prime net
-            pri_chgt : chargement sur prime
+    Output : Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
     """
     
     # creation d'un identifiant unique pour chaque ligne de mp.
@@ -141,16 +90,24 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
         for x in list_colonnes_a_enrichir:
             df_mp[x]= None
 
+        df_mp.rename(columns={"pm": "pm_fin"})
+
     elif t==1:
         df_mp = df_mp.loc[mp.t == (t-1),:]
         #initialisation de t.
         df_mp['t'] = t
+        df_mp['age'] = df_mp['age'] + 1
+        df_mp['anc'] = df_mp['anc'] + 1
+        df_mp['pm_deb'] = df_mp['pm_fin']
 
     elif t>=2:
         df_mp = df_mp.loc[mp.t == (t-1),:]
         #initialisation de t.
         df_mp['t'] = t
-        
+        df_mp['age'] = df_mp['age'] + 1
+        df_mp['anc'] = df_mp['anc'] + 1
+        df_mp['pm_deb'] = df_mp['pm_fin']
+
         # 0 : Calcul des proba des flux
         # 1 : Calcul des flux de prestation
         # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
@@ -173,13 +130,13 @@ def get_proba_rachat_total(mp):
     """
         # TODO : Implementer la probabilite de charchat total via la table des hypothèse de rachat totaux
     """
-    
     mp['qx_rach_tot'] = 0.00025
     return mp
 
 def get_rachat_dyn_partiel_et_total(mp):
     """
-        # TODO : Implémenter les Rachats dynamiques totaux et partiels.
+        # TODO : Implémenter les Rachats dynamiques totaux et partiels (selon la methodologie transmise dans le ONC de l'ACPR de 2013.).
+        Methode permettant de calculer la composante rachat dynamique selon la methodologie transmise dans le ONC de l'ACPR de 2013.
     """
     #TODO : loi de rachat dynamique : total et partiel.
     mp['qx_rach_tot_dyn'] = 0.0025
@@ -226,7 +183,16 @@ def calcul_des_taux_de_prel_sociaux(mp):
 
 
 def calcul_des_prestation(mp,t):
-    """ Calcul des prestations !!! """
+    """ 
+        Calcul des prestations en année t de projection : 
+            - Prestation avec revalorisation pour rachat total :
+            - Prestions avec revalorisation pour rachat total dynamique
+            - Prestation avec revalorisation pour rachat partiel dynamique
+            - Prestations avec revalorisation pour sinistre DC
+            - Prestations avec revalorisation pour contrat arrivé à échéance
+            - Chargements sur les différentes prestations
+            _ Prestations avec revalorisation net global
+    """
     # Indicatrice de sortie en echeance    
     mp.loc[mp['terme'] <= t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
     mp.loc[mp['terme'] > t, 'ind_ech'] = 1 # si le contrat à terme
@@ -293,6 +259,19 @@ def calcul_des_prestation(mp,t):
     mp['it_tech_prest'] = mp['prest'] * mp['tx_tech_se']
 
     return mp
+
+
+def calcul_des_pm(mp, t):
+
+    # Calculs effectues plusieurs fois
+    mp['diff_pm_prest'] <- mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations 
+
+    # Calcul de la revalorisation brute
+    mp['rev_stock_brut'] <- mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
+
+    # Chargements : sur encours
+    mp['enc_charg_stock'] <- mp['diff_pm_prest'] * (1 + mp['tx_an']) * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * mp['chgt_enc'] / 2
+
     
 
 #Vieillissement d'une ligne de MP d'un an
