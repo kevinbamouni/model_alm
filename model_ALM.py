@@ -173,6 +173,15 @@ def calcul_des_taux_min(mp):
     
     return mp
 
+def calcul_des_taux_cibles(mp):
+    """
+        # TODO : Implémenter le calcul des taux cibles par ligne de MP
+    """
+    mp['tx_cible_an'] = 0
+    mp['tx_cible_se'] = 0
+
+    return mp
+
 
 def calcul_des_taux_de_prel_sociaux(mp):
     """
@@ -264,18 +273,41 @@ def calcul_des_prestation(mp,t):
 def calcul_des_pm(mp, t):
 
     # Calculs effectues plusieurs fois
-    mp['diff_pm_prest'] <- mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations 
+    mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations 
 
     # Calcul de la revalorisation brute
-    mp['rev_stock_brut'] <- mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
+    mp['rev_stock_brut'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
 
     # Chargements : sur encours
-    mp['enc_charg_stock'] <- mp['diff_pm_prest'] * (1 + mp['tx_an']) * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * mp['chgt_enc'] / 2
+    mp['enc_charg_stock'] = mp['diff_pm_prest'] * (1 + mp['tx_an']) * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * mp['chgt_enc'] / 2
 
-    
+    # Chargement sur encours theorique en decomposant la part revalative au passif non revalorises et a la revalorisation
+    mp['enc_charg_base_th'] = mp['diff_pm_prest'] * mp['chgt_enc'] + mp['pri_net'] * mp['chgt_enc'] / 2
+    mp['enc_charg_rmin_th'] = (mp['diff_pm_prest'] * mp['chgt_enc']) * mp['tx_an'] + (mp['pri_net'] * mp['chgt_enc'] / 2) * mp['tx_se']
 
-#Vieillissement d'une ligne de MP d'un an
-def vieillir_mp(row_mp):
-    row_mp['t'] = row_mp['t'] + 1
-    row_mp['age'] = row_mp['age'] + 1
-    row_mp['anc'] = row_mp['anc'] + 1
+    # Base utilise pour appliques le calcul du taux de chargement sur encours
+    mp['base_enc_th'] = mp['diff_pm_prest'] * (1 + mp['tx_an']) + mp['pri_net'] * (1 + mp['tx_se'])
+
+    # Calcul de la revalorisation sur stock
+    mp['rev_stock_nette'] = mp['rev_stock_brut'] - mp['enc_charg_stock']
+
+    # Revalorisation nette totale
+    # mp['rev_total_nette'] = mp['rev_stock_nette'] + mp['rev_prest_nette']
+
+    # Prelevement sociaux
+    mp['soc_stock'] = np.maximum(0, mp['rev_stock_nette']) * mp['tx_soc']
+
+    # Evaluation des provisions mathematiques avant PB
+    mp['pm_fin'] = mp['diff_pm_prest'] + mp['pri_net'] + mp['rev_stock_nette'] - mp['soc_stock']
+
+    # PM moyenne et taux de chargement
+    mp['pm_moy'] = (mp['pm_deb'] + mp['pm_fin']) / 2
+
+    # Evaluation des interets techniques
+    mp['it_tech_stock']   = mp['diff_pm_prest'] * mp['tx_tech_an'] + mp['pri_net'] * mp['tx_tech_se']
+    mp['it_tech'] = mp['it_tech_stock'] + mp['it_tech_prest']
+
+    # EValuation du besoin de taux cible
+    mp = calcul_des_taux_cibles(mp)
+    mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
+
