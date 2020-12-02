@@ -83,10 +83,16 @@ variables_de_calculs = ['qx_rach_part_dyn',
         'pm_moy']
 
 
-# mp.loc[mp.age<18,"age"]=18
-# mp.to_csv(mp_path, sep=',', encoding='utf-8', index=False)
+def recup_des_frais(mp, df_ref_frais):
+    """
+        Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
+        Ceci se fait par une jointure sur le num produit
+    """
+    mp = pd.merge(mp, df_ref_frais, how='left', on=['num_prod'],
+         indicator=False, validate='many_to_one')
+    return mp
 
-def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
+def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, df_ref_frais, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
     Input : Dataframe du représentant le fichier de Model point en input
@@ -98,6 +104,7 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, t):
         #initialisation de t à 0.
         df_mp['t'] = t
         df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
+        df_mp = recup_des_frais(mp, df_ref_frais)
 
         for x in list_colonnes_a_enrichir:
             df_mp[x]= None
@@ -161,6 +168,26 @@ def calcul_des_primes(mp):
     mp.pri_net = mp.pri_brut * (1 - mp.chgt_prime) # primes nettes
     mp.pri_chgt = mp.pri_brut * mp.chgt_prime # Chargements sur primes
     
+    return mp
+
+
+def calcul_des_frais(mp):
+    """
+        Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
+    """
+
+    # Calcul de frais du prime
+    mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
+    mp['frais_var_prime'] = mp['pri_brut'] * mp['tx_frais_var_prime'] * (1 + mp['ind_inf_frais_var_prime']) * (mp['coef_inf'] - 1)
+
+    # Calcul de frais de prestation
+    mp['frais_fixe_prest'] = mp['nb_sortie'] * mp['tx_frais_fixe_prest'] * (1 + mp['ind_inf_frais_fixe_prest']) * (mp['coef_inf'] - 1)
+    mp['frais_var_prest'] = mp['prest'] * mp['tx_frais_var_prest'] * (1 + mp['ind_inf_frais_var_prest']) * (mp['coef_inf'] - 1)
+
+    # Calcul de frais sur encours
+    mp['frais_fixe_enc'] = mp['nb_contr_moy'] * mp['tx_frais_fixe_enc'] * (1 + mp['ind_inf_frais_fixe_enc']) * (mp['coef_inf'] - 1)
+    mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
+
     return mp
 
 
@@ -320,34 +347,5 @@ def calcul_des_pm(mp, t):
     # EValuation du besoin de taux cible
     mp = calcul_des_taux_cibles(mp)
     mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
-
-
-def recup_des_frais(mp, df_ref_frais):
-    """
-        Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
-        Ceci se fait par une jointure sur le num produit
-    """
-    mp = pd.merge(mp, df_ref_frais, how='left', on=['num_prod'],
-         indicator=False, validate='many_to_one')
-    return mp
-
-
-def calcul_des_frais(mp):
-    """
-        Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
-    """
-    # Calcul de frais du prime
-    mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prime'] = mp['pri_brut'] * mp['tx_frais_var_prime'] * (1 + mp['ind_inf_frais_var_prime']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais de prestation
-    mp['frais_fixe_prest'] = mp['nb_sortie'] * mp['tx_frais_fixe_prest'] * (1 + mp['ind_inf_frais_fixe_prest']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prest'] = mp['prest'] * mp['tx_frais_var_prest'] * (1 + mp['ind_inf_frais_var_prest']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais sur encours
-    mp['frais_fixe_enc'] = mp['nb_contr_moy'] * mp['tx_frais_fixe_enc'] * (1 + mp['ind_inf_frais_fixe_enc']) * (mp['coef_inf'] - 1)
-    mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
-
-    return mp
 
 # implementater le calcul des frais via un referentiel de frais par produit : voir frais_passif_class et calc_frais

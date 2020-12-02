@@ -52,12 +52,12 @@ Colonnes enrichies :
             pri_chgt : chargement sur prime
 
 
-Etape de calcul :
+Etape de calcul de projection annuelle:
 
-    # 0 : Calcul des proba des flux
-    # 1 : Calcul des flux de prestation
-    # 2 : Calcul des taux cibles pour chaque mp : objectif de rendement en fonction des autres assureurs et du rendement des actifs
-    # 3 : Taux minimum à servir par Model Point :
-    # 4 : Calcul des primes projetées
-    # 5 : Calcul de la PM
-    # 6 : Calcul de la revalo de la PM avec pb
+    # 0 : Primes
+    # 1 : Taux min
+    # 2 : Calcul proba flux
+    # 3 : Calcul proba dynamique
+    # 4 : Prestations normal & garantie
+    # 5 : Taux cible des rendements
+    # 6 : PM
