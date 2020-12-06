@@ -24,11 +24,11 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, df_ref_frais, t):
     Output : Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
     """
     mp_variable_list = ['num_mp', 'num_canton', 'num_prod', 'age', 'gen', 'num_tab_mort',
-       'chgt_enc', 'ind_chgt_enc_pos', 'pm_fin', 'nb_contr_fin', 'anc', 'terme',
+       'chgt_enc', 'ind_chgt_enc_pos', 'pm', 'nb_contr', 'anc', 'terme',
        'type_cot', 'periode_cot', 'tx_cible', 'chgt_prime', 'prime', 'tx_tech',
        'terme_tx_tech', 'tmg', 'terme_tmg', 'num_rach_tot', 'num_rach_part',
        'num_rach_dyn_tot', 'num_rach_dyn_part', 'chgt_rach', 'pm_gar',
-       'tx_revalo_prec', 'tx_cible_prec','t', 'uuid']
+       'tx_revalo_prec', 'tx_cible_prec']
 
     # creation d'un identifiant unique pour chaque ligne de mp.
     if t==0 :
@@ -37,30 +37,28 @@ def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, df_ref_frais, t):
         df_mp = df_mp.rename(columns={"nb_contr": "nb_contr_fin"})
         df_mp['t'] = t
         df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
-        
+        df_mp = recup_des_frais(df_mp, df_ref_frais)
 
         #for x in list_colonnes_a_enrichir:
         #    df_mp[x]= None
 
     elif t==1 :
-        df_mp = df_mp.loc[df_mp['t'] == (t-1), mp_variable_list]
+        df_mp = df_mp.loc[df_mp['t'] == (t-1),:]
         #initialisation de t.
         df_mp['t'] = t
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
-        df_mp = recup_des_frais(df_mp, df_ref_frais)
 
     elif t>=2:
-        df_mp = df_mp.loc[df_mp['t'] == (t-1), mp_variable_list]
+        df_mp = df_mp.loc[df_mp['t'] == (t-1),:]
         #initialisation de t.
         df_mp['t'] = t
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
-        df_mp = recup_des_frais(df_mp, df_ref_frais)
     
     return df_mp
 
@@ -97,12 +95,12 @@ def get_rachat_dyn_partiel_et_total(mp):
 # Etape 1 de la projection : Calculer les primes et les chargements sur prime
 def calcul_des_primes(mp):
     # Nombre de versements
-    mp.loc[mp['prime'] > 0,"nb_vers"] = mp['nb_contr']
+    mp.loc[mp.prime > 0,"nb_vers"] = mp.nb_contr
     
     # Calcul les primes de l'annee
-    mp['pri_brut'] = mp['prime'] * mp['nb_contr'] # primes brutes
-    mp['pri_net'] = mp['pri_brut'] * (1 - mp['chgt_prime']) # primes nettes
-    mp['pri_chgt'] = mp['pri_brut'] * mp['chgt_prime'] # Chargements sur primes
+    mp.pri_brut = mp.prime * mp.nb_contr # primes brutes
+    mp.pri_net = mp.pri_brut * (1 - mp.chgt_prime) # primes nettes
+    mp.pri_chgt = mp.pri_brut * mp.chgt_prime # Chargements sur primes
     
     return mp
 
@@ -134,12 +132,12 @@ def calcul_des_taux_min(mp):
      # TODO : calcul des taux techniques et TMG min à revoir potentiellement
     """ 
     # calcul du taux technique    
-    mp['tx_tech_an'] = np.maximum(mp['tx_tech'], 0)
-    mp['tx_tech_se'] = mp['tx_tech_an'] / 2 # taux semestriel
+    mp.tx_tech_an = np.maximum(mp.tx_tech, 0)
+    mp.tx_tech_se = mp.tx_tech_an / 2 # taux semestriel
 
     # Calcul du taux minimum
-    mp['tx_an'] = np.maximum(mp['tx_tech_an'], mp['tmg']) # taux annuel minimum
-    mp['tx_se'] = mp['tx_an'] / 2 # taux semestriel
+    mp.tx_an = np.maximum(mp.tx_tech_an, mp.tmg) # taux annuel minimum
+    mp.tx_se = mp.tx_an / 2 # taux semestriel
     
     return mp
 
@@ -283,25 +281,6 @@ def calcul_des_pm(mp):
     # EValuation du besoin de taux cible
     mp = calcul_des_taux_cibles(mp)
     mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
-
-    return mp
-
-
-def calcul_des_frais(mp):
-    """
-        Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
-    """
-    # Calcul de frais du prime
-    mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prime'] = mp['pri_brut'] * mp['tx_frais_var_prime'] * (1 + mp['ind_inf_frais_var_prime']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais de prestation
-    mp['frais_fixe_prest'] = mp['nb_sortie'] * mp['tx_frais_fixe_prest'] * (1 + mp['ind_inf_frais_fixe_prest']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prest'] = mp['prest'] * mp['tx_frais_var_prest'] * (1 + mp['ind_inf_frais_var_prest']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais sur encours
-    mp['frais_fixe_enc'] = mp['nb_contr_moy'] * mp['tx_frais_fixe_enc'] * (1 + mp['ind_inf_frais_fixe_enc']) * (mp['coef_inf'] - 1)
-    mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
 
     return mp
 
