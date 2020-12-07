@@ -17,7 +17,7 @@ def recup_des_frais(mp, df_ref_frais):
     return mp
 
 
-def initialisation_des_mp(df_mp, list_colonnes_a_enrichir, df_ref_frais, t):
+def initialisation_des_mp(df_mp, df_ref_frais, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
     Input : Dataframe du représentant le fichier de Model point en input
@@ -97,10 +97,11 @@ def get_rachat_dyn_partiel_et_total(mp):
 # Etape 1 de la projection : Calculer les primes et les chargements sur prime
 def calcul_des_primes(mp):
     # Nombre de versements
-    mp.loc[mp['prime'] > 0,"nb_vers"] = mp['nb_contr']
+    # mp.loc[mp['prime'] > 0,"nb_vers"] = np.maximum(mp['nb_contr'], 0)
+    mp['nb_vers'] = mp['nb_contr']
     
     # Calcul les primes de l'annee
-    mp['pri_brut'] = mp['prime'] * mp['nb_contr'] # primes brutes
+    mp['pri_brut'] = mp['prime'] * mp['nb_vers'] # primes brutes
     mp['pri_net'] = mp['pri_brut'] * (1 - mp['chgt_prime']) # primes nettes
     mp['pri_chgt'] = mp['pri_brut'] * mp['chgt_prime'] # Chargements sur primes
     
@@ -174,8 +175,8 @@ def calcul_des_prestation(mp,t, rach, tm):
             _ Prestations avec revalorisation net global
     """
     # Indicatrice de sortie en echeance    
-    mp.loc[mp['terme'] <= t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
-    mp.loc[mp['terme'] > t, 'ind_ech'] = 1 # si le contrat à terme
+    mp.loc[mp['terme'] > t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
+    mp.loc[mp['terme'] <= t, 'ind_ech'] = 1 # si le contrat à terme
     
     # Calcul du nombre de contrat en echeance
     mp['nb_ech'] = mp['nb_contr'] * mp['ind_ech']
@@ -384,33 +385,77 @@ if __name__ == "__main__":
         'pm_moy']
 
     # initialisation à t = 0
-    mp = initialisation_des_mp(mp, variables_de_calculs, ref_frais, 0)
+    # mp = initialisation_des_mp(mp, variables_de_calculs, ref_frais, 0)
+
+    # initialisation à t = 0
+    mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
     #print(mp.columns)
+    for time_index in range(1,4,1):
+        print(time_index)
+        # initialisation à t = 1
+        mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
+        # 0 : Primes
+        mp_t = calcul_des_primes(mp_t)
+        # 1 : Taux min
+        # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
+        # 3 : Calcul proba de rachat dynamique
+        # 4 : Prestations normales & garanties
+        mp_t =  calcul_des_prestation(mp_t, t=time_index, rach= rach, tm = tm)
+        # 5 : Taux cible des rendements
+        # 6 : PM
+        mp_t = calcul_des_pm(mp_t)
 
-    ################################
-    # initialisation à t = 1
-    mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 1)
-    # 0 : Primes
-    mp = calcul_des_primes(mp)
-    # 1 : Taux min
-    # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-    # 3 : Calcul proba de rachat dynamique
-    # 4 : Prestations normales & garanties
-    mp =  calcul_des_prestation(mp, t=1, rach= rach, tm = tm)
-    # 5 : Taux cible des rendements
-    # 6 : PM
-    mp = calcul_des_pm(mp)
+        mp_global_projection = mp_global_projection.append(mp_t)
+        print("ok")
+    
+    mp_global_projection.to_csv("mp_global_projection.csv", index = False)
 
-    #################################
-    # initialisation à t = 2
-    mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 2)
-    # 0 : Primes
-    mp = calcul_des_primes(mp)
-    # 1 : Taux min
-    # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-    # 3 : Calcul proba de rachat dynamique
-    # 4 : Prestations normales & garanties
-    mp =  calcul_des_prestation(mp, t=2, rach= rach, tm = tm)
-    # 5 : Taux cible des rendements
-    # 6 : PM
-    mp = calcul_des_pm(mp)
+        
+
+    # ################################
+    # # initialisation à t = 1
+    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 1)
+    # # 0 : Primes
+    # mp = calcul_des_primes(mp)
+    # # 1 : Taux min
+    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
+    # # 3 : Calcul proba de rachat dynamique
+    # # 4 : Prestations normales & garanties
+    # mp =  calcul_des_prestation(mp, t=1, rach= rach, tm = tm)
+    # # 5 : Taux cible des rendements
+    # # 6 : PM
+    # mp = calcul_des_pm(mp)
+    # mp.to_csv("mp1.csv", index = False)
+    
+
+    # #################################
+    # # initialisation à t = 2
+    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 2)
+    # # 0 : Primes
+    # mp = calcul_des_primes(mp)
+    # # 1 : Taux min
+    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
+    # # 3 : Calcul proba de rachat dynamique
+    # # 4 : Prestations normales & garanties
+    # mp =  calcul_des_prestation(mp, t=2, rach= rach, tm = tm)
+    # # 5 : Taux cible des rendements
+    # # 6 : PM
+    # mp = calcul_des_pm(mp)
+    # mp.to_csv("mp2.csv", index = False)
+
+    # #################################
+    # # initialisation à t = 3
+    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 3)
+    # # 0 : Primes
+    # mp = calcul_des_primes(mp)
+    # # 1 : Taux min
+    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
+    # # 3 : Calcul proba de rachat dynamique
+    # # 4 : Prestations normales & garanties
+    # mp =  calcul_des_prestation(mp, t=2, rach= rach, tm = tm)
+    # # 5 : Taux cible des rendements
+    # # 6 : PM
+    # mp = calcul_des_pm(mp)
+    # mp.to_csv("mp3.csv", index = False)
+
+    
