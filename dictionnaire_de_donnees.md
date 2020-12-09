@@ -1,3 +1,9 @@
+# Sources (09/12/2020):
+- Modele de projection ALM et donnees de tests :  package R "Simbel" de Q. Guibert, code source disponible sur github. Il est présenté comm eun package de calcul du best estimate epargne sous solvabilite 2 (voir : https://github.com/qguibert/SimBEL)
+- Generateur de scénarios économiques : (package R ESG et ESGToolkit voir : http://www.ressources-actuarielles.net/C1256F13006585B2/0/A5E99E9ABF5D3674C125772F00600F6C) 
+
+
+# Dictionnaire de données.
 Colonnes enrichies :
             
             ech : un vecteur contenant les flux de sortie en echeance de l'annee : nul si l'objet est de type RetraiteEuroRest.
