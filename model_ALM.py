@@ -325,64 +325,6 @@ if __name__ == "__main__":
     rach = pd.read_csv(rach_path) # loi de rachat
     ref_frais = pd.read_csv(ref_frais_path) # referentiel de frais par produit
 
-    #Variables projetees
-    variables_de_calculs = ['qx_rach_part_dyn', 
-        'qx_rach_tot_dyn',
-        #'qx_rach_tot',
-        'qx_rach_tot_glob',
-        #'qx_dc',
-        'qx_dc_rach',                
-        'ind_ech',                
-        'ech',
-        'rach_tot',
-        'dc',
-        'rach_part',
-        'prest',
-        'rev_ech',
-        'rev_rach_tot',
-        'rev_dc',
-        'rev_rach_part',
-        'rev_prest',
-        'rev_prest_nette',
-        'enc_charg',
-        'rach_charg',
-        'soc_prest',
-        'it_tech_prest',
-        'arr_charg',
-        'nb_ech',
-        'nb_rach_tot',
-        'nb_dc',
-        'nb_sortie',
-        'nb_contr_fin',
-        'nb_contr_moy',
-        'tx_cible_an',
-        'tx_cible_se',
-        'tx_tech_an',
-        'tx_tech_se',
-        'tx_an', 
-        'tx_se',
-        'tx_soc',
-        'rev_stock_brut',
-        'rev_stock_nette',
-        'enc_charg_stock',
-        'enc_charg_base_th',
-        'enc_charg_rmin_th',
-        'base_enc_th',
-        'soc_stock',
-        'it_tech_stock',
-        'it_tech',
-        'bes_tx_cible',
-        'rev_stock_brut_ap_pb',
-        'rev_stock_nette_ap_pb',
-        'enc_charg_stock_ap_pb',
-        'soc_stock_ap_pb',
-        'pm_fin_ap_pb',
-        'nb_vers',
-        'pri_brut',
-        'pri_net',
-        'pri_chgt',
-        'pm_deb',
-        'pm_moy']
 
     # initialisation à t = 0
     # mp = initialisation_des_mp(mp, variables_de_calculs, ref_frais, 0)
@@ -390,8 +332,8 @@ if __name__ == "__main__":
     # initialisation à t = 0
     mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
     #print(mp.columns)
-    for time_index in range(1,4,1):
-        print(time_index)
+    for time_index in range(1,41,1):
+        print("Debut de la projection sur l'année : ", time_index)
         # initialisation à t = 1
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
         # 0 : Primes
@@ -406,56 +348,7 @@ if __name__ == "__main__":
         mp_t = calcul_des_pm(mp_t)
 
         mp_global_projection = mp_global_projection.append(mp_t)
-        print("ok")
+        print("Fin de la projection sur l'année : ", time_index)
+        print("#################################################")
     
     mp_global_projection.to_csv("mp_global_projection.csv", index = False)
-
-        
-
-    # ################################
-    # # initialisation à t = 1
-    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 1)
-    # # 0 : Primes
-    # mp = calcul_des_primes(mp)
-    # # 1 : Taux min
-    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-    # # 3 : Calcul proba de rachat dynamique
-    # # 4 : Prestations normales & garanties
-    # mp =  calcul_des_prestation(mp, t=1, rach= rach, tm = tm)
-    # # 5 : Taux cible des rendements
-    # # 6 : PM
-    # mp = calcul_des_pm(mp)
-    # mp.to_csv("mp1.csv", index = False)
-    
-
-    # #################################
-    # # initialisation à t = 2
-    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 2)
-    # # 0 : Primes
-    # mp = calcul_des_primes(mp)
-    # # 1 : Taux min
-    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-    # # 3 : Calcul proba de rachat dynamique
-    # # 4 : Prestations normales & garanties
-    # mp =  calcul_des_prestation(mp, t=2, rach= rach, tm = tm)
-    # # 5 : Taux cible des rendements
-    # # 6 : PM
-    # mp = calcul_des_pm(mp)
-    # mp.to_csv("mp2.csv", index = False)
-
-    # #################################
-    # # initialisation à t = 3
-    # mp = initialisation_des_mp(mp,variables_de_calculs, ref_frais, t = 3)
-    # # 0 : Primes
-    # mp = calcul_des_primes(mp)
-    # # 1 : Taux min
-    # # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-    # # 3 : Calcul proba de rachat dynamique
-    # # 4 : Prestations normales & garanties
-    # mp =  calcul_des_prestation(mp, t=2, rach= rach, tm = tm)
-    # # 5 : Taux cible des rendements
-    # # 6 : PM
-    # mp = calcul_des_pm(mp)
-    # mp.to_csv("mp3.csv", index = False)
-
-    
