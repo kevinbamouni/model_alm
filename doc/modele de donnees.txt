@@ -1,40 +1,90 @@
-ech : un vecteur contenant les flux de sortie en echeance de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rach_tot : un vecteur contenant les flux de rachat totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-dc : un vecteur contenant les flux de deces de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rach_part : un vecteur contenant les flux de rachat partiel de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rente : le flux annuel de rente par model point : nul si l'objet est de type EpEuroInd.
-prest : un vecteur contenant les flux prestations de l'annee (renseigne que l'objet x soit de type RetraiteEuroRest ou EpEuroInd).
-rev_ech : un vecteur contenant la revalorisation des echeances de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rev_rach_tot : un vecteur contenant la revalorisation des rachats totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rev_dc : un vecteur contenant la revalorisation des deces de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rev_rach_part : un vecteur contenant la revalorisation des rachats partiels de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rev_prest : un vecteur contenant la revalorisation brute des prestations de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rev_prest_nette : un vecteur contenant la revalorisation des prestations nette de l'annee : nul si l'objet est de type RetraiteEuroRest.
-enc_charg : un vecteur contenant les chargements sur l'encours de l'annee : nul si l'objet est de type RetraiteEuroRest.
-rach_charg : un vecteur contenant les chargements sur les rachats de l'annee : nul si l'objet est de type RetraiteEuroRest.
-soc_prest : un vecteur contenant les prelevements sociaux sur prestations de l'annee : nul si l'objet est de type RetraiteEuroRest.
-it_tech_prest : un vecteur contenant les interets techniques sur prestations de l'annee. : nul si l'objet est de type RetraiteEuroRest.
-arr_charg : un vecteur contenant les chargements sur arrerages. : nul si l'objet est de type EpEuroInd.
+ech : un vecteur contenant les flux de sortie en echeance de lannee : nul si lobjet est de type RetraiteEuroRest.
+rach_tot : un vecteur contenant les flux de rachat totaux de lannee : nul si lobjet est de type RetraiteEuroRest.
+dc : un vecteur contenant les flux de deces de lannee : nul si lobjet est de type RetraiteEuroRest.
+rach_part : un vecteur contenant les flux de rachat partiel de lannee : nul si lobjet est de type RetraiteEuroRest.
+rente : le flux annuel de rente par model point : nul si lobjet est de type EpEuroInd.
+prest : un vecteur contenant les flux prestations de lannee (renseigne que lobjet x soit de type RetraiteEuroRest ou EpEuroInd).
+rev_ech : un vecteur contenant la revalorisation des echeances de lannee : nul si lobjet est de type RetraiteEuroRest.
+rev_rach_tot : un vecteur contenant la revalorisation des rachats totaux de lannee : nul si lobjet est de type RetraiteEuroRest.
+rev_dc : un vecteur contenant la revalorisation des deces de lannee : nul si lobjet est de type RetraiteEuroRest.
+rev_rach_part : un vecteur contenant la revalorisation des rachats partiels de lannee : nul si lobjet est de type RetraiteEuroRest.
+rev_prest : un vecteur contenant la revalorisation brute des prestations de lannee : nul si lobjet est de type RetraiteEuroRest.
+rev_prest_nette : un vecteur contenant la revalorisation des prestations nette de lannee : nul si lobjet est de type RetraiteEuroRest.
+enc_charg : un vecteur contenant les chargements sur lencours de lannee : nul si lobjet est de type RetraiteEuroRest.
+rach_charg : un vecteur contenant les chargements sur les rachats de lannee : nul si lobjet est de type RetraiteEuroRest.
+soc_prest : un vecteur contenant les prelevements sociaux sur prestations de lannee : nul si lobjet est de type RetraiteEuroRest.
+it_tech_prest : un vecteur contenant les interets techniques sur prestations de lannee. : nul si lobjet est de type RetraiteEuroRest.
+arr_charg : un vecteur contenant les chargements sur arrerages. : nul si lobjet est de type EpEuroInd.
 
-nb_ech : un vecteur contenant le nombre de sorties en echeance de l'annee : nul si l'objet est de type RetraiteEuroRest.
-nb_rach_tot : un vecteur contenant le nombre de rachats totaux de l'annee : nul si l'objet est de type RetraiteEuroRest.
-nb_dc : un vecteur contenant le nombre de deces de l'annee
-nb_sortie : un vecteur contenant le nombre de sorties de l'annee
-nb_contr_fin : un vecteur contenant le nombre de contrats en cours en fin d'annee
-nb_contr_moy : un vecteur contenant la moyenne du nombre de contrats sur l'annee.
+nb_ech : un vecteur contenant le nombre de sorties en echeance de lannee : nul si lobjet est de type RetraiteEuroRest.
+nb_rach_tot : un vecteur contenant le nombre de rachats totaux de lannee : nul si lobjet est de type RetraiteEuroRest.
+nb_dc : un vecteur contenant le nombre de deces de lannee
+nb_sortie : un vecteur contenant le nombre de sorties de lannee
+nb_contr_fin : un vecteur contenant le nombre de contrats en cours en fin dannee
+nb_contr_moy : un vecteur contenant la moyenne du nombre de contrats sur lannee.
 
-rev_stock_brut_ap_pb : un vecteur contenant la revalorisation brute de l'annee appliquee au PM
-rev_stock_nette_ap_pb : un vecteur contenant la revalorisation nette de l'annee appliquee au PM. Elle peut etre negative pour des contrats a taux negatif.
-enc_charg_stock_ap_pb : un vecteur contenant les montants de chargement sur encours de l'annee calcules pour le stock de PM
-soc_stock_ap_pb : un vecteur contenant les prelevements sociaux de l'annee
+rev_stock_brut_ap_pb : un vecteur contenant la revalorisation brute de lannee appliquee au PM
+rev_stock_nette_ap_pb : un vecteur contenant la revalorisation nette de lannee appliquee au PM. Elle peut etre negative pour des contrats a taux negatif.
+enc_charg_stock_ap_pb : un vecteur contenant les montants de chargement sur encours de lannee calcules pour le stock de PM
+soc_stock_ap_pb : un vecteur contenant les prelevements sociaux de lannee
 
-rev_stock_brut : un vecteur contenant la revalorisation minimale ##' brute de l'annee appliquee au PM (nul en cas de typage RetraiteEuroRest).
-rev_stock_nette : un vecteur contenant la revalorisation minimale ##' nette de l'annee appliquee au PM (nul en cas de typage RetraiteEuroRest).
-enc_charg_stock : un vecteur contenant les chargement sur encours de l'annee, calcules en prenant en compte la revalorisation minimale (nul en cas de typage RetraiteEuroRest).
-enc_charg_base_th : un vecteur contenant les chargements sur encours theoriques de l'annee, evalues sur la base de la PM non revalorisees (nul en cas de typage RetraiteEuroRest).
-enc_charg_rmin_th : un vecteur contenant les chargements sur encours theoriques de l'annee, evalues sur la seule base de la revalorisation minimale des PM (nul en cas de typage RetraiteEuroRest).
-base_enc_th : un vecteur contenant l'assiette de calcul des chargements sur encours de l'annee (nul en cas de typage RetraiteEuroRest).
-soc_stock : un vecteur contenant le prelevements sociaux de l'annee (nul en cas de typage RetraiteEuroRest).
-it_tech_stock : un vecteur contenant les interets techniques sur stock de l'annee (nul en cas de typage RetraiteEuroRest).
-it_tech : un vecteur contenant les interets techniques sur stock et sur prestations de l'annee (nul en cas de typage RetraiteEuroRest).
-bes_tx_cible : un vecteur contenant le besoin de financement de l'annee pour atteindre le taux cible de chaque assure.
+rev_stock_brut : un vecteur contenant la revalorisation minimale ## brute de lannee appliquee au PM (nul en cas de typage RetraiteEuroRest).
+rev_stock_nette : un vecteur contenant la revalorisation minimale ## nette de lannee appliquee au PM (nul en cas de typage RetraiteEuroRest).
+enc_charg_stock : un vecteur contenant les chargement sur encours de lannee, calcules en prenant en compte la revalorisation minimale (nul en cas de typage RetraiteEuroRest).
+enc_charg_base_th : un vecteur contenant les chargements sur encours theoriques de lannee, evalues sur la base de la PM non revalorisees (nul en cas de typage RetraiteEuroRest).
+enc_charg_rmin_th : un vecteur contenant les chargements sur encours theoriques de lannee, evalues sur la seule base de la revalorisation minimale des PM (nul en cas de typage RetraiteEuroRest).
+base_enc_th : un vecteur contenant lassiette de calcul des chargements sur encours de lannee (nul en cas de typage RetraiteEuroRest).
+soc_stock : un vecteur contenant le prelevements sociaux de lannee (nul en cas de typage RetraiteEuroRest).
+it_tech_stock : un vecteur contenant les interets techniques sur stock de lannee (nul en cas de typage RetraiteEuroRest).
+it_tech : un vecteur contenant les interets techniques sur stock et sur prestations de lannee (nul en cas de typage RetraiteEuroRest).
+bes_tx_cible : un vecteur contenant le besoin de financement de lannee pour atteindre le taux cible de chaque assure.
+
+
+Actions :-----
+num_mp : numero du mp
+val_marche : valeur de marche de laction
+val_nc : valeur nette comptable de laction qui est égale à la valeur dachat
+val_achat : valeur dachat
+presence : present dans le ptf ou non
+cessible : action cessible ou non
+nb_unit : nombre dunite de laction
+dur_det : duree de detention dans le ptf depuis lachat
+pdd :
+num_index :
+div :
+ind_invest : interets reinvestis ou non
+
+
+Obligation :-----
+num_mp : numero
+val_marche: valeur de marche valeu
+val_nc:aleur nette comptable de lobligation qui est égale à la valeur dachat
+val_achat: valeur dachat de lobligation
+presence : present dans le ptf ou non
+cessible : obligation cessible ou non
+nb_unit : nombre dunite de lobligation
+dur_det : duree de detention dans le ptf depuis lachat
+nominal : montant du nominal 
+tx_coupon : taux du coupon
+par : émise au pair ou pas au pair
+mat_res : maturité residuelle de lobligation
+type : souveraine ou corporate
+rating : rating de lemetteur
+duration : duration de lobligation
+zspread : spread de lobligation
+cc : 
+sd : surcote - decote de lobligation
+
+Immo :-----
+num_mp : 
+val_marche: valeur de marche valeu
+val_nc:aleur nette comptable de lobligation qui est égale à la valeur dachat
+val_achat: valeur dachat de lobligation
+presence : present dans le ptf ou non
+cessible : obligation cessible ou non
+nb_unit : nombre dunite de lobligation
+dur_det : duree de detention dans le ptf depuis lachat
+pdd :
+num_index : 
+loyer : taux du loyer anuel
+ind_invest : interets reinvestis ou non
