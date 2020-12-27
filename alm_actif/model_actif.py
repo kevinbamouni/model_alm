@@ -42,6 +42,8 @@ class portefeuille_financier():
         self.allocation_courante = {}
         self.allocation_cible = allocation_cible
 
+        self.reserve_capitalisation = 0
+
     def initialisation_action(df, t, df_rendement):
         """
             Fonction d'initialisaiton du portefeuille d'action en début de période de projection t
@@ -93,6 +95,10 @@ class portefeuille_financier():
         self.portefeuille_immo['loyer'] = self.portefeuille_immo['val_marche'] * np.sqrt(1 + self.portefeuille_immo['rdt']) * self.portefeuille_immo['loyer']
         self.portefeuille_immo['val_marche'] = self.portefeuille_immo['val_marche'] * self.portefeuille_immo['rdt'] 
         self.portefeuille_immo['dur_det'] = self.portefeuille_immo['dur_det'] + 1
+        self.portefeuille_immo['pvl'] = self.portefeuille_immo.loc[self.portefeuille_immo['val_nc']<=self.portefeuille_immo['val_marche'],'val_marche'] - \
+        self.portefeuille_immo.loc[self.portefeuille_immo['val_nc']>self.portefeuille_immo['val_marche'],'val_nc']
+        self.portefeuille_immo['mvl'] = self.portefeuille_immo.loc[self.portefeuille_immo['val_nc']>self.portefeuille_immo['val_marche'],'val_marche'] - \
+        self.portefeuille_immo.loc[self.portefeuille_immo['val_nc']<=self.portefeuille_immo['val_marche'],'val_nc']
 
 
     def veillissement_obligation(self, t):
@@ -108,7 +114,11 @@ class portefeuille_financier():
         self.portefeuille_oblig['dur_det'] = self.portefeuille_oblig['dur_det'] + 1
         self.portefeuille_oblig['mat_res'] = self.portefeuille_oblig['mat_res'] + 1
         self.portefeuille_oblig['surcote_decote'] = (self.portefeuille_oblig['nominal'] - self.portefeuille_oblig['vnc']) / self.portefeuille_oblig['mat_res']
-        pass
+        self.portefeuille_oblig['pvl'] = self.portefeuille_oblig.loc[self.portefeuille_oblig['val_nc']<=self.portefeuille_oblig['val_marche'],'val_marche'] - \
+            self.portefeuille_oblig.loc[self.portefeuille_oblig['val_nc']>self.portefeuille_oblig['val_marche'],'val_nc']
+        self.portefeuille_oblig['mvl'] = self.portefeuille_oblig.loc[self.portefeuille_oblig['val_nc']>self.portefeuille_oblig['val_marche'],'val_marche'] - \
+            self.portefeuille_oblig.loc[self.portefeuille_oblig['val_nc']<=self.portefeuille_oblig['val_marche'],'val_nc']
+        
 
 
     def veillissement_action(self, t):
@@ -121,6 +131,10 @@ class portefeuille_financier():
         self.portefeuile_action['dividende'] = self.portefeuile_action['val_marche'] * np.sqrt(1 + self.portefeuile_action['rdt']) * self.portefeuile_action['div']
         self.portefeuile_action['val_marche'] = self.portefeuile_action['val_marche'] * self.portefeuile_action['rdt'] 
         self.portefeuile_action['dur_det'] = self.portefeuile_action['dur_det'] + 1
+        self.portefeuile_action['pvl'] = self.portefeuile_action.loc[self.portefeuile_action['val_nc']<=self.portefeuile_action['val_marche'],'val_marche'] - \
+            self.portefeuile_action.loc[self.portefeuile_action['val_nc']>self.portefeuile_action['val_marche'],'val_nc']
+        self.portefeuile_action['mvl'] = self.portefeuile_action.loc[self.portefeuile_action['val_nc']>self.portefeuile_action['val_marche'],'val_marche'] - \
+            self.portefeuile_action.loc[self.portefeuile_action['val_nc']<=self.portefeuile_action['val_marche'],'val_nc']
         
 
     def reallocation_tactique(self):
@@ -141,4 +155,8 @@ class portefeuille_financier():
         'total': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
 
 
+    def calcul_de_reserve_capitation(self, t):
+        self.reserve_capitalisation = max(self.reserve_capitalisation + pmvr_oblig, 0)
 
+    def calcul_provision_risque_exigibilite(self, t):
+        pass
