@@ -30,11 +30,11 @@ matplot(t(ds), type='l', xlab = "horizon", ylab = "spread de d?faut")
 matplot(t(ls), type='l', xlab ="horizon", ylab = "spread de liquidit?")
 
 # Ecriture des fichiers csv
-write.table(x = rt, file = "esg_shortrate.csv", sep = ";", row.names = FALSE, col.names = FALSE)
-write.table(x = simulStock$stockPaths, file = "esg_stock.csv", sep = ";", row.names = FALSE, col.names = FALSE)
-write.table(x = re$realEstatePaths, file = "esg_realestate.csv", sep = ";", row.names = FALSE, col.names = FALSE)
-write.table(x = ds, file = "esg_defaultspread.csv", sep = ";", row.names = FALSE, col.names = FALSE)
-write.table(x = ls, file = "esg_liquidityspread.csv", sep = ";", row.names = FALSE, col.names = FALSE)
+write.table(x = rt, file = "gse_outputs/esg_shortrate.csv", sep = ";", row.names = FALSE, col.names = FALSE)
+write.table(x = simulStock$stockPaths, file = "gse_outputs/esg_stock.csv", sep = ";", row.names = FALSE, col.names = FALSE)
+write.table(x = re$realEstatePaths, file = "gse_outputs/esg_realestate.csv", sep = ";", row.names = FALSE, col.names = FALSE)
+write.table(x = ds, file = "gse_outputs/esg_defaultspread.csv", sep = ";", row.names = FALSE, col.names = FALSE)
+write.table(x = ls, file = "gse_outputs/esg_liquidityspread.csv", sep = ";", row.names = FALSE, col.names = FALSE)
 
 ## 3 - Tous les facteurs de risque, sur un m?me horizon en une seule fois avec la fonction rAllRisksFactors
 
