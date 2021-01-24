@@ -15,7 +15,7 @@ class portefeuille_financier():
     """
     
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
-    portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, allocation_cible):
+    portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
         self.portefeuile_action = portefeuille_action
         self.portefeuille_oblig = portefeuille_oblig
         self.portefeuille_immo = portefeuille_immo
@@ -27,11 +27,12 @@ class portefeuille_financier():
         self.scena_eco_treso = scena_eco_treso
         
         self.allocation_courante = {}
-        self.allocation_cible = allocation_cible
+        self.alloc_strat_cible_portfi = alloc_strat_cible_portfi
 
         self.plus_moins_value_realised = 0
         self.pmvr_oblig = 0
         self.reserve_capitalisation = 0
+
 
     def initialisation_action(df, t, df_rendement):
         """
@@ -76,8 +77,7 @@ class portefeuille_financier():
 
     def veillissement_immo(self, t):
         """
-            Vieillisement du portefeuille immobilier par projection 
-            sur un an avec calcul des loyers versés et du rendement
+            Vieillisement du portefeuille immobilier par projection sur un an avec calcul des loyers versés et du rendement
         """
         self.portefeuille_immo['t'] = t
         self.portefeuille_immo['rdt'] = (self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) / (1 + self.portefeuille_immo['loyer'] * self.portefeuille_immo['ind_invest']) - 1
@@ -90,8 +90,7 @@ class portefeuille_financier():
 
     def veillissement_obligation(self, t):
         """
-            Vieillisement du portefeuille obligation par projection 
-            sur un an avec calcul des coupons versés et du rendement
+            Vieillisement du portefeuille obligation par projection sur un an avec calcul des coupons versés et du rendement
         """
         self.portefeuille_oblig['t'] = t
         self.portefeuille_oblig['coupon'] = self.portefeuille_oblig['tx_coupon'] * self.portefeuille_oblig['nominal'] * self.portefeuille_oblig['par'] * self.portefeuille_oblig['nb_unit']  
@@ -108,8 +107,7 @@ class portefeuille_financier():
 
     def veillissement_action(self, t):
         """
-            Vieillisement du portefeuille action par projection 
-            sur un an avec calcul des dividendes versées et des du rendement
+            Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
         """
         self.portefeuile_action['t'] = t
         self.portefeuile_action['rdt'] = (self.scena_eco_action.iloc[1,t] / self.scena_eco_action.iloc[1,t-1]) / (1 + self.portefeuile_action['div'] * self.portefeuile_action['ind_invest']) - 1
@@ -135,7 +133,7 @@ class portefeuille_financier():
         'total_vm_portfi': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
 
 
-    def allocation_strategique(self, alloc_strat_cible_portfi, portfi_de_reference):
+    def allocation_strategique(self):
         """
         L'allocation stratégique vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
 
@@ -145,56 +143,60 @@ class portefeuille_financier():
 
         """
         self.calcul_alloc_strateg_crt()
-        calcul_operation_alm_vm = {'action' : alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_action,
-        'oblig' : alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_oblig,
-        'immo' : alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_immo,
-        'treso' : alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_treso}
+        calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_action'],
+        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_oblig'],
+        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_immo'],
+        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_treso']}
         
         if calcul_operation_alm_vm > 0:
             self.acheter_des_actions()
         else if calcul_operation_alm_vm < 0:
             self.vendres_des_actions()
     
-    def allocation_strategique(self):
-        """
-        L'allocation stratégique
-            Cette première étape, appelée l’allocation stratégique, vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
-        """
 
     def calcul_reserve_capitation(self, t):
+        """ 
+            Fonction qui permet de calculer la reserve capitalisation après la vente d'obligations.
+
+            Definition : https://assurance-vie.ooreka.fr/astuce/voir/503241/reserve-de-capitalisation (24/01/2021)
+            La réserve de capitalisation est une réserve obligatoirement mise en place par les organismes d'assurance.
+            Elle est alimentée par les plus-values réalisées sur les cessions d’obligations.
+            L'objectif de la réserve de capitalisation est de lisser les résultats enregistrés sur les titres obligataires et de garantir aux assurés le rendement des contrats jusqu’à leur terme.
+            La réserve de capitalisation fait partie de la marge de solvabilité.
+            Cette réserve est alimentée par les plus-values constatées lors de la cession d'obligations et diminuée à hauteur des moins-values.
+        """
         pass
 
 
     def calcul_provision_risque_exigibilite(self, t):
+        """
+            Fonction qui permet de calculer la provision pour risque d'exigibilite aka P.R.E.
+
+            copy-paste de "argus de l'assurance"
+            La provision pour risque d’exigibilité (PRE) a pour fonction de permettre à l’entreprise d’assurance de faire 
+            face à ses engagements dans le cas de moins-value de certains actifs (C. assur., art. R. 332-20). 
+            Une moins-value latente nette globale des placements concernés est constatée lorsque la valeur nette 
+            comptable de ces placements est supérieure à leur valeur globale.
+        """
         pass
 
 
-    def acheter_des_actions(self, calcul_operation_alm_vm, portfi_de_reference):
+    def acheter_des_actions(self, calcul_operation_alm_vm):
         """
             Fonction permettant d'acheter des actions et de mettre le
             portfeuille action automatiquement à jour.
         """
-        # 1 - Calcul du nombre a acheter
-        # POINT IMPORTANT : RAPPEL DE CONVENTION LE NB_UNIT DU PTF_REFERENCE (portfi_de_reference) 
-        # EST LA PROPORTION DE CHAQUE ACTIF DANS LE PTF DE REF ce qui permet de calculer la VM_achat/vente pour chaque ligne action du
-        # ptf_action.
-        portfi_de_reference["coef_multi_action"] = calcul_operation_alm_vm.action * portfi_de_reference["nb_unit"] / portfi_de_reference["val_marche"]
-        portfi_de_reference["nb_unit"] = portfi_de_reference["coef_multi_action"]
-        portfi_de_reference["val_nc"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_nc"]
-        portfi_de_reference["val_achat"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_achat"]
-        portfi_de_reference["val_marche"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_marche"]
-
         # 2 - Calcul du nombre a acheter
-        self.portefeuile_action["nb_unit"] = self.portefeuile_action["nb_unit"] + portfi_de_reference["nb_unit"]
-        self.portefeuile_action["val_nc"] = self.portefeuile_action["val_nc"] + portfi_de_reference["val_nc"]
-        self.portefeuile_action["val_achat"] = self.portefeuile_action["val_achat"] + portfi_de_reference["val_achat"]
-        self.portefeuile_action["val_marche"] = self.portefeuile_action["val_marche"] + portfi_de_reference["val_marche"]
+        self.portefeuile_action["nb_unit_achat"] = calcul_operation_alm_vm.action * self.portefeuile_action["nb_unit_ref"] / self.portefeuile_action["val_marche"])
+        self.portefeuile_action["val_nc"] = self.portefeuile_action["val_nc"] + self.portefeuile_action["val_nc"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
+        self.portefeuile_action["val_achat"] = self.portefeuile_action["val_achat"] + self.portefeuile_action["val_achat"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
+        self.portefeuile_action["val_marche"] = self.portefeuile_action["val_marche"] + self.portefeuile_action["val_marche"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
+        self.portefeuile_action["nb_unit"] = self.portefeuile_action["nb_unit"] + self.portefeuile_action["nb_unit_achat"]
 
 
     def vendres_des_actions(self, ptf_action, montant_a_vendre):
         """
-            Fonction permettant de vendre des actions et de mettre le portefeuille action
-            automatiquement à jour.
+            Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
         """
         ptf_action["alloc"] = ptf_action["val_marche"] / np.sum(ptf_action["val_marche"]) 
         ptf_action["nb_to_sold"] = (ptf_action["alloc"] * montant_a_vendre) / (ptf_action["val_marche"] / ptf_action["nb_unit"])
@@ -214,22 +216,33 @@ if __name__ == "__main__":
     # execute only if run as a script
 
     # Variable à configurer :
-    Date_t0="31/12/2019" # Jour j de projection
-    N = 40 # Nombre d'années de projections
+    # Jour j de projection
+    Date_t0="31/12/2019"
+    # Nombre d'années de projections
+    N = 40
+
+    # Chargement des input : Model point portefeuille financier
     oblig_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_oblig.csv"
     action_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_action.csv"
     treso_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_treso.csv"
     immo_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_immo.csv"
 
+    oblig = pd.read_csv(oblig_path)
+    action = pd.read_csv(action_path)
+    treso = pd.read_csv(treso_path)
+    immo = pd.read_csv(immo_path)
+
+    # Chargement des données ESG 
+    oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_bond.csv"
+    action_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_stock.csv"
+    immo_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_realestate.csv"
+
+    oblig_scena = pd.read_csv(oblig_scena_path)
+    action_scena = pd.read_csv(action_scena_path)
+    immo_scena = pd.read_csv(immo_scena_path)
+
+    # Chargement de l'allocaiton cible
     alloc_strat_cible_portfi_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/alloc_strat_cible_portfi.json"
-
-    # Chargement des données ESG
-
-    # Chargement des input.
-    oblig = pd.read_csv(oblig_path) # model point
-    action = pd.read_csv(action_path) #table de mortalite
-    treso = pd.read_csv(treso_path) # loi de rachat
-    immo = pd.read_csv(immo_path) # referentiel de frais par produit
 
     # read file
     with open(alloc_strat_cible_portfi_path, 'r') as myfile:
