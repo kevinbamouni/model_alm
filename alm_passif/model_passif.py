@@ -314,10 +314,10 @@ if __name__ == "__main__":
     # Variable à configurer :
     Date_t0="31/12/2019" # Jour j de projection
     N = 40 # Nombre d'années de projections
-    mp_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/mp.csv"
-    tm_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/th_dc_00_02.csv"
-    rach_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/table_rachat.csv"
-    ref_frais_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/ref_frais_produits.csv"
+    mp_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/mp.csv"
+    tm_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/th_dc_00_02.csv"
+    rach_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/table_rachat.csv"
+    ref_frais_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ref_frais_produits.csv"
 
     # Chargement des input.
     mp = pd.read_csv(mp_path) # model point
@@ -351,4 +351,4 @@ if __name__ == "__main__":
         print("Fin de la projection sur l'année : ", time_index)
         print("#################################################")
     
-    mp_global_projection.to_csv("mp_global_projection.csv", index = False)
+    mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)

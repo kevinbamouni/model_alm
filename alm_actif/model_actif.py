@@ -2,23 +2,10 @@
 #%%
 import pandas as pd
 import numpy as np
+import json
 from fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
-# Variable à configurer :
-Date_t0="31/12/2019" # Jour j de projection
-N = 40 # Nombre d'années de projections
-oblig_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_oblig.csv"
-action_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_action.csv"
-treso_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_treso.csv"
-immo_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_immo.csv"
 
-# Chargement des données ESG
-
-# Chargement des input.
-oblig = pd.read_csv(oblig_path) # model point
-action = pd.read_csv(action_path) #table de mortalite
-treso = pd.read_csv(treso_path) # loi de rachat
-immo = pd.read_csv(immo_path) # referentiel de frais par produit
 
 # %%
 
@@ -42,8 +29,8 @@ class portefeuille_financier():
         self.allocation_courante = {}
         self.allocation_cible = allocation_cible
 
+        self.plus_moins_value_realised = 0
         self.pmvr_oblig = 0
-
         self.reserve_capitalisation = 0
 
     def initialisation_action(df, t, df_rendement):
@@ -133,26 +120,118 @@ class portefeuille_financier():
         self.portefeuile_action['mvl'] = self.portefeuile_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
         
 
-    def reallocation_tactique(self):
-        pass
-
-    def calcu_allocation_courante(self):
+    def calcul_alloc_strateg_crt(self):
         """
             Calcul allocation courante du portefeuille financier
         """
-        self.allocation_courante  = {'somme_action': sum(self.portefeuile_action['val_marche']),
-        'somme_oblig': sum(self.portefeuille_oblig['val_marche']),
-        'somme_immo': sum(self.portefeuille_immo['val_marche']),
-        'somme_treso': sum(self.portefeuille_treso['val_marche']),
-        'propo_action': sum(self.portefeuile_action['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-        'propo_oblig': sum(self.portefeuille_oblig['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-        'propo_immo': sum(self.portefeuille_immo['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-        'propo_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-        'total': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
+        self.allocation_courante  = {'somme_vm_action': sum(self.portefeuile_action['val_marche']),
+        'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche']),
+        'somme_vm_immo': sum(self.portefeuille_immo['val_marche']),
+        'somme_vm_treso': sum(self.portefeuille_treso['val_marche']),
+        'propor_action': sum(self.portefeuile_action['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+        'propor_oblig': sum(self.portefeuille_oblig['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+        'propor_immo': sum(self.portefeuille_immo['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+        'propor_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuile_action['val_marche'])+sum(self.portefeuille_obli['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+        'total_vm_portfi': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
 
 
-    def calcul_de_reserve_capitation(self, t):
-        self.reserve_capitalisation = max(self.reserve_capitalisation + self.pmvr_oblig, 0)
+    def allocation_strategique(self, alloc_strat_cible_portfi, portfi_de_reference):
+        """
+        L'allocation stratégique vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
+
+        Cette fonction permet de faire l'allocation strategique du portefeuille suite à l'evolution des valeurs de marchés des actifs à l'an t en fonction
+        de l'allocation strategique cible. Après évaluation des écarts par rapport à l'allocation cible des opérations d'achats-ventes sont effectuées afin
+        de correspondre à l'allocation cible.
+
+        """
+        self.calcul_alloc_strateg_crt()
+        calcul_operation_alm_vm = {'action' : alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_action,
+        'oblig' : alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_oblig,
+        'immo' : alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_immo,
+        'treso' : alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante.total_vm_portfi - self.allocation_courante.somme_vm_treso}
+        
+        if calcul_operation_alm_vm > 0:
+            self.acheter_des_actions()
+        else if calcul_operation_alm_vm < 0:
+            self.vendres_des_actions()
+    
+    def allocation_strategique(self):
+        """
+        L'allocation stratégique
+            Cette première étape, appelée l’allocation stratégique, vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
+        """
+
+    def calcul_reserve_capitation(self, t):
+        pass
+
 
     def calcul_provision_risque_exigibilite(self, t):
         pass
+
+
+    def acheter_des_actions(self, calcul_operation_alm_vm, portfi_de_reference):
+        """
+            Fonction permettant d'acheter des actions et de mettre le
+            portfeuille action automatiquement à jour.
+        """
+        # 1 - Calcul du nombre a acheter
+        # POINT IMPORTANT : RAPPEL DE CONVENTION LE NB_UNIT DU PTF_REFERENCE (portfi_de_reference) 
+        # EST LA PROPORTION DE CHAQUE ACTIF DANS LE PTF DE REF ce qui permet de calculer la VM_achat/vente pour chaque ligne action du
+        # ptf_action.
+        portfi_de_reference["coef_multi_action"] = calcul_operation_alm_vm.action * portfi_de_reference["nb_unit"] / portfi_de_reference["val_marche"]
+        portfi_de_reference["nb_unit"] = portfi_de_reference["coef_multi_action"]
+        portfi_de_reference["val_nc"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_nc"]
+        portfi_de_reference["val_achat"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_achat"]
+        portfi_de_reference["val_marche"] = portfi_de_reference["coef_multi_action"] * portfi_de_reference["val_marche"]
+
+        # 2 - Calcul du nombre a acheter
+        self.portefeuile_action["nb_unit"] = self.portefeuile_action["nb_unit"] + portfi_de_reference["nb_unit"]
+        self.portefeuile_action["val_nc"] = self.portefeuile_action["val_nc"] + portfi_de_reference["val_nc"]
+        self.portefeuile_action["val_achat"] = self.portefeuile_action["val_achat"] + portfi_de_reference["val_achat"]
+        self.portefeuile_action["val_marche"] = self.portefeuile_action["val_marche"] + portfi_de_reference["val_marche"]
+
+
+    def vendres_des_actions(self, ptf_action, montant_a_vendre):
+        """
+            Fonction permettant de vendre des actions et de mettre le portefeuille action
+            automatiquement à jour.
+        """
+        ptf_action["alloc"] = ptf_action["val_marche"] / np.sum(ptf_action["val_marche"]) 
+        ptf_action["nb_to_sold"] = (ptf_action["alloc"] * montant_a_vendre) / (ptf_action["val_marche"] / ptf_action["nb_unit"])
+        ptf_action["pct_to_sold"] = ptf_action["nb_to_sold"] / ptf_action["nb_unit"]
+
+        self.plus_moins_value_realised = self.plus_moins_value_realised + np.sum((ptf_action["val_achat"] - ptf_action["val_nc"]) * ptf_action["pct_to_sold"])
+
+        # Actualisation des données de portefeuille
+        ptf_action["val_achat"] = ptf_action["val_achat"] * (1 - ptf_action["pct_to_sold"])
+        ptf_action["val_marche"] = ptf_action["val_marche"] * (1 - ptf_action["pct_to_sold"])
+        ptf_action["val_nc"] = ptf_action["val_nc"] *  (1 - ptf_action["pct_to_sold"])
+        ptf_action["nb_unit"] = ptf_action["nb_unit"] * (1 - ptf_action["pct_to_sold"])
+
+
+# Execution main :
+if __name__ == "__main__":
+    # execute only if run as a script
+
+    # Variable à configurer :
+    Date_t0="31/12/2019" # Jour j de projection
+    N = 40 # Nombre d'années de projections
+    oblig_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_oblig.csv"
+    action_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_action.csv"
+    treso_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_treso.csv"
+    immo_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_immo.csv"
+
+    alloc_strat_cible_portfi_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/alloc_strat_cible_portfi.json"
+
+    # Chargement des données ESG
+
+    # Chargement des input.
+    oblig = pd.read_csv(oblig_path) # model point
+    action = pd.read_csv(action_path) #table de mortalite
+    treso = pd.read_csv(treso_path) # loi de rachat
+    immo = pd.read_csv(immo_path) # referentiel de frais par produit
+
+    # read file
+    with open(alloc_strat_cible_portfi_path, 'r') as myfile:
+        data=myfile.read()
+    alloc_strat_cible_portfi = json.loads(data)
