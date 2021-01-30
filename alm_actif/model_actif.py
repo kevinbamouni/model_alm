@@ -5,8 +5,6 @@ import numpy as np
 import json
 from fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
-
-
 # %%
 
 class portefeuille_financier():
@@ -133,7 +131,7 @@ class portefeuille_financier():
         'total_vm_portfi': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
 
 
-    def allocation_strategique(self):
+    def allocation_strategique(self, t, prestations_):
         """
         L'allocation stratégique vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
 
@@ -142,19 +140,26 @@ class portefeuille_financier():
         de correspondre à l'allocation cible.
 
         """
+        # Calcul de l'allocaiton strategique courante
         self.calcul_alloc_strateg_crt()
-        calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_action'],
-        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_oblig'],
-        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_immo'],
-        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_treso']}
+
+        # Montant total de l'actif à allouer après versement des prestations
+        montant_total_actif_a_allouer = self.allocation_courante['total_vm_portfi'] - prestations_en_t
+
+        # Calcul des opération à effecteuer pour atteindre l'allocation strategique cible après prestations et mise à jour des VM des actifs
+        calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_action'],
+        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_oblig'],
+        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_immo'],
+        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_treso']}
         
+        # Operations achats-ventes
         if calcul_operation_alm_vm > 0:
             self.acheter_des_actions()
         else if calcul_operation_alm_vm < 0:
             self.vendres_des_actions()
     
 
-    def calcul_reserve_capitation(self, t):
+    def calcul_reserve_capitation(self, plus_ou_moins_value):
         """ 
             Fonction qui permet de calculer la reserve capitalisation après la vente d'obligations.
 
@@ -165,7 +170,7 @@ class portefeuille_financier():
             La réserve de capitalisation fait partie de la marge de solvabilité.
             Cette réserve est alimentée par les plus-values constatées lors de la cession d'obligations et diminuée à hauteur des moins-values.
         """
-        pass
+        self.reserve_capitalisation = np.max(0, self.reserve_capitalisation + plus_ou_moins_value)
 
 
     def calcul_provision_risque_exigibilite(self, t):
@@ -175,8 +180,10 @@ class portefeuille_financier():
             copy-paste de "argus de l'assurance"
             La provision pour risque d’exigibilité (PRE) a pour fonction de permettre à l’entreprise d’assurance de faire 
             face à ses engagements dans le cas de moins-value de certains actifs (C. assur., art. R. 332-20). 
-            Une moins-value latente nette globale des placements concernés est constatée lorsque la valeur nette 
+            Une moins-value latente nette globale des placements concernés (action et immobilier) est constatée lorsque la valeur nette 
             comptable de ces placements est supérieure à leur valeur globale.
+
+            La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.
         """
         pass
 
