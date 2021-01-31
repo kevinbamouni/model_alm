@@ -169,7 +169,7 @@ class portefeuille_financier():
         # Operations achats-ventes
         if calcul_operation_alm_vm > 0:
             self.acheter_des_actions()
-        else if calcul_operation_alm_vm < 0:
+        elif calcul_operation_alm_vm < 0:
             self.vendres_des_actions()
     
 
@@ -208,7 +208,7 @@ class portefeuille_financier():
             portfeuille action automatiquement à jour.
         """
         # 2 - Calcul du nombre a acheter
-        self.portefeuile_action["nb_unit_achat"] = calcul_operation_alm_vm.action * self.portefeuile_action["nb_unit_ref"] / self.portefeuile_action["val_marche"])
+        self.portefeuile_action["nb_unit_achat"] = calcul_operation_alm_vm.action * self.portefeuile_action["nb_unit_ref"] / self.portefeuile_action["val_marche"]
         self.portefeuile_action["val_nc"] = self.portefeuile_action["val_nc"] + self.portefeuile_action["val_nc"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
         self.portefeuile_action["val_achat"] = self.portefeuile_action["val_achat"] + self.portefeuile_action["val_achat"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
         self.portefeuile_action["val_marche"] = self.portefeuile_action["val_marche"] + self.portefeuile_action["val_marche"] / self.portefeuile_action["nb_unit"] * self.portefeuile_action["nb_unit_achat"]
@@ -256,11 +256,11 @@ if __name__ == "__main__":
     immo = pd.read_csv(immo_path)
 
     # Chargement des données ESG 
-    oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_bond.csv"
+    # oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_bond.csv"
     action_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_stock.csv"
     immo_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_realestate.csv"
 
-    oblig_scena = pd.read_csv(oblig_scena_path)
+    # oblig_scena = pd.read_csv(oblig_scena_path)
     action_scena = pd.read_csv(action_scena_path)
     immo_scena = pd.read_csv(immo_scena_path)
 
@@ -271,3 +271,4 @@ if __name__ == "__main__":
     with open(alloc_strat_cible_portfi_path, 'r') as myfile:
         data=myfile.read()
     alloc_strat_cible_portfi = json.loads(data)
+# %%
