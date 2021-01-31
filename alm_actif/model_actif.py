@@ -116,6 +116,20 @@ class portefeuille_financier():
         self.portefeuile_action['mvl'] = self.portefeuile_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
         
 
+    def calcul_assiette_tresorerie(self, total_frais_passif, total_prestations_passif):
+        """
+            Calcul de l'assiette de treso =
+            (dividendes + coupons + remboursement de nominal + loyer immo + interets monetaires)
+            - (frais de l'actif + frais du passif + prestations rachats + prestations deces + revalorisation de prestations)
+
+        """
+        self.portefeuille_treso = self.portefeuille_treso + np.sum(self.portefeuile_action["val_marche"] * self.portefeuile_action["div"])
+        + np.sum(self.portefeuile_immo["val_marche"] * self.portefeuile_immo["loyer"])
+        + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
+        + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal'])
+        - total_frais_passif - total_prestations_passif
+
+
     def calcul_alloc_strateg_crt(self):
         """
             Calcul allocation courante du portefeuille financier
@@ -144,13 +158,13 @@ class portefeuille_financier():
         self.calcul_alloc_strateg_crt()
 
         # Montant total de l'actif à allouer après versement des prestations
-        montant_total_actif_a_allouer = self.allocation_courante['total_vm_portfi'] - prestations_en_t
+        # montant_total_actif_a_allouer = self.allocation_courante['total_vm_portfi'] - prestations_en_t
 
         # Calcul des opération à effecteuer pour atteindre l'allocation strategique cible après prestations et mise à jour des VM des actifs
-        calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_action'],
-        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_oblig'],
-        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_immo'],
-        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * montant_total_actif_a_allouer - self.allocation_courante['somme_vm_treso']}
+        calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_action'],
+        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_oblig'],
+        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_immo'],
+        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_treso']}
         
         # Operations achats-ventes
         if calcul_operation_alm_vm > 0:
@@ -216,6 +230,8 @@ class portefeuille_financier():
         ptf_action["val_marche"] = ptf_action["val_marche"] * (1 - ptf_action["pct_to_sold"])
         ptf_action["val_nc"] = ptf_action["val_nc"] *  (1 - ptf_action["pct_to_sold"])
         ptf_action["nb_unit"] = ptf_action["nb_unit"] * (1 - ptf_action["pct_to_sold"])
+
+    
 
 
 # Execution main :
