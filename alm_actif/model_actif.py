@@ -3,7 +3,7 @@
 import pandas as pd
 import numpy as np
 import json
-from fonctionsfinance import valeur_marche_oblig, duration_obligatioin
+from alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
 # %%
 
@@ -32,45 +32,14 @@ class portefeuille_financier():
         self.reserve_capitalisation = 0
 
 
-    def initialisation_action(df, t, df_rendement):
-        """
-            Fonction d'initialisaiton du portefeuille d'action en début de période de projection t
-        """
-        
-        variables = ['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'cessible',
-        'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'div', 'ind_invest']
-        
-        if t==0 :
-            df = df[:,variables] 
-            df['t'] = t
-            df = df.rename(columns={"val_marche": "val_marche_fin"})
-            df = df.rename(columns={"val_nc": "val_nc_fin"})
-            df = df.rename(columns={"val_achat": "val_achat_fin"})
-            df = df.rename(columns={"nb_unit": "nb_unit_fin"})
-
-        elif t == 1:
-            df = df.loc[(df['t'] == (t-1)) & (df['dur_det'] < t), variables]
-            df['t'] = t
-            df['dur_det'] = df['dur_det'] + 1
-            df['nb_unit_deb '] = df['nb_unit_fin']
-            df = recup_rendement_action(df, df_rendement, t)
-
-        elif t >= 2:
-            df = df.loc[(df['t'] == (t-1)) & (df['dur_det'] < t), variables]
-            df['t'] = t
-            df['dur_det'] = np.maximum(0, df['dur_det'] - 1)
-            df['nb_unit_deb '] = df['nb_unit_fin']
-            df = recup_rendement_action(df, df_rendement, t)
-    
-
-    def veillissement_treso(self, t):
+    def veillissement_treso(self, t, maturite):
         """
             Vieillisement du portefeuille de trésorerie par projection 
             sur un an avec calcul du rendement
         """
         self.portefeuille_treso['t'] = t
         self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
-        self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * self.portefeuille_treso['rdt'] 
+        self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
 
 
     def veillissement_immo(self, t):
@@ -145,7 +114,7 @@ class portefeuille_financier():
         'total_vm_portfi': sum(self.portefeuile_action['val_marche']) + sum(self.portefeuille_obli['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
 
 
-    def allocation_strategique(self, t, prestations_):
+    def allocation_strategique(self, t):
         """
         L'allocation stratégique vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc
 
@@ -231,8 +200,6 @@ class portefeuille_financier():
         ptf_action["val_nc"] = ptf_action["val_nc"] *  (1 - ptf_action["pct_to_sold"])
         ptf_action["nb_unit"] = ptf_action["nb_unit"] * (1 - ptf_action["pct_to_sold"])
 
-    
-
 
 # Execution main :
 if __name__ == "__main__":
@@ -243,6 +210,7 @@ if __name__ == "__main__":
     Date_t0="31/12/2019"
     # Nombre d'années de projections
     N = 40
+    t = 0
 
     # Chargement des input : Model point portefeuille financier
     oblig_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_oblig.csv"
@@ -256,13 +224,15 @@ if __name__ == "__main__":
     immo = pd.read_csv(immo_path)
 
     # Chargement des données ESG 
-    # oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_bond.csv"
+    oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/2009_ESWG_1000_scenarios.csv"
     action_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_stock.csv"
     immo_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_realestate.csv"
+    treso_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_shortrate.csv"
 
-    # oblig_scena = pd.read_csv(oblig_scena_path)
+    oblig_scena = pd.read_csv(oblig_scena_path)
     action_scena = pd.read_csv(action_scena_path)
     immo_scena = pd.read_csv(immo_scena_path)
+    treso_scena = pd.read_csv(treso_scena_path)
 
     # Chargement de l'allocaiton cible
     alloc_strat_cible_portfi_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/alloc_strat_cible_portfi.json"
@@ -271,4 +241,17 @@ if __name__ == "__main__":
     with open(alloc_strat_cible_portfi_path, 'r') as myfile:
         data=myfile.read()
     alloc_strat_cible_portfi = json.loads(data)
+
+    # Modelisation actif...
+    ptf_financier = portefeuille_financier(action, oblig, immo, treso, action_scena, oblig_scena, immo_scena, treso_scena, alloc_strat_cible_portfi)
+
+    ptf_financier.veillissement_treso(t, maturite= 0.5)
+    ptf_financier.calcul_assiette_tresorerie(0,0)
+    
+    ptf_financier.veillissement_treso(t, maturite= 0.5)
+    ptf_financier.veillissement_action(t)
+    ptf_financier.veillissement_immo(t)
+    ptf_financier.veillissement_obligation(t)
+
+    ptf_financier.allocation_strategique(t)
 # %%
