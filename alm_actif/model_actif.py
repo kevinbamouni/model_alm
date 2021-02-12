@@ -40,7 +40,8 @@ class portefeuille_financier():
             sur un an avec calcul du rendement
         """
         self.portefeuille_treso['t'] = t
-        self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
+        # self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
+        self.portefeuille_treso['rdt'] = 0.001
         self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
 
 
@@ -49,7 +50,7 @@ class portefeuille_financier():
             Vieillisement du portefeuille immobilier par projection sur un an avec calcul des loyers versés et du rendement
         """
         self.portefeuille_immo['t'] = t
-        self.portefeuille_immo['rdt'] = (self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) / (1 + self.portefeuille_immo['loyer'] * self.portefeuille_immo['ind_invest']) - 1
+        self.portefeuille_immo['rdt'] = ((self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) - 1) + (self.portefeuille_immo['loyer'] * self.portefeuille_immo['ind_invest'])
         self.portefeuille_immo['loyer'] = self.portefeuille_immo['val_marche'] * np.sqrt(1 + self.portefeuille_immo['rdt']) * self.portefeuille_immo['loyer']
         self.portefeuille_immo['val_marche'] = self.portefeuille_immo['val_marche'] * (1 + self.portefeuille_immo['rdt'])
         self.portefeuille_immo['dur_det'] = self.portefeuille_immo['dur_det'] + 1
@@ -79,7 +80,7 @@ class portefeuille_financier():
             Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
         """
         self.portefeuille_action['t'] = t
-        self.portefeuille_action['rdt'] = (self.scena_eco_action.iloc[1,t] / self.scena_eco_action.iloc[1,t-1]) / (1 + self.portefeuille_action['div'] * self.portefeuille_action['ind_invest']) - 1
+        self.portefeuille_action['rdt'] = ((self.scena_eco_action.iloc[1,t] / self.scena_eco_action.iloc[1,t-1]) - 1) + (self.portefeuille_action['div'] * self.portefeuille_action['ind_invest'])
         self.portefeuille_action['dividende'] = self.portefeuille_action['val_marche'] * np.sqrt(1 + self.portefeuille_action['rdt']) * self.portefeuille_action['div']
         self.portefeuille_action['val_marche'] = self.portefeuille_action['val_marche'] * (1 + self.portefeuille_action['rdt']) 
         self.portefeuille_action['dur_det'] = self.portefeuille_action['dur_det'] + 1
