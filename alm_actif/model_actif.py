@@ -289,6 +289,27 @@ class portefeuille_financier():
         self.portefeuille_oblig["val_nc"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
         self.portefeuille_oblig["nb_unit"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
 
+    def initialisation_ptf_action(self):
+        self.portefeuille_action = self.portefeuille_action[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
+       'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'div', 'ind_invest', 'nb_unit_ref']]
+
+        self.portefeuille_action = self.portefeuille_action.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
+        "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin"})
+
+    def initialisation_ptf_immo(self):
+        self.portefeuille_immo = self.portefeuille_immo[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
+       'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'loyer', 'ind_invest', 't', 'nb_unit_ref']]
+
+        self.portefeuille_immo = self.portefeuille_immo.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
+        "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin"})
+
+    def initialisation_ptf_oblig(self):
+        self.portefeuille_oblig = self.portefeuille_oblig[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
+       'nb_unit_fin', 'dur_det', 'nominal', 'tx_coupon', 'par', 'mat_res', 'type', 'rating', 'duration_fin', 'zspread', 'cc', 'sd', 'nb_unit_ref']]
+
+        self.portefeuille_oblig = self.portefeuille_oblig.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
+        "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin", "duration": "duration_fin"})
+
 
 # Execution main :
 if __name__ == "__main__":
