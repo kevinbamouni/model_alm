@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import json
-from  fonctionsfinance import valeur_marche_oblig, duration_obligatioin
+from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
 
 class portefeuille_financier():
@@ -289,26 +289,32 @@ class portefeuille_financier():
         self.portefeuille_oblig["val_nc"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
         self.portefeuille_oblig["nb_unit"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
 
-    def initialisation_ptf_action(self):
+    def initialisation_ptf_financier(self):
+        """
+            Initialise le portefeuille financier pour une projection de l'année N.
+            Le portefeuille en fin d'année de projection N-1 devient le portefeuille input pour la projection de l'année N
+        """
+        # initialisation action
         self.portefeuille_action = self.portefeuille_action[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
        'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'div', 'ind_invest', 'nb_unit_ref']]
 
         self.portefeuille_action = self.portefeuille_action.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin"})
 
-    def initialisation_ptf_immo(self):
+        # initialisation immo
         self.portefeuille_immo = self.portefeuille_immo[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
-       'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'loyer', 'ind_invest', 't', 'nb_unit_ref']]
+       'nb_unit_fin', 'dur_det', 'pdd', 'num_index', 'loyer', 'ind_invest', 'nb_unit_ref']]
 
         self.portefeuille_immo = self.portefeuille_immo.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin"})
 
-    def initialisation_ptf_oblig(self):
+        # initialisation oblig
         self.portefeuille_oblig = self.portefeuille_oblig[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
        'nb_unit_fin', 'dur_det', 'nominal', 'tx_coupon', 'par', 'mat_res', 'type', 'rating', 'duration_fin', 'zspread', 'cc', 'sd', 'nb_unit_ref']]
 
         self.portefeuille_oblig = self.portefeuille_oblig.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin", "duration": "duration_fin"})
+
 
 
 # Execution main :
@@ -357,13 +363,12 @@ if __name__ == "__main__":
 
     # Modelisation actif...
     ptf_financier = portefeuille_financier(action, oblig, immo, treso, action_scena, oblig_scena, immo_scena, treso_scena, alloc_strat_cible_portfi)
-
-    ptf_financier.veillissement_treso(t, maturite= 0.5)
-    ptf_financier.calcul_assiette_tresorerie(0,0)
-    
-    ptf_financier.veillissement_treso(t, maturite= 0.5)
-    ptf_financier.veillissement_action(t)
-    ptf_financier.veillissement_immo(t)
-    ptf_financier.veillissement_obligation(scenario, t)
-
-    ptf_financier.allocation_strategique(t)
+    for time_index in range(1,10,1):
+        print("time............................................................................",time_index)
+        ptf_financier.veillissement_treso(time_index, maturite= 0.5)
+        ptf_financier.calcul_assiette_tresorerie(0,0)
+        ptf_financier.veillissement_treso(time_index, maturite= 0.5)
+        ptf_financier.veillissement_action(time_index)
+        ptf_financier.veillissement_immo(time_index)
+        ptf_financier.veillissement_obligation(scenario, time_index)
+        ptf_financier.allocation_strategique(time_index)

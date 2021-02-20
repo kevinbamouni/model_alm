@@ -108,26 +108,6 @@ def calcul_des_primes(mp):
     return mp
 
 
-def calcul_des_frais(mp):
-    """
-        Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
-    """
-
-    # Calcul de frais du prime
-    mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prime'] = mp['pri_brut'] * mp['tx_frais_var_prime'] * (1 + mp['ind_inf_frais_var_prime']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais de prestation
-    mp['frais_fixe_prest'] = mp['nb_sortie'] * mp['tx_frais_fixe_prest'] * (1 + mp['ind_inf_frais_fixe_prest']) * (mp['coef_inf'] - 1)
-    mp['frais_var_prest'] = mp['prest'] * mp['tx_frais_var_prest'] * (1 + mp['ind_inf_frais_var_prest']) * (mp['coef_inf'] - 1)
-
-    # Calcul de frais sur encours
-    mp['frais_fixe_enc'] = mp['nb_contr_moy'] * mp['tx_frais_fixe_enc'] * (1 + mp['ind_inf_frais_fixe_enc']) * (mp['coef_inf'] - 1)
-    mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
-
-    return mp
-
-
 # Etape 2 : Calcul des taux min
 def calcul_des_taux_min(mp):
     """
@@ -139,7 +119,7 @@ def calcul_des_taux_min(mp):
     mp['tx_tech_se'] = mp['tx_tech_an'] / 2 # taux semestriel
 
     # Calcul du taux minimum
-    mp['tx_an'] = np.maximum(mp['tx_tech_an'], mp['tmg']) # taux annuel minimum
+    mp['tx_an'] = np.maximum(np.maximum(mp['tx_tech_an'], mp['tmg']), 0) # taux annuel minimum
     mp['tx_se'] = mp['tx_an'] / 2 # taux semestriel
     
     return mp
@@ -149,8 +129,8 @@ def calcul_des_taux_cibles(mp):
     """
         # TODO : Implémenter le calcul des taux cibles par ligne de MP
     """
-    mp['tx_cible_an'] = 0
-    mp['tx_cible_se'] = 0
+    mp['tx_cible_an'] = 0.05
+    mp['tx_cible_se'] = 0.05
 
     return mp
 
@@ -165,6 +145,7 @@ def calcul_des_taux_de_prel_sociaux(mp):
 
 def calcul_des_prestation(mp,t, rach, tm):
     """ 
+        Calcul les flux de prestations pour des contrats epargne en euros ou retraite euros en phases de restitution.
         Calcul des prestations en année t de projection : 
             - Prestation avec revalorisation pour rachat total :
             - Prestions avec revalorisation pour rachat total dynamique
@@ -245,6 +226,10 @@ def calcul_des_prestation(mp,t, rach, tm):
 
 
 def calcul_des_pm(mp):
+    """
+    calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
+    de fin de periode avant application de la revalorisation au titre de la participation aux benefices.
+    """
 
     # Calculs effectues plusieurs fois
     mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations 
@@ -309,7 +294,6 @@ def calcul_des_frais(mp):
 
 # Execution main :
 if __name__ == "__main__":
-    # execute only if run as a script
 
     # Variable à configurer :
     Date_t0="31/12/2019" # Jour j de projection
@@ -349,6 +333,6 @@ if __name__ == "__main__":
 
         mp_global_projection = mp_global_projection.append(mp_t)
         print("Fin de la projection sur l'année : ", time_index)
-        print("#################################################")
+        print("....................................................")
     
     mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)
