@@ -32,6 +32,7 @@ class portefeuille_financier():
 
         self.reserve_capitalisation = 0
         self.provision_risque_exigibilite = 0
+        self.ppb = 0
 
 
     def veillissement_treso(self, t, maturite):
@@ -205,10 +206,10 @@ class portefeuille_financier():
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_action["nb_unit_achat"] = montant_a_acheter * self.portefeuille_action["nb_unit_ref"] / self.portefeuille_action["val_marche"]
-        self.portefeuille_action["val_nc"] = self.portefeuille_action["val_nc"] + self.portefeuille_action["val_nc"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
-        self.portefeuille_action["val_achat"] = self.portefeuille_action["val_achat"] + self.portefeuille_action["val_achat"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
-        self.portefeuille_action["val_marche"] = self.portefeuille_action["val_marche"] + self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
-        self.portefeuille_action["nb_unit"] = self.portefeuille_action["nb_unit"] + self.portefeuille_action["nb_unit_achat"]
+        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] + self.portefeuille_action["val_nc"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
+        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + self.portefeuille_action["val_achat"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
+        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche"] + self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
+        self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] + self.portefeuille_action["nb_unit_achat"]
 
 
     def acheter_des_immo(self, montant_a_acheter):
@@ -218,10 +219,10 @@ class portefeuille_financier():
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["nb_unit_ref"] / self.portefeuille_immo["val_marche"]
-        self.portefeuille_immo["val_nc"] = self.portefeuille_immo["val_nc"] + self.portefeuille_immo["val_nc"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
-        self.portefeuille_immo["val_achat"] = self.portefeuille_immo["val_achat"] + self.portefeuille_immo["val_achat"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
-        self.portefeuille_immo["val_marche"] = self.portefeuille_immo["val_marche"] + self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
-        self.portefeuille_immo["nb_unit"] = self.portefeuille_immo["nb_unit"] + self.portefeuille_immo["nb_unit_achat"]
+        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + self.portefeuille_immo["val_nc"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
+        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] + self.portefeuille_immo["val_achat"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
+        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche"] + self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
+        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] + self.portefeuille_immo["nb_unit_achat"]
 
 
     def acheter_des_oblig(self, montant_a_acheter):
@@ -231,10 +232,10 @@ class portefeuille_financier():
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_oblig["nb_unit_achat"] = montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"] / self.portefeuille_oblig["val_marche"]
-        self.portefeuille_oblig["val_nc"] = self.portefeuille_oblig["val_nc"] + self.portefeuille_oblig["val_nc"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
-        self.portefeuille_oblig["val_achat"] = self.portefeuille_oblig["val_achat"] + self.portefeuille_oblig["val_achat"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
-        self.portefeuille_oblig["val_marche"] = self.portefeuille_oblig["val_marche"] + self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
-        self.portefeuille_oblig["nb_unit"] = self.portefeuille_oblig["nb_unit"] + self.portefeuille_oblig["nb_unit_achat"]
+        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + self.portefeuille_oblig["val_nc"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
+        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + self.portefeuille_oblig["val_achat"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
+        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche"] + self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
+        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] + self.portefeuille_oblig["nb_unit_achat"]
 
 
     def vendres_des_actions(self, montant_a_vendre):
@@ -249,10 +250,10 @@ class portefeuille_financier():
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_action
 
         # Actualisation des données de portefeuille
-        self.portefeuille_action["val_achat"] = self.portefeuille_action["val_achat"] * (1 - self.portefeuille_action["pct_to_sold"])
-        self.portefeuille_action["val_marche"] = self.portefeuille_action["val_marche"] * (1 - self.portefeuille_action["pct_to_sold"])
-        self.portefeuille_action["val_nc"] = self.portefeuille_action["val_nc"] *  (1 - self.portefeuille_action["pct_to_sold"])
-        self.portefeuille_action["nb_unit"] = self.portefeuille_action["nb_unit"] * (1 - self.portefeuille_action["pct_to_sold"])
+        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] * (1 - self.portefeuille_action["pct_to_sold"])
+        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche"] * (1 - self.portefeuille_action["pct_to_sold"])
+        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] *  (1 - self.portefeuille_action["pct_to_sold"])
+        self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] * (1 - self.portefeuille_action["pct_to_sold"])
 
 
     def vendres_des_immo(self, montant_a_vendre):
@@ -267,10 +268,10 @@ class portefeuille_financier():
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
 
         # Actualisation des données de portefeuille
-        self.portefeuille_immo["val_achat"] = self.portefeuille_immo["val_achat"] * (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["val_marche"] = self.portefeuille_immo["val_marche"] * (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["val_nc"] = self.portefeuille_immo["val_nc"] *  (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["nb_unit"] = self.portefeuille_immo["nb_unit"] * (1 - self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] * (1 - self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche"] * (1 - self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] *  (1 - self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] * (1 - self.portefeuille_immo["pct_to_sold"])
 
     def vendres_des_oblig(self, montant_a_vendre):
         """
@@ -284,10 +285,28 @@ class portefeuille_financier():
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
 
         # Actualisation des données de portefeuille
-        self.portefeuille_oblig["val_achat"] = self.portefeuille_oblig["val_achat"] * (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["val_marche"] = self.portefeuille_oblig["val_marche"] * (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["val_nc"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["nb_unit"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] * (1 - self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche"] * (1 - self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
+
+    def calcul_resultat_financier(self, frais_val_marche, frais_produits, charges_reserve_capi):
+        """
+        Fonction de calcul du resultat financier
+        """
+        self.calcul_alloc_strateg_crt()
+        np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
+        + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"])
+        + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
+        + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal']) 
+        + self.plus_moins_value_realised_oblig 
+        + self.plus_moins_value_realised_action 
+        + self.plus_moins_value_realised_immo
+        + (self.portefeuille_oblig["val_nc_fin"] - self.portefeuille_oblig["val_nc"])
+        - frais_val_marche * self.allocation_courante['total_vm_portfi']
+        - charges_reserve_capi * self.reserve_capitalisation
+        - frais_produits * 0
+        pass
 
     def initialisation_ptf_financier(self):
         """
@@ -309,6 +328,7 @@ class portefeuille_financier():
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin"})
 
         # initialisation oblig
+        self.portefeuille_oblig = self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] != 0,:] 
         self.portefeuille_oblig = self.portefeuille_oblig[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',
        'nb_unit_fin', 'dur_det', 'nominal', 'tx_coupon', 'par', 'mat_res', 'type', 'rating', 'duration_fin', 'zspread', 'cc', 'sd', 'nb_unit_ref']]
 
@@ -350,7 +370,6 @@ if __name__ == "__main__":
     action_scena = pd.read_csv(action_scena_path, sep=",")
     immo_scena = pd.read_csv(immo_scena_path, sep=",")
     treso_scena = pd.read_csv(treso_scena_path, sep=",")
-
     oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'], value_vars=['0.25', '0.5', '1', '2','3', '5', '7', '10', '20','30'], var_name='maturities', value_name='rates')
 
     # Chargement de l'allocaiton cible

@@ -1,6 +1,7 @@
 from alm_passif.model_passif import *
 import alm_actif.model_actif as actif
 import pandas as pd
+import numpy as np
 from tqdm import tqdm
 import json
 
@@ -90,17 +91,16 @@ if __name__ == "__main__":
         # 6 : PM
         mp_t = calcul_des_pm(mp_t)
 
-        mp_global_projection = mp_global_projection.append(mp_t)
-
-    
-    for time_index in tqdm(range(1,10,1)):
         ptf_financier.veillissement_treso(time_index, maturite= 0.5)
-        ptf_financier.calcul_assiette_tresorerie(0,0)
+        ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
         ptf_financier.veillissement_treso(time_index, maturite= 0.5)
         ptf_financier.veillissement_action(time_index)
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
         ptf_financier.allocation_strategique(time_index)
+
+        mp_global_projection = mp_global_projection.append(mp_t)
+
     
     mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)
 

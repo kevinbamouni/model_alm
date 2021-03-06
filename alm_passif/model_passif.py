@@ -3,6 +3,8 @@
 import pandas as pd
 import uuid
 import numpy as np
+from tqdm import tqdm
+
 
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
 
@@ -228,7 +230,8 @@ def calcul_des_prestation(mp,t, rach, tm):
 def calcul_des_pm(mp):
     """
     calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
-    de fin de periode avant application de la revalorisation au titre de la participation aux benefices.
+    de fin de periode avant application de la revalorisation au titre de la participation aux benefices
+    et après versement des prestations.
     """
 
     # Calculs effectues plusieurs fois
@@ -276,6 +279,7 @@ def calcul_des_pm(mp):
 def calcul_des_frais(mp):
     """
         Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
+        Calcul des frais sur passif : prestations, primes, encours.
     """
     # Calcul de frais du prime
     mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
@@ -316,8 +320,7 @@ if __name__ == "__main__":
     # initialisation à t = 0
     mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
     #print(mp.columns)
-    for time_index in range(1,41,1):
-        print("Debut de la projection sur l'année : ", time_index)
+    for time_index in tqdm(range(1,41,1)):
         # initialisation à t = 1
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
         # 0 : Primes
@@ -330,9 +333,10 @@ if __name__ == "__main__":
         # 5 : Taux cible des rendements
         # 6 : PM
         mp_t = calcul_des_pm(mp_t)
+        # Calcul des frais 
+        mp_t = calcul_des_frais(mp_t)
 
         mp_global_projection = mp_global_projection.append(mp_t)
-        print("Fin de la projection sur l'année : ", time_index)
-        print("....................................................")
+
     
     mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)
