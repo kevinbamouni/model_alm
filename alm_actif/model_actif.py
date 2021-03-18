@@ -336,6 +336,13 @@ class portefeuille_financier():
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin", "duration": "duration_fin"})
 
 
+    def historisation(self, t):
+        if t==0:
+            action = self.portefeuille_action
+            oblig = self.portefeuille_oblig
+            immo = self.portefeuille_immo
+            treso = self.portefeuille_treso
+
 
 # Execution main :
 if __name__ == "__main__":

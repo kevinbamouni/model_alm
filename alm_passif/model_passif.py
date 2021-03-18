@@ -227,6 +227,7 @@ def calcul_des_prestation(mp,t, rach, tm):
     return mp
 
 
+
 def calcul_des_pm(mp):
     """
     calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
@@ -294,6 +295,7 @@ def calcul_des_frais(mp):
     mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
 
     return mp
+
 
 
 # Execution main :
