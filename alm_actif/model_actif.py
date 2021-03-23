@@ -241,6 +241,7 @@ class portefeuille_financier():
     def vendres_des_actions(self, montant_a_vendre):
         """
             Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
+            TODO : gérer le cas où toute une ligne est déjà vendue
         """
         self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche"] / np.sum(self.portefeuille_action["val_marche"]) 
         self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * (-1 * montant_a_vendre)) / (self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"])
@@ -259,6 +260,7 @@ class portefeuille_financier():
     def vendres_des_immo(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
+            TODO : gérer le cas où toute une ligne est déjà vendue
         """
         self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche"] / np.sum(self.portefeuille_immo["val_marche"]) 
         self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"])
@@ -276,6 +278,7 @@ class portefeuille_financier():
     def vendres_des_oblig(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
+            TODO : gérer le cas où toute une ligne est déjà vendue
         """
         self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche"] / np.sum(self.portefeuille_oblig["val_marche"]) 
         self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"])
@@ -334,14 +337,6 @@ class portefeuille_financier():
 
         self.portefeuille_oblig = self.portefeuille_oblig.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin", "duration": "duration_fin"})
-
-
-    def historisation(self, t):
-        if t==0:
-            action = self.portefeuille_action
-            oblig = self.portefeuille_oblig
-            immo = self.portefeuille_immo
-            treso = self.portefeuille_treso
 
 
 # Execution main :

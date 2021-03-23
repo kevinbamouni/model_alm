@@ -129,6 +129,8 @@ def calcul_des_taux_min(mp):
 
 def calcul_des_taux_cibles(mp):
     """
+        Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l'assreur souhaite revaloriser sa PM afin de minimiser 
+        les effets de rachat dynamiques.
         # TODO : Implémenter le calcul des taux cibles par ligne de MP
     """
     mp['tx_cible_an'] = 0.05
@@ -236,10 +238,18 @@ def calcul_des_pm(mp):
     """
 
     # Calculs effectues plusieurs fois
-    mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations 
+    mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations
+
+    # EValuation du besoin de taux cible
+    # Evalue le montant necessaire pour revaloriser les pm restant après versement de prestations ainsi que primes reçues au taux cible
+    mp = calcul_des_taux_cibles(mp)
+    mp['rev_stock_brut_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
 
     # Calcul de la revalorisation brute
-    mp['rev_stock_brut'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
+    mp['rev_stock_brut_tmg'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
+
+    # Revalorisation au maximum entre le TMG et le taux cible
+    mp['rev_stock_brut'] = np.maximum(mp['rev_stock_brut_tx_cible'], mp['rev_stock_brut_tmg'])
 
     # Chargements : sur encours
     mp['enc_charg_stock'] = mp['diff_pm_prest'] * (1 + mp['tx_an']) * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * mp['chgt_enc'] / 2
@@ -270,11 +280,9 @@ def calcul_des_pm(mp):
     mp['it_tech_stock']   = mp['diff_pm_prest'] * mp['tx_tech_an'] + mp['pri_net'] * mp['tx_tech_se']
     mp['it_tech'] = mp['it_tech_stock'] + mp['it_tech_prest']
 
-    # EValuation du besoin de taux cible
-    mp = calcul_des_taux_cibles(mp)
-    mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
-
+    
     return mp
+
 
 
 def calcul_des_frais(mp):
@@ -295,6 +303,35 @@ def calcul_des_frais(mp):
     mp['frais_var_enc'] = mp['pm_moy'] * mp['tx_frais_var_enc'] * (1 + mp['ind_inf_frais_var_enc']) * (mp['coef_inf'] - 1)
 
     return mp
+
+
+def calcul_du_resultat_technique(mp):
+    """ 
+        Calcul du resultat technique.
+        :Param mp: Portefeuille enrichie
+    """
+    # flux debut : rach_mass est le choc de rachat massif non encore implémenter, je vais le gérer plus tard j'ai la flemme là maintenant.
+    # TODO modéliser le choc de rachat : le rachat massif.
+    mp['rach_mass'] = 0
+    mp['rach_charg_mass'] = 0
+    flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
+    # flux_milieu : primes - prestation - (charges sur prestations + charges sur primes) TODO intégrer les flux hors modèle (non modéliser)
+    flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest'] - mp['rach_mass'] - (mp['rach_charg'] - mp['rach_charg_mass']))  - (mp["frais_var_prime"] + mp["frais_fixe_prime"] + mp["frais_var_prest"] + mp["frais_fixe_prest"]) 
+    flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
+
+    resultat_technique = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
+
+
+
+def projection_autres_passifs(an, autre_passif, coef_inf):
+    """ 
+    Méthode permettant de calculer les PM et les flux sur une annee pour des passif non modelises :
+    :Param an: année de projection
+    :Param autre_passif: dataframe représentant le passif non modélisé
+    :Param coef_inf: coefiscient d'inflation pour les frais
+    """
+    autre_passif = autre_passif.loc[autre_passif['annee'] == an,:]
+    autre_passif = autre_passif['pm_moy'] * coef_inf
 
 
 
