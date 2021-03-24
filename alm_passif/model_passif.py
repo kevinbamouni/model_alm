@@ -319,8 +319,8 @@ def calcul_du_resultat_technique(mp):
     flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest'] - mp['rach_mass'] - (mp['rach_charg'] - mp['rach_charg_mass']))  - (mp["frais_var_prime"] + mp["frais_fixe_prime"] + mp["frais_var_prest"] + mp["frais_fixe_prest"]) 
     flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
 
-    resultat_technique = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
-
+    mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
+    return mp
 
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
@@ -332,7 +332,6 @@ def projection_autres_passifs(an, autre_passif, coef_inf):
     """
     autre_passif = autre_passif.loc[autre_passif['annee'] == an,:]
     autre_passif = autre_passif['pm_moy'] * coef_inf
-
 
 
 # Execution main :
@@ -351,7 +350,6 @@ if __name__ == "__main__":
     tm = pd.read_csv(tm_path) #table de mortalite
     rach = pd.read_csv(rach_path) # loi de rachat
     ref_frais = pd.read_csv(ref_frais_path) # referentiel de frais par produit
-
 
     # initialisation à t = 0
     # mp = initialisation_des_mp(mp, variables_de_calculs, ref_frais, 0)
@@ -374,8 +372,8 @@ if __name__ == "__main__":
         mp_t = calcul_des_pm(mp_t)
         # Calcul des frais 
         mp_t = calcul_des_frais(mp_t)
+        mp_t = calcul_du_resultat_technique(mp_t)
 
         mp_global_projection = mp_global_projection.append(mp_t)
 
-    
     mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)

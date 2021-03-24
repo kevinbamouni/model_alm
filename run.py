@@ -90,6 +90,9 @@ if __name__ == "__main__":
         # 5 : Taux cible des rendements
         # 6 : PM
         mp_t = calcul_des_pm(mp_t)
+        # Calcul des frais 
+        mp_t = calcul_des_frais(mp_t)
+        mp_t = calcul_du_resultat_technique(mp_t)
 
         ptf_financier.veillissement_treso(time_index, maturite= 0.5)
         ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
