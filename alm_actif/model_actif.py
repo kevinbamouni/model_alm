@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import json
-from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioin
+from  fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
 
 class portefeuille_financier():
@@ -241,7 +241,7 @@ class portefeuille_financier():
     def vendres_des_actions(self, montant_a_vendre):
         """
             Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
-            TODO : gérer le cas où toute une ligne est déjà vendue
+            TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
         """
         self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche"] / np.sum(self.portefeuille_action["val_marche"]) 
         self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * (-1 * montant_a_vendre)) / (self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"])
@@ -260,7 +260,7 @@ class portefeuille_financier():
     def vendres_des_immo(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
-            TODO : gérer le cas où toute une ligne est déjà vendue
+            TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
         """
         self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche"] / np.sum(self.portefeuille_immo["val_marche"]) 
         self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"])
@@ -278,7 +278,7 @@ class portefeuille_financier():
     def vendres_des_oblig(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
-            TODO : gérer le cas où toute une ligne est déjà vendue
+            TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
         """
         self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche"] / np.sum(self.portefeuille_oblig["val_marche"]) 
         self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"])
@@ -298,7 +298,7 @@ class portefeuille_financier():
         Fonction de calcul du resultat financier
         """
         self.calcul_alloc_strateg_crt()
-        np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
+        resultat_fi = np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
         + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"])
         + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal']) 
@@ -309,7 +309,8 @@ class portefeuille_financier():
         - frais_val_marche * self.allocation_courante['total_vm_portfi']
         - charges_reserve_capi * self.reserve_capitalisation
         - frais_produits * 0
-        pass
+
+        return resultat_fi
 
     def initialisation_ptf_financier(self):
         """
@@ -393,3 +394,5 @@ if __name__ == "__main__":
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
         ptf_financier.allocation_strategique(time_index)
+        resultat_financier = ptf_financier.calcul_resultat_financier(0,0,0)
+        print(resultat_financier)

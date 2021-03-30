@@ -93,6 +93,7 @@ if __name__ == "__main__":
         # Calcul des frais 
         mp_t = calcul_des_frais(mp_t)
         mp_t = calcul_du_resultat_technique(mp_t)
+        resultat_technique = np.sum(mp_t['resultat_technique'])
 
         ptf_financier.veillissement_treso(time_index, maturite= 0.5)
         ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
@@ -101,7 +102,10 @@ if __name__ == "__main__":
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
         ptf_financier.allocation_strategique(time_index)
+        resultat_financier = ptf_financier.calcul_resultat_financier(frais_produits=0,frais_val_marche= 0,charges_reserve_capi=0)
 
+        resultat_total = resultat_financier + resultat_technique
+        
         mp_global_projection = mp_global_projection.append(mp_t)
 
     

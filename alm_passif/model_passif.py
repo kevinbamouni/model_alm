@@ -243,13 +243,13 @@ def calcul_des_pm(mp):
     # EValuation du besoin de taux cible
     # Evalue le montant necessaire pour revaloriser les pm restant après versement de prestations ainsi que primes reçues au taux cible
     mp = calcul_des_taux_cibles(mp)
-    mp['rev_stock_brut_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
+    mp['rev_stock_brut_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net'])) 
 
     # Calcul de la revalorisation brute
     mp['rev_stock_brut_tmg'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
 
     # Revalorisation au maximum entre le TMG et le taux cible
-    mp['rev_stock_brut'] = np.maximum(mp['rev_stock_brut_tx_cible'], mp['rev_stock_brut_tmg'])
+    mp['rev_stock_brut'] = mp['rev_stock_brut_tmg'] #np.maximum(mp['rev_stock_brut_tx_cible'], mp['rev_stock_brut_tmg'])
 
     # Chargements : sur encours
     mp['enc_charg_stock'] = mp['diff_pm_prest'] * (1 + mp['tx_an']) * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * mp['chgt_enc'] / 2
@@ -283,6 +283,27 @@ def calcul_des_pm(mp):
     
     return mp
 
+def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs):
+    # calcul de la PPE
+    if resultat_total>np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg']):
+        # Valorisaiton au TMG des prestations et des stock de pm et de primes versées. rev_stock_brut_tmg inclus la revalo des nouvelles primes
+        ppe = ppe.append(resultat_total-(np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg'])))
+    else:
+        # vendre des actifs à l'exception des obligations pour respecter les engagements de TMG
+        if resultat_total - (np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg']))<pvl_actifs:
+            # realiser les pvl a hauteur de pvl_actifs
+            pass
+        else:
+            # realiser les pvl et combler le besoin avec les fonds propres
+            pass
+    
+    if ppe[-1]>np.sum(mp['rev_stock_brut_tx_cible']):
+        mp['pm_fin'] = mp['pm_fin'] + mp['rev_stock_brut_tx_cible']  # attribution de la PB au stock de PM et de Primes
+        if len(ppe)>=8:
+            mp['pm_fin'] = mp['pm_fin'] + ppe[-8] + mp['pm_fin']/np.sum(mp['pm_fin']) # Attribution de la ppe stockées 8 ans auparavant
+            ppe[-8] = 0      # une fois attribuée elle est remise à 0
+    
+    return mp, ppe
 
 
 def calcul_des_frais(mp):
