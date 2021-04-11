@@ -256,6 +256,49 @@ class portefeuille_financier():
         self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] *  (1 - self.portefeuille_action["pct_to_sold"])
         self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] * (1 - self.portefeuille_action["pct_to_sold"])
 
+    def realiser_les_pvl_action(self, montant_a_vendre):
+        """
+            Cette fonction permet de réaliser les PVL action pour honorer le TMG, dans le cas ou le résultat total n'est pas 
+            suffisant. Les flux de réalisation sont ajoutés à la tréso
+        """
+        actions_en_pvl = self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]]
+
+        actions_en_pvl["alloc"] = actions_en_pvl["val_marche"] / np.sum(actions_en_pvl["val_marche"]) 
+        actions_en_pvl["nb_to_sold"] = (actions_en_pvl["alloc"] * (-1 * montant_a_vendre)) / (actions_en_pvl["val_marche"] / actions_en_pvl["nb_unit"])
+        actions_en_pvl["pct_to_sold"] = actions_en_pvl["nb_to_sold"] / actions_en_pvl["nb_unit"]
+
+        self.portefeuille_treso["val_marche"] = np.sum((actions_en_pvl["val_achat"] - actions_en_pvl["val_nc"]) * actions_en_pvl["pct_to_sold"])
+
+        # Actualisation des données de portefeuille
+        actions_en_pvl["val_achat_fin"] = actions_en_pvl["val_achat"] * (1 - actions_en_pvl["pct_to_sold"])
+        actions_en_pvl["val_marche_fin"] = actions_en_pvl["val_marche"] * (1 - actions_en_pvl["pct_to_sold"])
+        actions_en_pvl["val_nc_fin"] = actions_en_pvl["val_nc"] *  (1 - actions_en_pvl["pct_to_sold"])
+        actions_en_pvl["nb_unit_fin"] = actions_en_pvl["nb_unit"] * (1 - actions_en_pvl["pct_to_sold"])
+
+        self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]] = actions_en_pvl
+
+
+    def realiser_les_pvl_immo(self, montant_a_vendre):
+        """
+            Cette fonction permet de réaliser les PVL immo pour honorer le TMG, dans le cas ou le résultat total n'est pas 
+            suffisant. Les flux de réalisation sont ajoutés à la tréso
+        """
+        immo_en_pvl = self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]]
+
+        immo_en_pvl["alloc"] = immo_en_pvl["val_marche"] / np.sum(immo_en_pvl["val_marche"]) 
+        immo_en_pvl["nb_to_sold"] = (immo_en_pvl["alloc"] * -1 * montant_a_vendre) / (immo_en_pvl["val_marche"] / immo_en_pvl["nb_unit"])
+        immo_en_pvl["pct_to_sold"] = immo_en_pvl["nb_to_sold"] / immo_en_pvl["nb_unit"]
+
+        self.portefeuille_treso["val_marche"] = np.sum((immo_en_pvl["val_achat"] - immo_en_pvl["val_nc"]) * immo_en_pvl["pct_to_sold"])
+
+        # Actualisation des données de portefeuille
+        immo_en_pvl["val_achat_fin"] = immo_en_pvl["val_achat"] * (1 - immo_en_pvl["pct_to_sold"])
+        immo_en_pvl["val_marche_fin"] = immo_en_pvl["val_marche"] * (1 - immo_en_pvl["pct_to_sold"])
+        immo_en_pvl["val_nc_fin"] = immo_en_pvl["val_nc"] *  (1 - immo_en_pvl["pct_to_sold"])
+        immo_en_pvl["nb_unit_fin"] = immo_en_pvl["nb_unit"] * (1 - immo_en_pvl["pct_to_sold"])
+
+        self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]] = immo_en_pvl
+
 
     def vendres_des_immo(self, montant_a_vendre):
         """

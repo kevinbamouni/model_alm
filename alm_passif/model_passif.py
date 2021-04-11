@@ -283,27 +283,34 @@ def calcul_des_pm(mp):
     
     return mp
 
-def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs):
+def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs, portefeuille_financier):
+    """
+        Calcul du stock de PM après attribution de la participation au benefice et calcul de PPE.
+        Gestion de la PPE 8 ans
+    """
     # calcul de la PPE
-    if resultat_total>np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg']):
-        # Valorisaiton au TMG des prestations et des stock de pm et de primes versées. rev_stock_brut_tmg inclus la revalo des nouvelles primes
-        ppe = ppe.append(resultat_total-(np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg'])))
+    if resultat_total>np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']):
+        ppe = ppe.append(resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']))) # rev_stock_brut_tmg inclus la revalo des nouvelles primes
     else:
         # vendre des actifs à l'exception des obligations pour respecter les engagements de TMG
-        if resultat_total - (np.sum(mp['rev_prest'])+np.sum(mp['rev_stock_brut_tmg']))<pvl_actifs:
+        ppe = ppe.append(0)
+        if resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])) < pvl_actifs:
             # realiser les pvl a hauteur de pvl_actifs
-            pass
+            portefeuille_financier = portefeuille_financier.realiser_les_pvl_action((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
+            portefeuille_financier = portefeuille_financier.realiser_les_pvl_immo((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
         else:
             # realiser les pvl et combler le besoin avec les fonds propres
-            pass
+            portefeuille_financier = portefeuille_financier.realiser_les_pvl_action(pvl_actifs/2)
+            portefeuille_financier = portefeuille_financier.realiser_les_pvl_immo(pvl_actifs/2)
     
-    if ppe[-1]>np.sum(mp['rev_stock_brut_tx_cible']):
-        mp['pm_fin'] = mp['pm_fin'] + mp['rev_stock_brut_tx_cible']  # attribution de la PB au stock de PM et de Primes
-        if len(ppe)>=8:
+    # Attribution de la PB au stock de PM
+    if ppe[-1] > np.sum(mp['rev_stock_brut_tx_cible']) - np.sum(mp['rev_prest']):
+        mp['pm_fin'] = mp['pm_fin'] + (mp['rev_stock_brut_tx_cible'] - np.sum(mp['rev_prest'])) # attribution de la PB au stock de PM et de Primes
+        if len(ppe) >= 8:
             mp['pm_fin'] = mp['pm_fin'] + ppe[-8] + mp['pm_fin']/np.sum(mp['pm_fin']) # Attribution de la ppe stockées 8 ans auparavant
             ppe[-8] = 0      # une fois attribuée elle est remise à 0
     
-    return mp, ppe
+    return mp, ppe, portefeuille_financier
 
 
 def calcul_des_frais(mp):
