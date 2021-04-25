@@ -4,6 +4,7 @@ import pandas as pd
 import uuid
 import numpy as np
 from tqdm import tqdm
+import os
 
 
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
@@ -12,7 +13,12 @@ from tqdm import tqdm
 def recup_des_frais(mp, df_ref_frais):
     """
         Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
-        Ceci se fait par une jointure sur le num produit
+        Ceci se fait par une jointure sur le num produit.
+
+        :param df_mp: model points passif
+        :param df_ref_frais: référentiel des taux de frais (plusieurs type de frais) par produit
+
+        :returns: model points passif enrichie des taux frais
     """
     mp = pd.merge(mp, df_ref_frais, how='left', on=['num_prod'],
          indicator=False, validate='many_to_one')
@@ -22,8 +28,10 @@ def recup_des_frais(mp, df_ref_frais):
 def initialisation_des_mp(df_mp, df_ref_frais, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
-    Input : Dataframe du représentant le fichier de Model point en input
-    Output : Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
+        :param df_mp: Dataframe du représentant le fichier de Model point en input
+        :param df_ref_frais: référentiel des taux de frais (plusieurs type de frais) par produit
+
+        :returns: Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
     """
     mp_variable_list = ['num_mp', 'num_canton', 'num_prod', 'age', 'gen', 'num_tab_mort',
        'chgt_enc', 'ind_chgt_enc_pos', 'pm_fin', 'nb_contr_fin', 'anc', 'terme',
@@ -70,6 +78,11 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
 def get_proba_deces(mp, tm):
     """
         calcul des qx (décès) à partir de la table de mortalité
+
+        :param mp: model point passif
+        :param tm: table de survie
+
+        :returns: model point passif enrichie des probabilité de survie
     """
     mp = pd.merge(mp, tm, how='left', on=['age'],
          indicator=False, validate='many_to_one')
@@ -78,7 +91,12 @@ def get_proba_deces(mp, tm):
 
 def get_proba_rachat_total(mp, rach):
     """
-        calcul de la probabilite de rachat total via la table des hypothèse de rachat totaux
+        calcul de la probabilite de rachat total via la table des hypothèse de rachat totaux.
+
+        :param mp: model point passif
+        :param rach: table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
+
+        :returns: model point passif enrichie des probabilité de rachats totaux
     """
     mp = pd.merge(mp, rach, how='left', on=['anc','age'],
          indicator=False, validate='many_to_one')
@@ -89,6 +107,10 @@ def get_rachat_dyn_partiel_et_total(mp):
     """
         # TODO : Implémenter les Rachats dynamiques totaux et partiels (selon la methodologie transmise dans le ONC de l'ACPR de 2013.).
         Methode permettant de calculer la composante rachat dynamique selon la methodologie transmise dans le ONC de l'ACPR de 2013.
+
+        :param mp: model point passif
+
+        :returns: model point passif enrichie des rachats dynamiques totaux et partiels.
     """
     #TODO : loi de rachat dynamique : total et partiel.
     mp['qx_rach_tot_dyn'] = 0.0025
@@ -97,15 +119,28 @@ def get_rachat_dyn_partiel_et_total(mp):
 
 
 # Etape 1 de la projection : Calculer les primes et les chargements sur prime
-def calcul_des_primes(mp):
+def calcul_des_primes(mp, projection_des_primes=False):
+    """
+        Calcul des primes. Par defaut les primes ne sont pas modélisées (primes = 0).
+
+        :param mp: model point passif
+        :param projection_des_primes: valeur par défaut "False".  "True" si avec projection des primes.
+
+        :returns: model point enrichi des calculs des primes 
+    """
     # Nombre de versements
     # mp.loc[mp['prime'] > 0,"nb_vers"] = np.maximum(mp['nb_contr'], 0)
     mp['nb_vers'] = mp['nb_contr']
     
-    # Calcul les primes de l'annee
-    mp['pri_brut'] = mp['prime'] * mp['nb_vers'] # primes brutes
-    mp['pri_net'] = mp['pri_brut'] * (1 - mp['chgt_prime']) # primes nettes
-    mp['pri_chgt'] = mp['pri_brut'] * mp['chgt_prime'] # Chargements sur primes
+    if projection_des_primes==True:
+        # Calcul les primes de l'annee
+        mp['pri_brut'] = mp['prime'] * mp['nb_vers'] # primes brutes
+        mp['pri_net'] = mp['pri_brut'] * (1 - mp['chgt_prime']) # primes nettes
+        mp['pri_chgt'] = mp['pri_brut'] * mp['chgt_prime'] # Chargements sur primes
+    else:
+        mp['pri_brut'] = 0
+        mp['pri_net'] = 0
+        mp['pri_chgt'] = 0
     
     return mp
 
@@ -114,7 +149,11 @@ def calcul_des_primes(mp):
 def calcul_des_taux_min(mp):
     """
      Fonction de calcul des taux techniques et tmg min pour chaque ligne de MP.
-     # TODO : calcul des taux techniques et TMG min à revoir potentiellement
+     # TODO : calcul des taux techniques et TMG min à revoir potentiellement.
+
+     :param mp: model point passif
+     
+     :returns: model point passif enrichie des taux techniques ainsi que des taux minimum garantis annuels et semestriels
     """ 
     # calcul du taux technique    
     mp['tx_tech_an'] = np.maximum(mp['tx_tech'], 0)
@@ -132,6 +171,10 @@ def calcul_des_taux_cibles(mp):
         Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l'assreur souhaite revaloriser sa PM afin de minimiser 
         les effets de rachat dynamiques.
         # TODO : Implémenter le calcul des taux cibles par ligne de MP
+
+        :param mp: model point passif
+
+        :returns: model point passif enrichie des taux de revalorisation cibles
     """
     mp['tx_cible_an'] = 0.05
     mp['tx_cible_se'] = 0.05
@@ -158,6 +201,13 @@ def calcul_des_prestation(mp,t, rach, tm):
             - Prestations avec revalorisation pour contrat arrivé à échéance
             - Chargements sur les différentes prestations
             _ Prestations avec revalorisation net global
+        
+        :param mp: model point passif enrichie des colonnes de la fonction *calcul_des_primes*
+        :param t: année de projection
+        :param rach: table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
+        :param tm: table de survie
+
+        :returns: 
     """
     # Indicatrice de sortie en echeance    
     mp.loc[mp['terme'] > t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
@@ -235,6 +285,10 @@ def calcul_des_pm(mp):
     calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
     de fin de periode avant application de la revalorisation au titre de la participation aux benefices
     et après versement des prestations.
+
+    :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_prestations*
+
+    :returns: model point passif enrichi  des calculs de provision mathématiques (pm)
     """
 
     # Calculs effectues plusieurs fois
@@ -285,23 +339,32 @@ def calcul_des_pm(mp):
 
 def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs, portefeuille_financier):
     """
-        Calcul du stock de PM après attribution de la participation au benefice et calcul de PPE.
-        Gestion de la PPE 8 ans
+        Calcul du stock de PM après attribution de la participation au benefice et calcul de PPE et gestion de la PPE 8 ans
+
+        :param resultat_total: somme du resultat technique et financier
+        :param mp: model point enrichies
+        :param ppe: provision pour participation aux excédents
+        :param pvl_actifs: plus values latentes des types d'actifs non amortissables
+        :param portefeuille_financier: portefeuille financier du type objet
+
+        :returns: mp, model point passif.
+        :returns: ppe, provision pour participation aux excédents.
+        :returns: portefeuille_financier
     """
     # calcul de la PPE
     if resultat_total>np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']):
-        ppe = ppe.append(resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']))) # rev_stock_brut_tmg inclus la revalo des nouvelles primes
+        ppe = np.append(ppe, resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))
     else:
         # vendre des actifs à l'exception des obligations pour respecter les engagements de TMG
-        ppe = ppe.append(0)
+        ppe = np.append(ppe, 0)
         if resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])) < pvl_actifs:
             # realiser les pvl a hauteur de pvl_actifs
-            portefeuille_financier = portefeuille_financier.realiser_les_pvl_action((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
-            portefeuille_financier = portefeuille_financier.realiser_les_pvl_immo((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
+            portefeuille_financier.realiser_les_pvl_action((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
+            portefeuille_financier.realiser_les_pvl_immo((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
         else:
             # realiser les pvl et combler le besoin avec les fonds propres
-            portefeuille_financier = portefeuille_financier.realiser_les_pvl_action(pvl_actifs/2)
-            portefeuille_financier = portefeuille_financier.realiser_les_pvl_immo(pvl_actifs/2)
+            portefeuille_financier.realiser_les_pvl_action(pvl_actifs/2)
+            portefeuille_financier.realiser_les_pvl_immo(pvl_actifs/2)
     
     # Attribution de la PB au stock de PM
     if ppe[-1] > np.sum(mp['rev_stock_brut_tx_cible']) - np.sum(mp['rev_prest']):
@@ -317,6 +380,10 @@ def calcul_des_frais(mp):
     """
         Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
         Calcul des frais sur passif : prestations, primes, encours.
+
+        :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_pm*
+
+        :returns: model point passif enrichi des calculs des frais
     """
     # Calcul de frais du prime
     mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
@@ -336,7 +403,10 @@ def calcul_des_frais(mp):
 def calcul_du_resultat_technique(mp):
     """ 
         Calcul du resultat technique.
-        :Param mp: Portefeuille enrichie
+
+        :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_frais*
+
+        :returns: model point passif enrichi du resultat technique
     """
     # flux debut : rach_mass est le choc de rachat massif non encore implémenter, je vais le gérer plus tard j'ai la flemme là maintenant.
     # TODO modéliser le choc de rachat : le rachat massif.
@@ -348,12 +418,14 @@ def calcul_du_resultat_technique(mp):
     flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
 
     mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
+    
     return mp
 
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
     """ 
     Méthode permettant de calculer les PM et les flux sur une annee pour des passif non modelises :
+
     :Param an: année de projection
     :Param autre_passif: dataframe représentant le passif non modélisé
     :Param coef_inf: coefiscient d'inflation pour les frais
@@ -368,10 +440,11 @@ if __name__ == "__main__":
     # Variable à configurer :
     Date_t0="31/12/2019" # Jour j de projection
     N = 40 # Nombre d'années de projections
-    mp_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/mp.csv"
-    tm_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/th_dc_00_02.csv"
-    rach_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/table_rachat.csv"
-    ref_frais_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ref_frais_produits.csv"
+    abs_path = os.path.abspath(os.curdir)
+    mp_path =  abs_path + "/tests/input_test_data/mp.csv"
+    tm_path =  abs_path + "/tests/input_test_data/th_dc_00_02.csv"
+    rach_path =  abs_path + "/tests/input_test_data/table_rachat.csv"
+    ref_frais_path =  abs_path + "/tests/input_test_data/ref_frais_produits.csv"
 
     # Chargement des input.
     mp = pd.read_csv(mp_path) # model point
@@ -404,4 +477,4 @@ if __name__ == "__main__":
 
         mp_global_projection = mp_global_projection.append(mp_t)
 
-    mp_global_projection.to_csv("/Users/kevinbamouni/OneDrive/Modele_ALM/output_test_data/mp_global_projection.csv", index = False)
+    mp_global_projection.to_csv( abs_path + "/tests/output_test_data/mp_global_projection.csv", index = False)

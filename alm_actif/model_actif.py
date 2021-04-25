@@ -2,7 +2,8 @@
 import pandas as pd
 import numpy as np
 import json
-from  fonctionsfinance import valeur_marche_oblig, duration_obligatioin
+import os
+from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioin
 
 
 class portefeuille_financier():
@@ -394,12 +395,13 @@ if __name__ == "__main__":
     N = 40
     t = 0
     scenario = 1
+    abs_path = os.path.abspath(os.curdir)
 
     # Chargement des input : Model point portefeuille financier
-    oblig_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_oblig.csv"
-    action_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_action.csv"
-    treso_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_treso.csv"
-    immo_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/ptf_immo.csv"
+    oblig_path =  abs_path + "/tests/input_test_data/ptf_oblig.csv"
+    action_path =  abs_path + "/tests/input_test_data/ptf_action.csv"
+    treso_path =  abs_path + "/tests/input_test_data/ptf_treso.csv"
+    immo_path =  abs_path + "/tests/input_test_data/ptf_immo.csv"
 
     oblig = pd.read_csv(oblig_path)
     action = pd.read_csv(action_path)
@@ -407,10 +409,10 @@ if __name__ == "__main__":
     immo = pd.read_csv(immo_path)
 
     # Chargement des données ESG 
-    oblig_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/2009_ESWG_1000_scenarios.csv"
-    action_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_stock.csv"
-    immo_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_realestate.csv"
-    treso_scena_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/gse/gse_outputs/esg_shortrate.csv"
+    oblig_scena_path =  abs_path + "/gse/gse_outputs/2009_ESWG_1000_scenarios.csv"
+    action_scena_path =  abs_path + "/gse/gse_outputs/esg_stock.csv"
+    immo_scena_path =  abs_path + "/gse/gse_outputs/esg_realestate.csv"
+    treso_scena_path =  abs_path + "/gse/gse_outputs/esg_shortrate.csv"
 
     oblig_scena = pd.read_csv(oblig_scena_path, sep=";")
     action_scena = pd.read_csv(action_scena_path, sep=",")
@@ -419,7 +421,7 @@ if __name__ == "__main__":
     oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'], value_vars=['0.25', '0.5', '1', '2','3', '5', '7', '10', '20','30'], var_name='maturities', value_name='rates')
 
     # Chargement de l'allocaiton cible
-    alloc_strat_cible_portfi_path = "/Users/kevinbamouni/OneDrive/Modele_ALM/input_test_data/alloc_strat_cible_portfi.json"
+    alloc_strat_cible_portfi_path =  abs_path + "/tests/input_test_data/alloc_strat_cible_portfi.json"
 
     # read file
     with open(alloc_strat_cible_portfi_path, 'r') as myfile:

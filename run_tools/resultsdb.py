@@ -38,7 +38,7 @@ def database_iinit():
     sqliteconn = create_connection(os.path.abspath(os.curdir) + "/database/pythonsqlite.db")
     cursor = sqliteconn.cursor()
 
-    with open('/Users/kevinbamouni/OneDrive/Modele_ALM/run_tools/create_table_run.sql', 'r') as sqlite_file:
+    with open(os.path.abspath(os.curdir) +  '/run_tools/create_table_run.sql', 'r') as sqlite_file:
         sql_script = sqlite_file.read()
 
     cursor.executescript(sql_script)
