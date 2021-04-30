@@ -8,11 +8,26 @@ from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioi
 
 class portefeuille_financier():
     """"
-        Class de portefeuille financier pour modelisation l'actif, sa projection et ses interaction
+        Classe representation le portefeuille financier pour la modelisation de l'actif, sa projection et ses interactions.
     """
 
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
     portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
+    """
+        Constructeur de la classe *portefeuille_financier* de l'objet portefeuille financier.
+
+        :param portefeuille_action: dataframe du portefeuille action
+        :param portefeuille_oblig:  dataframe du portefeuille obligation
+        :param portefeuille_immo:  dataframe du portefeuille immobilier
+        :param portefeuille_treso:  dataframe du portefeuille tresorerie
+        :param scena_eco_action:  dataframe du scenarios economiques des actions
+        :param scena_eco_oblig: dataframe du scenarios economiques des obligations
+        :param scena_eco_immo: dataframe des scenarios economiques pour l'immobilier
+        :param scena_eco_treso: dataframe du scenarios economiques pour la tresorerie 
+        :param alloc_strat_cible_portfi: dictionnaire de l'allocation stratégique cible du portefeuille financier.
+
+        :returns: objet de la classer *portefeuille_financier*.
+    """
         self.portefeuille_action = portefeuille_action
         self.portefeuille_oblig = portefeuille_oblig
         self.portefeuille_immo = portefeuille_immo
@@ -50,6 +65,10 @@ class portefeuille_financier():
     def veillissement_immo(self, t):
         """
             Vieillisement du portefeuille immobilier par projection sur un an avec calcul des loyers versés et du rendement
+
+            :param t: année t de projection
+
+            :returns: None, vieilli d'une année le portefeuille immo de l'objet courant
         """
         self.portefeuille_immo['t'] = t
         self.portefeuille_immo['rdt'] = ((self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) - 1) + (self.portefeuille_immo['loyer'] * self.portefeuille_immo['ind_invest'])
@@ -63,6 +82,10 @@ class portefeuille_financier():
     def veillissement_obligation(self, scenario, t):
         """
             Vieillisement du portefeuille obligation par projection sur un an avec calcul des coupons versés et du rendement
+            :param t: année t de projection
+
+            :returns: None, vieilli d'une année le portefeuille obligation de l'objet courant
+        
         """
         courbe = self.scena_eco_oblig.loc[(self.scena_eco_oblig['scenario']==scenario) & (self.scena_eco_oblig['month']==t),['maturities','rates']]
         self.portefeuille_oblig['t'] = t
@@ -80,6 +103,9 @@ class portefeuille_financier():
     def veillissement_action(self, t):
         """
             Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
+            :param t: année t de projection
+
+            :returns: None, vieilli d'une année le portefeuille action de l'objet courant
         """
         self.portefeuille_action['t'] = t
         self.portefeuille_action['rdt'] = ((self.scena_eco_action.iloc[1,t] / self.scena_eco_action.iloc[1,t-1]) - 1) + (self.portefeuille_action['div'] * self.portefeuille_action['ind_invest'])
@@ -96,6 +122,11 @@ class portefeuille_financier():
             (dividendes + coupons + remboursement de nominal + loyer immo + interets monetaires)
             - (frais de l'actif + frais du passif + prestations rachats + prestations deces + revalorisation de prestations)
 
+            :param total_frais_passif: montant total des frais engendrés par l'activité du passif
+            :param total_prestations_passif: montant total des prestations 
+
+            :returns: None, ajout au portefeuille des différents flux de produits et charges du portefeuille financier 
+        
         """
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
         + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"])
@@ -107,6 +138,10 @@ class portefeuille_financier():
     def calcul_alloc_strateg_crt(self):
         """
             Calcul allocation courante du portefeuille financier
+
+            :param : None
+
+            :returns: None, calcul l'allocation stratégieu courante du portefeuille
         """
         self.allocation_courante  = {'somme_vm_action': sum(self.portefeuille_action['val_marche']),
         'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche']),
@@ -125,7 +160,11 @@ class portefeuille_financier():
 
         Cette fonction permet de faire l'allocation strategique du portefeuille suite à l'evolution des valeurs de marchés des actifs à l'an t en fonction
         de l'allocation strategique cible. Après évaluation des écarts par rapport à l'allocation cible des opérations d'achats-ventes sont effectuées afin
-        de correspondre à l'allocation cible.
+        de correspondre à l'allocation cible
+
+        :param t: année t de projection
+
+        :returns: None, Réalocation stratégique du portefeuille financier de l'objet en cours.
 
         """
         # Calcul de l'allocaiton strategique courante
@@ -181,6 +220,10 @@ class portefeuille_financier():
             L'objectif de la réserve de capitalisation est de lisser les résultats enregistrés sur les titres obligataires et de garantir aux assurés le rendement des contrats jusqu’à leur terme.
             La réserve de capitalisation fait partie de la marge de solvabilité.
             Cette réserve est alimentée par les plus-values constatées lors de la cession d'obligations et diminuée à hauteur des moins-values.
+        
+            :param plus_ou_moins_value: plus ou moins value latente des **obligations**
+
+            :returns: None, mise à jour de la réserve de capitalisation de l'objet en cours.
         """
         self.reserve_capitalisation = max(0, self.reserve_capitalisation + plus_ou_moins_value)
 
@@ -196,14 +239,21 @@ class portefeuille_financier():
             comptable de ces placements est supérieure à leur valeur globale.
 
             La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.
+        
+            :param t: année t de projection
+
+            :returns: None, mise à jour de  provision pour risque d'exigibilite de l'objet portefeuille financier en cours.
         """
         self.provision_risque_exigibilite = max(np.sum(self.portefeuille_action['pvl'] + self.portefeuille_immo['pvl'] + self.portefeuille_action['mvl'] + self.portefeuille_immo['mvl']), 0)
 
 
     def acheter_des_actions(self, montant_a_acheter):
         """
-            Fonction permettant d'acheter des actions et de mettre le
-            portfeuille action automatiquement à jour.
+            Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
+
+            :param montant_a_acheter: montant total des actions à acheter
+
+            :returns: None, modification du portefeuille action de l'objet courant
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_action["nb_unit_achat"] = montant_a_acheter * self.portefeuille_action["nb_unit_ref"] / self.portefeuille_action["val_marche"]
@@ -215,8 +265,12 @@ class portefeuille_financier():
 
     def acheter_des_immo(self, montant_a_acheter):
         """
-            Fonction permettant d'acheter des actions et de mettre le
-            portfeuille action automatiquement à jour.
+            Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
+
+            :param montant_a_acheter: montant total à acheter
+
+            :returns: None, modificaiton du portefeuille immobilier
+
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["nb_unit_ref"] / self.portefeuille_immo["val_marche"]
@@ -228,8 +282,11 @@ class portefeuille_financier():
 
     def acheter_des_oblig(self, montant_a_acheter):
         """
-            Fonction permettant d'acheter des actions et de mettre le
-            portfeuille action automatiquement à jour.
+            Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
+
+            :param montant_a_acheter: montant total à acheter
+
+            :returns: None, modificaiton du portefeuille obligation
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_oblig["nb_unit_achat"] = montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"] / self.portefeuille_oblig["val_marche"]
@@ -243,6 +300,10 @@ class portefeuille_financier():
         """
             Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
+
+            :param montant_a_vendre: montant total à vendre
+
+            :returns: None, modificaiton du portefeuille actions
         """
         self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche"] / np.sum(self.portefeuille_action["val_marche"]) 
         self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * (-1 * montant_a_vendre)) / (self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"])
@@ -305,6 +366,10 @@ class portefeuille_financier():
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
+
+            :param montant_a_vendre: montant total à vendre
+
+            :returns: None, modificaiton du portefeuille immobilier
         """
         self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche"] / np.sum(self.portefeuille_immo["val_marche"]) 
         self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"])
@@ -323,6 +388,10 @@ class portefeuille_financier():
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
+
+            :param montant_a_vendre: montant total à vendre
+
+            :returns: None, modificaiton du portefeuille obligation
         """
         self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche"] / np.sum(self.portefeuille_oblig["val_marche"]) 
         self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"])
@@ -340,6 +409,12 @@ class portefeuille_financier():
     def calcul_resultat_financier(self, frais_val_marche, frais_produits, charges_reserve_capi):
         """
         Fonction de calcul du resultat financier
+
+        :param frais_val_marche: montant des frais de marché
+        :param frais_produits: montant des frais sur les produits financiers
+        :param charges_reserve_capi: montant des charges sur la réserve de capitalisation
+
+        :returns: resultat financier.
         """
         self.calcul_alloc_strateg_crt()
         resultat_fi = np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
@@ -360,6 +435,10 @@ class portefeuille_financier():
         """
             Initialise le portefeuille financier pour une projection de l'année N.
             Le portefeuille en fin d'année de projection N-1 devient le portefeuille input pour la projection de l'année N
+
+            :param : None
+
+            :returns: None
         """
         # initialisation action
         self.portefeuille_action = self.portefeuille_action[['num_mp', 'val_marche_fin', 'val_nc_fin', 'val_achat_fin', 'presence', 'cessible',

@@ -91,12 +91,12 @@ def get_proba_deces(mp, tm):
 
 def get_proba_rachat_total(mp, rach):
     """
-        calcul de la probabilite de rachat total via la table des hypothèse de rachat totaux.
+        Import de la probabilite de rachat structurel total à partir de la table des hypothèses de rachats structurels totaux.
 
         :param mp: model point passif
         :param rach: table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
 
-        :returns: model point passif enrichie des probabilité de rachats totaux
+        :returns: model point passif enrichie des probabilité de rachats structurels totaux
     """
     mp = pd.merge(mp, rach, how='left', on=['anc','age'],
          indicator=False, validate='many_to_one')
@@ -105,18 +105,66 @@ def get_proba_rachat_total(mp, rach):
 
 def get_rachat_dyn_partiel_et_total(mp):
     """
-        # TODO : Implémenter les Rachats dynamiques totaux et partiels (selon la methodologie transmise dans le ONC de l'ACPR de 2013.).
+        # TODO : Implémenter les Rachats dynamiques (aussi appelé rachat conjoncturel) totaux et partiels (selon la methodologie transmise dans le ONC de l'ACPR de 2013.).
         Methode permettant de calculer la composante rachat dynamique selon la methodologie transmise dans le ONC de l'ACPR de 2013.
 
-        :param mp: model point passif
+        :param mp: (Dataframe) model point passif
 
-        :returns: model point passif enrichie des rachats dynamiques totaux et partiels.
+        :returns: (Dataframe) model point passif enrichie des rachats dynamiques totaux et partiels.
     """
     #TODO : loi de rachat dynamique : total et partiel.
     mp['qx_rach_tot_dyn'] = 0.0025
     mp['qx_rach_part_dyn'] = 0.0025
     return mp
 
+def calcul_rachat_conjoncturel_acpr(ecart, loi='Min'):
+    """
+        Fonction qui permet de calculer la probabilité de rachat conjoncturel (aussi appelé rachat dynamique)
+
+        :param ecart: (Numeric) calculé comme <- taux servi - taux cible
+        :param loi: (String) prend la valeur 'Min' ou 'Max'
+
+        :returns: (Numeric) Probabilité de rachat conjonturel.
+    """
+    if loi=="Min":
+        alpha = -0.06
+        beta = -0.02
+        gamma = 0.01
+        delta = 0.02
+        RCmin = -0.06
+        RCmax = 0.2
+    else :
+        if loi =="Max":
+            alpha = -0.04
+            beta = 0
+            gamma = 0.01
+            delta = 0.04
+            RCmin = -0.04
+            RCmax = 0.4
+        else:
+            alpha = -0.05
+            beta = -0.01
+            gamma = 0.01
+            delta = 0.03
+            RCmin = -0.05
+            RCmax = 0.3
+    
+    if ecart<alpha:
+        rachat = RCmax
+    
+    if alpha<ecart and ecart<beta:
+        rachat = RCmax*(ecart-beta)/(alpha-beta)
+
+    if beta<ecart and ecart<gamma:
+        rachat = 0
+
+    if gamma<ecart and ecart<delta:
+        rachat = RCmin*(ecart-gamma)/(delta-beta)
+    
+    if ecart>delta:
+        rachat = RCmin
+    
+    return rachat
 
 # Etape 1 de la projection : Calculer les primes et les chargements sur prime
 def calcul_des_primes(mp, projection_des_primes=False):
