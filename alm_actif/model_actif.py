@@ -13,21 +13,21 @@ class portefeuille_financier():
 
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
     portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
-    """
-        Constructeur de la classe *portefeuille_financier* de l'objet portefeuille financier.
+        """
+            Constructeur de la classe *portefeuille_financier* de l'objet portefeuille financier.
 
-        :param portefeuille_action: dataframe du portefeuille action
-        :param portefeuille_oblig:  dataframe du portefeuille obligation
-        :param portefeuille_immo:  dataframe du portefeuille immobilier
-        :param portefeuille_treso:  dataframe du portefeuille tresorerie
-        :param scena_eco_action:  dataframe du scenarios economiques des actions
-        :param scena_eco_oblig: dataframe du scenarios economiques des obligations
-        :param scena_eco_immo: dataframe des scenarios economiques pour l'immobilier
-        :param scena_eco_treso: dataframe du scenarios economiques pour la tresorerie 
-        :param alloc_strat_cible_portfi: dictionnaire de l'allocation stratégique cible du portefeuille financier.
+            :param portefeuille_action: dataframe du portefeuille action
+            :param portefeuille_oblig:  dataframe du portefeuille obligation
+            :param portefeuille_immo:  dataframe du portefeuille immobilier
+            :param portefeuille_treso:  dataframe du portefeuille tresorerie
+            :param scena_eco_action:  dataframe du scenarios economiques des actions
+            :param scena_eco_oblig: dataframe du scenarios economiques des obligations
+            :param scena_eco_immo: dataframe des scenarios economiques pour l'immobilier
+            :param scena_eco_treso: dataframe du scenarios economiques pour la tresorerie 
+            :param alloc_strat_cible_portfi: dictionnaire de l'allocation stratégique cible du portefeuille financier.
 
-        :returns: objet de la classer *portefeuille_financier*.
-    """
+            :returns: objet de la classer *portefeuille_financier*.
+        """
         self.portefeuille_action = portefeuille_action
         self.portefeuille_oblig = portefeuille_oblig
         self.portefeuille_immo = portefeuille_immo
@@ -66,7 +66,7 @@ class portefeuille_financier():
         """
             Vieillisement du portefeuille immobilier par projection sur un an avec calcul des loyers versés et du rendement
 
-            :param t: année t de projection
+            :param t: (Int) année t de projection
 
             :returns: None, vieilli d'une année le portefeuille immo de l'objet courant
         """
@@ -82,7 +82,7 @@ class portefeuille_financier():
     def veillissement_obligation(self, scenario, t):
         """
             Vieillisement du portefeuille obligation par projection sur un an avec calcul des coupons versés et du rendement
-            :param t: année t de projection
+            :param t: (Int) année t de projection
 
             :returns: None, vieilli d'une année le portefeuille obligation de l'objet courant
         
@@ -103,7 +103,7 @@ class portefeuille_financier():
     def veillissement_action(self, t):
         """
             Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
-            :param t: année t de projection
+            :param t: (Int) année t de projection
 
             :returns: None, vieilli d'une année le portefeuille action de l'objet courant
         """
@@ -122,8 +122,8 @@ class portefeuille_financier():
             (dividendes + coupons + remboursement de nominal + loyer immo + interets monetaires)
             - (frais de l'actif + frais du passif + prestations rachats + prestations deces + revalorisation de prestations)
 
-            :param total_frais_passif: montant total des frais engendrés par l'activité du passif
-            :param total_prestations_passif: montant total des prestations 
+            :param total_frais_passif: (Float) montant total des frais engendrés par l'activité du passif
+            :param total_prestations_passif: (Float) montant total des prestations 
 
             :returns: None, ajout au portefeuille des différents flux de produits et charges du portefeuille financier 
         
@@ -133,6 +133,15 @@ class portefeuille_financier():
         + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal'])
         - total_frais_passif - total_prestations_passif
+
+
+    def debit_credit_tresorerie(self, montant):
+        """
+            :param montant: (Numeric) Montant à debiter ou à créditer à la tresorerie.
+
+            :returns: (None), 
+        """
+        self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + montant
 
 
     def calcul_alloc_strateg_crt(self):
@@ -162,7 +171,7 @@ class portefeuille_financier():
         de l'allocation strategique cible. Après évaluation des écarts par rapport à l'allocation cible des opérations d'achats-ventes sont effectuées afin
         de correspondre à l'allocation cible
 
-        :param t: année t de projection
+        :param t: (Int) année t de projection
 
         :returns: None, Réalocation stratégique du portefeuille financier de l'objet en cours.
 
@@ -221,7 +230,7 @@ class portefeuille_financier():
             La réserve de capitalisation fait partie de la marge de solvabilité.
             Cette réserve est alimentée par les plus-values constatées lors de la cession d'obligations et diminuée à hauteur des moins-values.
         
-            :param plus_ou_moins_value: plus ou moins value latente des **obligations**
+            :param plus_ou_moins_value: (Float) plus ou moins value latente des **obligations**
 
             :returns: None, mise à jour de la réserve de capitalisation de l'objet en cours.
         """
@@ -240,7 +249,7 @@ class portefeuille_financier():
 
             La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.
         
-            :param t: année t de projection
+            :param t: (Int) année t de projection
 
             :returns: None, mise à jour de  provision pour risque d'exigibilite de l'objet portefeuille financier en cours.
         """
@@ -267,7 +276,7 @@ class portefeuille_financier():
         """
             Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
 
-            :param montant_a_acheter: montant total à acheter
+            :param montant_a_acheter: (Float) montant total à acheter
 
             :returns: None, modificaiton du portefeuille immobilier
 
@@ -284,7 +293,7 @@ class portefeuille_financier():
         """
             Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
 
-            :param montant_a_acheter: montant total à acheter
+            :param montant_a_acheter: (Float) montant total à acheter
 
             :returns: None, modificaiton du portefeuille obligation
         """
@@ -301,7 +310,7 @@ class portefeuille_financier():
             Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
 
-            :param montant_a_vendre: montant total à vendre
+            :param montant_a_vendre: (Float) montant total à vendre
 
             :returns: None, modificaiton du portefeuille actions
         """

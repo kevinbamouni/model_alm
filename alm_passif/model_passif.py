@@ -15,8 +15,8 @@ def recup_des_frais(mp, df_ref_frais):
         Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
         Ceci se fait par une jointure sur le num produit.
 
-        :param df_mp: model points passif
-        :param df_ref_frais: référentiel des taux de frais (plusieurs type de frais) par produit
+        :param df_mp: (Dataframe) model points passif
+        :param df_ref_frais: (Dataframe) référentiel des taux de frais (plusieurs type de frais) par produit
 
         :returns: model points passif enrichie des taux frais
     """
@@ -28,8 +28,8 @@ def recup_des_frais(mp, df_ref_frais):
 def initialisation_des_mp(df_mp, df_ref_frais, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
     
-        :param df_mp: Dataframe du représentant le fichier de Model point en input
-        :param df_ref_frais: référentiel des taux de frais (plusieurs type de frais) par produit
+        :param df_mp: (Dataframe) Dataframe du représentant le fichier de Model point en input
+        :param df_ref_frais: (Dataframe) référentiel des taux de frais (plusieurs type de frais) par produit
 
         :returns: Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
     """
@@ -79,8 +79,8 @@ def get_proba_deces(mp, tm):
     """
         calcul des qx (décès) à partir de la table de mortalité
 
-        :param mp: model point passif
-        :param tm: table de survie
+        :param mp: (Dataframe) model point passif
+        :param tm: (Dataframe) table de survie
 
         :returns: model point passif enrichie des probabilité de survie
     """
@@ -93,8 +93,8 @@ def get_proba_rachat_total(mp, rach):
     """
         Import de la probabilite de rachat structurel total à partir de la table des hypothèses de rachats structurels totaux.
 
-        :param mp: model point passif
-        :param rach: table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
+        :param mp: (Dataframe) model point passif
+        :param rach: (Dataframe) table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
 
         :returns: model point passif enrichie des probabilité de rachats structurels totaux
     """
@@ -171,8 +171,8 @@ def calcul_des_primes(mp, projection_des_primes=False):
     """
         Calcul des primes. Par defaut les primes ne sont pas modélisées (primes = 0).
 
-        :param mp: model point passif
-        :param projection_des_primes: valeur par défaut "False".  "True" si avec projection des primes.
+        :param mp: (Dataframe) model point passif
+        :param projection_des_primes: (Bool) valeur par défaut "False".  "True" si avec projection des primes.
 
         :returns: model point enrichi des calculs des primes 
     """
@@ -199,7 +199,7 @@ def calcul_des_taux_min(mp):
      Fonction de calcul des taux techniques et tmg min pour chaque ligne de MP.
      # TODO : calcul des taux techniques et TMG min à revoir potentiellement.
 
-     :param mp: model point passif
+     :param mp: (Dataframe) model point passif
      
      :returns: model point passif enrichie des taux techniques ainsi que des taux minimum garantis annuels et semestriels
     """ 
@@ -220,7 +220,7 @@ def calcul_des_taux_cibles(mp):
         les effets de rachat dynamiques.
         # TODO : Implémenter le calcul des taux cibles par ligne de MP
 
-        :param mp: model point passif
+        :param mp: (Dataframe) model point passif
 
         :returns: model point passif enrichie des taux de revalorisation cibles
     """
@@ -232,6 +232,10 @@ def calcul_des_taux_cibles(mp):
 
 def calcul_des_taux_de_prel_sociaux(mp):
     """
+        :param mp: (Dataframe) model point passif
+
+        :returns: model point passif enrichie des taux de prélèvement sociaux
+
         #TODO : calcul des taux de prelevement sociaux A revoir potentiellement
     """
     mp['tx_soc'] = 0.05
@@ -250,10 +254,10 @@ def calcul_des_prestation(mp,t, rach, tm):
             - Chargements sur les différentes prestations
             _ Prestations avec revalorisation net global
         
-        :param mp: model point passif enrichie des colonnes de la fonction *calcul_des_primes*
-        :param t: année de projection
-        :param rach: table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
-        :param tm: table de survie
+        :param mp: (Dataframe) model point passif enrichie des colonnes de la fonction *calcul_des_primes*
+        :param t: (Int) année de projection
+        :param rach: (Dataframe) table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
+        :param tm: (Dataframe) table de survie
 
         :returns: 
     """
@@ -334,9 +338,9 @@ def calcul_des_pm(mp):
     de fin de periode avant application de la revalorisation au titre de la participation aux benefices
     et après versement des prestations.
 
-    :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_prestations*
+    :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_prestations*
 
-    :returns: model point passif enrichi  des calculs de provision mathématiques (pm)
+    :returns: (Dataframe) model point passif enrichi  des calculs de provision mathématiques (pm)
     """
 
     # Calculs effectues plusieurs fois
@@ -390,14 +394,14 @@ def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs, portefeuille_financ
         Calcul du stock de PM après attribution de la participation au benefice et calcul de PPE et gestion de la PPE 8 ans
 
         :param resultat_total: somme du resultat technique et financier
-        :param mp: model point enrichies
-        :param ppe: provision pour participation aux excédents
-        :param pvl_actifs: plus values latentes des types d'actifs non amortissables
-        :param portefeuille_financier: portefeuille financier du type objet
+        :param mp: (Dataframe) model point enrichies
+        :param ppe: (Float) provision pour participation aux excédents
+        :param pvl_actifs: (Float) plus values latentes des types d'actifs non amortissables
+        :param portefeuille_financier: (Object : portefeuille_financier) portefeuille financier du type objet
 
-        :returns: mp, model point passif.
-        :returns: ppe, provision pour participation aux excédents.
-        :returns: portefeuille_financier
+        :returns: (Dataframe) mp, model point passif.
+        :returns: (Float) ppe, provision pour participation aux excédents.
+        :returns: (Object : portefeuille_financier) portefeuille_financier
     """
     # calcul de la PPE
     if resultat_total>np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']):
@@ -429,9 +433,9 @@ def calcul_des_frais(mp):
         Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
         Calcul des frais sur passif : prestations, primes, encours.
 
-        :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_pm*
+        :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_pm*
 
-        :returns: model point passif enrichi des calculs des frais
+        :returns: (Dataframe) model point passif enrichi des calculs des frais
     """
     # Calcul de frais du prime
     mp['frais_fixe_prime'] = mp['nb_vers'] * mp['tx_frais_fixe_prime'] * (1 + mp['ind_inf_frais_fixe_prime']) * (mp['coef_inf'] - 1)
@@ -452,9 +456,9 @@ def calcul_du_resultat_technique(mp):
     """ 
         Calcul du resultat technique.
 
-        :param mp: model point passif enrichi des colonnes de la fonction *calcul_des_frais*
+        :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*
 
-        :returns: model point passif enrichi du resultat technique
+        :returns: (Dataframe) model point passif enrichi du resultat technique
     """
     # flux debut : rach_mass est le choc de rachat massif non encore implémenter, je vais le gérer plus tard j'ai la flemme là maintenant.
     # TODO modéliser le choc de rachat : le rachat massif.
@@ -474,9 +478,9 @@ def projection_autres_passifs(an, autre_passif, coef_inf):
     """ 
     Méthode permettant de calculer les PM et les flux sur une annee pour des passif non modelises :
 
-    :Param an: année de projection
-    :Param autre_passif: dataframe représentant le passif non modélisé
-    :Param coef_inf: coefiscient d'inflation pour les frais
+    :Param an: (int) année de projection
+    :Param autre_passif: (Dataframe) dataframe représentant le passif non modélisé
+    :Param coef_inf: (Float) coefiscient d'inflation pour les frais
     """
     autre_passif = autre_passif.loc[autre_passif['annee'] == an,:]
     autre_passif = autre_passif['pm_moy'] * coef_inf

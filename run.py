@@ -98,11 +98,11 @@ if __name__ == "__main__":
 
         # Modelisation de l'Actif
         ptf_financier.veillissement_treso(time_index, maturite = 0.5)
-        ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
         ptf_financier.veillissement_treso(time_index, maturite = 0.5)
         ptf_financier.veillissement_action(time_index)
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
+        ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
         ptf_financier.allocation_strategique(time_index)
         resultat_financier = ptf_financier.calcul_resultat_financier(frais_produits = 0, frais_val_marche = 0, charges_reserve_capi = 0)
 
@@ -115,6 +115,8 @@ if __name__ == "__main__":
                                                         ppe = ppe,
                                                         pvl_actifs = 0,
                                                         portefeuille_financier = ptf_financier)
+        
+        # Application de l'algorithme de profit share
         
         mp_global_projection = mp_global_projection.append(mp_t)
 
