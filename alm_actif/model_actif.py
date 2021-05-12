@@ -50,7 +50,6 @@ class portefeuille_financier():
         self.provision_risque_exigibilite = 0
         self.ppb = 0
 
-
     def veillissement_treso(self, t, maturite):
         """
             Vieillisement du portefeuille de trésorerie par projection 
@@ -60,7 +59,6 @@ class portefeuille_financier():
         # self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
         self.portefeuille_treso['rdt'] = 0.001
         self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
-
 
     def veillissement_immo(self, t):
         """
@@ -77,7 +75,6 @@ class portefeuille_financier():
         self.portefeuille_immo['dur_det'] = self.portefeuille_immo['dur_det'] + 1
         self.portefeuille_immo['pvl'] = self.portefeuille_immo.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_immo['mvl'] = self.portefeuille_immo.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
-
 
     def veillissement_obligation(self, scenario, t):
         """
@@ -99,7 +96,6 @@ class portefeuille_financier():
         self.portefeuille_oblig['pvl'] = self.portefeuille_oblig.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_oblig['mvl'] = self.portefeuille_oblig.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
         
-
     def veillissement_action(self, t):
         """
             Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
@@ -115,7 +111,6 @@ class portefeuille_financier():
         self.portefeuille_action['pvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_action['mvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
         
-
     def calcul_assiette_tresorerie(self, total_frais_passif, total_prestations_passif):
         """
             Calcul de l'assiette de treso =
@@ -134,7 +129,6 @@ class portefeuille_financier():
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal'])
         - total_frais_passif - total_prestations_passif
 
-
     def debit_credit_tresorerie(self, montant):
         """
             :param montant: (Numeric) Montant à debiter ou à créditer à la tresorerie.
@@ -142,7 +136,6 @@ class portefeuille_financier():
             :returns: (None), 
         """
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + montant
-
 
     def calcul_alloc_strateg_crt(self):
         """
@@ -161,7 +154,6 @@ class portefeuille_financier():
         'propor_immo': sum(self.portefeuille_immo['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
         'propor_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
         'total_vm_portfi': sum(self.portefeuille_action['val_marche']) + sum(self.portefeuille_oblig['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche']) }
-
 
     def allocation_strategique(self, t):
         """
@@ -218,7 +210,6 @@ class portefeuille_financier():
 
         self.calcul_provision_risque_exigibilite(t)
     
-
     def calcul_reserve_capitation(self, plus_ou_moins_value):
         """ 
             Fonction qui permet de calculer la reserve capitalisation après la vente d'obligations.
@@ -235,7 +226,6 @@ class portefeuille_financier():
             :returns: None, mise à jour de la réserve de capitalisation de l'objet en cours.
         """
         self.reserve_capitalisation = max(0, self.reserve_capitalisation + plus_ou_moins_value)
-
 
     def calcul_provision_risque_exigibilite(self, t):
         """
@@ -255,7 +245,6 @@ class portefeuille_financier():
         """
         self.provision_risque_exigibilite = max(np.sum(self.portefeuille_action['pvl'] + self.portefeuille_immo['pvl'] + self.portefeuille_action['mvl'] + self.portefeuille_immo['mvl']), 0)
 
-
     def acheter_des_actions(self, montant_a_acheter):
         """
             Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
@@ -270,7 +259,6 @@ class portefeuille_financier():
         self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + self.portefeuille_action["val_achat"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
         self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche"] + self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
         self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] + self.portefeuille_action["nb_unit_achat"]
-
 
     def acheter_des_immo(self, montant_a_acheter):
         """
@@ -288,7 +276,6 @@ class portefeuille_financier():
         self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche"] + self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
         self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] + self.portefeuille_immo["nb_unit_achat"]
 
-
     def acheter_des_oblig(self, montant_a_acheter):
         """
             Fonction permettant d'acheter des actions et de mettre le portfeuille action automatiquement à jour.
@@ -303,7 +290,6 @@ class portefeuille_financier():
         self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + self.portefeuille_oblig["val_achat"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
         self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche"] + self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
         self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] + self.portefeuille_oblig["nb_unit_achat"]
-
 
     def vendres_des_actions(self, montant_a_vendre):
         """
@@ -327,10 +313,24 @@ class portefeuille_financier():
         self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] *  (1 - self.portefeuille_action["pct_to_sold"])
         self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] * (1 - self.portefeuille_action["pct_to_sold"])
 
+    def calcul_des_pvl_action(self):
+        """
+            Calcul des plus values latentes sur les actions
+        """
+        temp = self.portefeuille_action.loc[self.portefeuille_action['val_marche_fin'] > self.portefeuille_action['val_nc_fin'],['val_nc_fin','val_marche_fin']]
+        return np.sum(temp['val_marche_fin']-temp['val_nc_fin'])
+
+    def calcul_des_pvl_immo(self):
+        """
+            Calcul des plus values latentes sur l'immobilier
+        """
+        temp = self.portefeuille_immo.loc[self.portefeuille_immo['val_marche_fin'] > self.portefeuille_immo['val_nc_fin'],['val_nc_fin','val_marche_fin']]
+        return np.sum(temp['val_marche_fin']-temp['val_nc_fin'])
+
     def realiser_les_pvl_action(self, montant_a_vendre):
         """
             Cette fonction permet de réaliser les PVL action pour honorer le TMG, dans le cas ou le résultat total n'est pas 
-            suffisant. Les flux de réalisation sont ajoutés à la tréso
+            suffisant. Les flux de réalisation sont directement crédités à la trésorerie.
         """
         actions_en_pvl = self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]]
 
@@ -348,11 +348,10 @@ class portefeuille_financier():
 
         self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]] = actions_en_pvl
 
-
     def realiser_les_pvl_immo(self, montant_a_vendre):
         """
             Cette fonction permet de réaliser les PVL immo pour honorer le TMG, dans le cas ou le résultat total n'est pas 
-            suffisant. Les flux de réalisation sont ajoutés à la tréso
+            suffisant. Les flux de réalisation sont directement crédités à la trésorerie.
         """
         immo_en_pvl = self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]]
 
@@ -369,7 +368,6 @@ class portefeuille_financier():
         immo_en_pvl["nb_unit_fin"] = immo_en_pvl["nb_unit"] * (1 - immo_en_pvl["pct_to_sold"])
 
         self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]] = immo_en_pvl
-
 
     def vendres_des_immo(self, montant_a_vendre):
         """
@@ -470,7 +468,6 @@ class portefeuille_financier():
 
         self.portefeuille_oblig = self.portefeuille_oblig.rename(columns={"val_marche": "val_marche_fin", "val_nc": "val_nc_fin",
         "val_achat": "val_achat_fin", "nb_unit": "nb_unit_fin", "duration": "duration_fin"})
-
 
 # Execution main :
 if __name__ == "__main__":

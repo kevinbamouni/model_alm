@@ -1,5 +1,4 @@
-# To add a new cell, type '# %%'
-# To add a new markdown cell, type '# %% [markdown]'
+
 import pandas as pd
 import uuid
 import numpy as np
@@ -8,7 +7,6 @@ import os
 
 
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
-
 
 def recup_des_frais(mp, df_ref_frais):
     """
@@ -23,7 +21,6 @@ def recup_des_frais(mp, df_ref_frais):
     mp = pd.merge(mp, df_ref_frais, how='left', on=['num_prod'],
          indicator=False, validate='many_to_one')
     return mp
-
 
 def initialisation_des_mp(df_mp, df_ref_frais, t):
     """Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs
@@ -74,7 +71,6 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
     
     return df_mp
 
-
 def get_proba_deces(mp, tm):
     """
         calcul des qx (décès) à partir de la table de mortalité
@@ -88,7 +84,6 @@ def get_proba_deces(mp, tm):
          indicator=False, validate='many_to_one')
     return mp
 
-
 def get_proba_rachat_total(mp, rach):
     """
         Import de la probabilite de rachat structurel total à partir de la table des hypothèses de rachats structurels totaux.
@@ -101,7 +96,6 @@ def get_proba_rachat_total(mp, rach):
     mp = pd.merge(mp, rach, how='left', on=['anc','age'],
          indicator=False, validate='many_to_one')
     return mp
-
 
 def get_rachat_dyn_partiel_et_total(mp):
     """
@@ -192,7 +186,6 @@ def calcul_des_primes(mp, projection_des_primes=False):
     
     return mp
 
-
 # Etape 2 : Calcul des taux min
 def calcul_des_taux_min(mp):
     """
@@ -213,7 +206,6 @@ def calcul_des_taux_min(mp):
     
     return mp
 
-
 def calcul_des_taux_cibles(mp):
     """
         Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l'assreur souhaite revaloriser sa PM afin de minimiser 
@@ -224,11 +216,20 @@ def calcul_des_taux_cibles(mp):
 
         :returns: model point passif enrichie des taux de revalorisation cibles
     """
+
+    # taux_marche = np.sum(rendement * allocation_marche)
+
+    # tp_max = taux_marche - charg_enc_mar
+
+    # if tp_max > 0:
+    #     tx_cible_an = tp_max * w_n * (1.0 - marge_mar)
+
+    # tx_cible_an + (1.0 - w_n) * tx_cible_prec
+
     mp['tx_cible_an'] = 0.05
     mp['tx_cible_se'] = 0.05
 
     return mp
-
 
 def calcul_des_taux_de_prel_sociaux(mp):
     """
@@ -240,7 +241,6 @@ def calcul_des_taux_de_prel_sociaux(mp):
     """
     mp['tx_soc'] = 0.05
     return mp
-
 
 def calcul_des_prestation(mp,t, rach, tm):
     """ 
@@ -330,8 +330,6 @@ def calcul_des_prestation(mp,t, rach, tm):
 
     return mp
 
-
-
 def calcul_des_pm(mp):
     """
     calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
@@ -351,7 +349,7 @@ def calcul_des_pm(mp):
     mp = calcul_des_taux_cibles(mp)
     mp['rev_stock_brut_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net'])) 
 
-    # Calcul de la revalorisation brute
+    # Calcul de la revalorisation brute (montant total de la revalorisation)
     mp['rev_stock_brut_tmg'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se'] # on suppose que les primes sont versées en milieu d'années
 
     # Revalorisation au maximum entre le TMG et le taux cible
@@ -367,7 +365,7 @@ def calcul_des_pm(mp):
     # Base utilise pour appliques le calcul du taux de chargement sur encours
     mp['base_enc_th'] = mp['diff_pm_prest'] * (1 + mp['tx_an']) + mp['pri_net'] * (1 + mp['tx_se'])
 
-    # Calcul de la revalorisation sur stock
+    # Calcul de la revalorisation net sur stock
     mp['rev_stock_nette'] = mp['rev_stock_brut'] - mp['enc_charg_stock']
 
     # Revalorisation nette totale
@@ -386,7 +384,6 @@ def calcul_des_pm(mp):
     mp['it_tech_stock']   = mp['diff_pm_prest'] * mp['tx_tech_an'] + mp['pri_net'] * mp['tx_tech_se']
     mp['it_tech'] = mp['it_tech_stock'] + mp['it_tech_prest']
 
-    
     return mp
 
 def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs, portefeuille_financier):
@@ -403,30 +400,34 @@ def calcul_des_pm_ap_pb(resultat_total, mp, ppe, pvl_actifs, portefeuille_financ
         :returns: (Float) ppe, provision pour participation aux excédents.
         :returns: (Object : portefeuille_financier) portefeuille_financier
     """
-    # calcul de la PPE
+    # Calcul de la PPE
+    # Si le resultat total est supérieur au besoin pour revalo TMG, alouer le surplus à la ppe
     if resultat_total>np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']):
         ppe = np.append(ppe, resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))
     else:
-        # vendre des actifs à l'exception des obligations pour respecter les engagements de TMG
+        # Sinon, vendre des actifs à l'exception des obligations pour respecter les engagements de TMG, allouer 0 à la PPE
         ppe = np.append(ppe, 0)
         if resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])) < pvl_actifs:
             # realiser les pvl a hauteur de pvl_actifs
             portefeuille_financier.realiser_les_pvl_action((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
             portefeuille_financier.realiser_les_pvl_immo((resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg'])))/2)
+            # Debit de la tresorerie pour revalo TMG après réalisation des pvl
+            portefeuille_financier.debit_credit_tresorerie(-(resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']))))
         else:
-            # realiser les pvl et combler le besoin avec les fonds propres
+            # realiser les pvl et combler le besoin avec les fonds propres par impact à la trésorerie
             portefeuille_financier.realiser_les_pvl_action(pvl_actifs/2)
             portefeuille_financier.realiser_les_pvl_immo(pvl_actifs/2)
+            portefeuille_financier.debit_credit_tresorerie(-(resultat_total - (np.sum(mp['rev_prest']) + np.sum(mp['rev_stock_brut_tmg']))))
     
-    # Attribution de la PB au stock de PM
-    if ppe[-1] > np.sum(mp['rev_stock_brut_tx_cible']) - np.sum(mp['rev_prest']):
-        mp['pm_fin'] = mp['pm_fin'] + (mp['rev_stock_brut_tx_cible'] - np.sum(mp['rev_prest'])) # attribution de la PB au stock de PM et de Primes
+    # Après revalo au TMG et dodation de la PPE, Attribution de la PB au stock de PM
+    # Si la PPE de l'année courante 
+    if ppe[-1] > np.sum(mp['rev_stock_brut_tx_cible']) - np.sum(mp['rev_stock_nette']):
+        mp['pm_fin'] = mp['pm_fin'] + (mp['rev_stock_brut_tx_cible'] - np.sum(mp['rev_stock_nette'])) # attribution de la PB au stock de PM et de Primes
         if len(ppe) >= 8:
             mp['pm_fin'] = mp['pm_fin'] + ppe[-8] + mp['pm_fin']/np.sum(mp['pm_fin']) # Attribution de la ppe stockées 8 ans auparavant
             ppe[-8] = 0      # une fois attribuée elle est remise à 0
     
     return mp, ppe, portefeuille_financier
-
 
 def calcul_des_frais(mp):
     """
@@ -451,7 +452,6 @@ def calcul_des_frais(mp):
 
     return mp
 
-
 def calcul_du_resultat_technique(mp):
     """ 
         Calcul du resultat technique.
@@ -459,20 +459,19 @@ def calcul_du_resultat_technique(mp):
         :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*
 
         :returns: (Dataframe) model point passif enrichi du resultat technique
+
+        # TODO modéliser le choc de rachat : le rachat massif.
     """
     # flux debut : rach_mass est le choc de rachat massif non encore implémenter, je vais le gérer plus tard j'ai la flemme là maintenant.
-    # TODO modéliser le choc de rachat : le rachat massif.
     mp['rach_mass'] = 0
     mp['rach_charg_mass'] = 0
     flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
     # flux_milieu : primes - prestation - (charges sur prestations + charges sur primes) TODO intégrer les flux hors modèle (non modéliser)
     flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest'] - mp['rach_mass'] - (mp['rach_charg'] - mp['rach_charg_mass']))  - (mp["frais_var_prime"] + mp["frais_fixe_prime"] + mp["frais_var_prest"] + mp["frais_fixe_prest"]) 
     flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
-
     mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
     
     return mp
-
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
     """ 
