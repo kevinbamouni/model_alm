@@ -53,7 +53,10 @@ if __name__ == "__main__":
     treso_scena = pd.read_csv(treso_scena_path, sep=",")
 
     # Mise en forme du dataframe de l'oblig scena
-    oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'], value_vars=['0.25', '0.5', '1', '2','3', '5', '7', '10', '20','30'], var_name='maturities', value_name='rates')
+    oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'], 
+                                    value_vars=['0.25', '0.5', '1', '2','3', '5', '7', '10', '20','30'], 
+                                    var_name='maturities', 
+                                    value_name='rates')
 
     # read file json de l'allocaiton cible
     with open(alloc_strat_cible_portfi_path, 'r') as myfile:
@@ -91,7 +94,8 @@ if __name__ == "__main__":
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
         mp_t = calcul_des_primes(mp_t)
         mp_t = calcul_des_prestation(mp_t, t = time_index, rach = rach, tm = tm)
-        mp_t = calcul_des_pm(mp_t)
+        mp_t = calcul_des_pm1(mp_t)
+        mp_t = calcul_revalo_pm(mp_t, rev_net_alloue = np.sum(mp_t['rev_stock_nette']), rev_brute_alloue_gar = np.sum(mp_t['rev_stock_brut']))
         mp_t = calcul_des_frais(mp_t)
         mp_t = calcul_du_resultat_technique(mp_t)
         resultat_technique = np.sum(mp_t['resultat_technique'])
@@ -110,11 +114,11 @@ if __name__ == "__main__":
         resultat_total = resultat_financier + resultat_technique
 
         pvl_actifs = 0
-        mp_t, ppe, ptf_financier = calcul_des_pm_ap_pb(resultat_total = resultat_total,
-                                                        mp = mp_t,
-                                                        ppe = ppe,
-                                                        pvl_actifs = ptf_financier.calcul_des_pvl_action()+ptf_financier.calcul_des_pvl_immo(),
-                                                        portefeuille_financier = ptf_financier)
+        # mp_t, ppe, ptf_financier = calcul_des_pm_ap_pb(resultat_total = resultat_total,
+        #                                                 mp = mp_t,
+        #                                                 ppe = ppe,
+        #                                                 pvl_actifs = ptf_financier.calcul_des_pvl_action()+ptf_financier.calcul_des_pvl_immo(),
+        #                                                 portefeuille_financier = ptf_financier)
     
         # Application de l'algorithme de profit share
         mp_global_projection = mp_global_projection.append(mp_t)
