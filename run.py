@@ -10,7 +10,6 @@ import os
     run.py est l'unique point d'entré pour lancer un run de projection.
 """
 
-
 # Execution main :
 if __name__ == "__main__":
 
@@ -92,12 +91,17 @@ if __name__ == "__main__":
     for time_index in tqdm(range(1,41,1)):
         # Modelisaiton du Passif
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
+        
+        # Modelisation du passif Avant Participation au Bénéfice
         mp_t = calcul_des_primes(mp_t)
         mp_t = calcul_des_prestation(mp_t, t = time_index, rach = rach, tm = tm)
         mp_t = calcul_des_pm1(mp_t)
-        mp_t = calcul_revalo_pm(mp_t, rev_net_alloue = np.sum(mp_t['rev_stock_nette']), rev_brute_alloue_gar = np.sum(mp_t['rev_stock_brut']))
         mp_t = calcul_des_frais(mp_t)
         mp_t = calcul_du_resultat_technique(mp_t)
+
+        # Modélisaiton du passif Après Participation au Bénéfice
+        #mp_t = calcul_revalo_pm(mp_t, rev_net_alloue = np.sum(mp_t['rev_stock_nette']), rev_brute_alloue_gar = np.sum(mp_t['rev_stock_brut']))
+
         resultat_technique = np.sum(mp_t['resultat_technique'])
 
         # Modelisation de l'Actif

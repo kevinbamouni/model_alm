@@ -438,6 +438,15 @@ class portefeuille_financier():
 
         return resultat_fi
 
+    def calcul_tra(self, placement_moyen, resultat_financier):
+        """
+            Calcul du taux de rendement financier 
+        """
+        if placement_moyen == 0:
+            return 0
+        else:
+            return resultat_financier/placement_moyen
+
     def initialisation_ptf_financier(self):
         """
             Initialise le portefeuille financier pour une projection de l'année N.

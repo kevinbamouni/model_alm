@@ -1,4 +1,3 @@
-
 import pandas as pd
 import uuid
 import numpy as np
@@ -260,7 +259,10 @@ def calcul_des_prestation(mp,t, rach, tm):
         :param rach: (Dataframe) table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
         :param tm: (Dataframe) table de survie
 
-        :returns: 
+        Le calcul des prestations fait appel aux fonctions suivantes :
+        calcul_des_taux_min(mp) ; get_rachat_dyn_partiel_et_total(mp) ; get_proba_rachat_total(mp, rach) ; get_proba_deces(mp, tm) ; calcul_des_taux_de_prel_sociaux(mp)
+        
+        :returns: (Dataframe) Model point enrichie des colonnes des prestations calculées
     """
     # Indicatrice de sortie en echeance    
     mp.loc[mp['terme'] > t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
@@ -551,12 +553,25 @@ def calcul_du_resultat_technique(mp):
 
         # TODO modéliser le choc de rachat : le rachat massif.
     """
-    # flux debut : rach_mass est le choc de rachat massif non encore implémenter, je vais le gérer plus tard j'ai la flemme là maintenant.
+    # calcul des flux debut d'annee: rach_mass est le choc de rachat massif non encore implémenter,
     mp['rach_mass'] = 0
     mp['rach_charg_mass'] = 0
     flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
-    # flux_milieu : primes - prestation - (charges sur prestations + charges sur primes) TODO intégrer les flux hors modèle (non modéliser)
-    flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest'] - mp['rach_mass'] - (mp['rach_charg'] - mp['rach_charg_mass']))  - (mp["frais_var_prime"] + mp["frais_fixe_prime"] + mp["frais_var_prest"] + mp["frais_fixe_prest"]) 
+    #  calcul des flux_milieu d'annee : primes - prestation - (charges sur prestations + charges sur primes) 
+    # TODO intégrer les flux hors modèle (non modéliser)
+    flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + 
+                                        mp['prest'] - 
+                                        mp['rach_mass'] - 
+                                        (mp['rach_charg'] - mp['rach_charg_mass'])
+                                 ) - \
+                                 (
+                                     mp["frais_var_prime"] + 
+                                    mp["frais_fixe_prime"] + 
+                                    mp["frais_var_prest"] + 
+                                    mp["frais_fixe_prest"]
+                                 )
+
+    # calcul des flux_fin d'annee :
     flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
     mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
     
@@ -572,7 +587,6 @@ def projection_autres_passifs(an, autre_passif, coef_inf):
     """
     autre_passif = autre_passif.loc[autre_passif['annee'] == an,:]
     autre_passif = autre_passif['pm_moy'] * coef_inf
-
 
 # Execution main :
 if __name__ == "__main__":
