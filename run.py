@@ -73,6 +73,7 @@ if __name__ == "__main__":
     tm_path = abs_path + "/tests/input_test_data/th_dc_00_02.csv"
     rach_path = abs_path + "/tests/input_test_data/table_rachat.csv"
     ref_frais_path = abs_path + "/tests/input_test_data/ref_frais_produits.csv"
+    taux_pb = abs_path + "/tests/input_test_data/taux_pb.csv"
 
     # Chargement des input.
     mp = pd.read_csv(mp_path) # model point
@@ -91,17 +92,14 @@ if __name__ == "__main__":
     for time_index in tqdm(range(1,41,1)):
         # Modelisaiton du Passif
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
-        
         # Modelisation du passif Avant Participation au Bénéfice
         mp_t = calcul_des_primes(mp_t)
         mp_t = calcul_des_prestation(mp_t, t = time_index, rach = rach, tm = tm)
         mp_t = calcul_des_pm1(mp_t)
         mp_t = calcul_des_frais(mp_t)
         mp_t = calcul_du_resultat_technique(mp_t)
-
         # Modélisaiton du passif Après Participation au Bénéfice
         #mp_t = calcul_revalo_pm(mp_t, rev_net_alloue = np.sum(mp_t['rev_stock_nette']), rev_brute_alloue_gar = np.sum(mp_t['rev_stock_brut']))
-
         resultat_technique = np.sum(mp_t['resultat_technique'])
 
         # Modelisation de l'Actif

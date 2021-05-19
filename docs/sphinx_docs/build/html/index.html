@@ -404,6 +404,338 @@ TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nomb
 </dl>
 </dd></dl>
 </dd></dl>
+<span class="target" id="module-alm_actif.fonctionsfinance"></span><dl class="py function">
+<dt id="alm_actif.fonctionsfinance.duration_obligatioin">
+<code class="sig-prename descclassname">alm_actif.fonctionsfinance.</code><code class="sig-name descname">duration_obligatioin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tx_coupon</span></em>, <em class="sig-param"><span class="n">nominal</span></em>, <em class="sig-param"><span class="n">courbe</span></em>, <em class="sig-param"><span class="n">maturite</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.duration_obligatioin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul de la duration de l’obligation, avec interpolation de la courbe taux zero par spline cubique.
+Utilise la fonction <em>valeur_marche_oblig</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tx_coupon</strong> – taux de coupon</p></li>
+<li><p><strong>nominal</strong> – montant du nominal de l’obligation</p></li>
+<li><p><strong>courbe</strong> – courbe des taux</p></li>
+<li><p><strong>maturite</strong> – maturité de l’obligation</p></li>
+<li><p><strong>t</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>valeur de duration d’une obligation</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_actif.fonctionsfinance.valeur_marche_oblig">
+<code class="sig-prename descclassname">alm_actif.fonctionsfinance.</code><code class="sig-name descname">valeur_marche_oblig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tx_coupon</span></em>, <em class="sig-param"><span class="n">nominal</span></em>, <em class="sig-param"><span class="n">courbe</span></em>, <em class="sig-param"><span class="n">maturite</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.valeur_marche_oblig" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul de la valeur de marche de l’obligation, avec interpolation de la courbe taux zero par spline cubique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tx_coupon</strong> – taux de coupon</p></li>
+<li><p><strong>nominal</strong> – montant du nominal de l’obligation</p></li>
+<li><p><strong>courbe</strong> – courbe des taux</p></li>
+<li><p><strong>maturite</strong> – maturité de l’obligation</p></li>
+<li><p><strong>t</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>valeur de marché d’une obligation</p>
+</dd>
+</dl>
+</dd></dl>
+<span class="target" id="module-alm_passif.model_passif"></span><dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_frais">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_frais</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_frais" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction qui permet de calculer les frais (après avoir récupérer les taux de frais du référentiel de frais par produit)
+Calcul des frais sur passif : prestations, primes, encours.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_pm</em></p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichi des calculs des frais</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_pm">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_pm</code><span class="sig-paren">(</span><em class="sig-param">) est une methode permettant de calculer les provisions mathematiques (PM</em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_pm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>de fin de periode avant application de la revalorisation au titre de la participation aux benefices
+et après versement des prestations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_prestations</em></p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichi  des calculs de provision mathématiques (pm)</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_pm1">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_pm1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_pm1" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>calcul_des_pm() est une methode permettant de calculer les provisions mathematiques (PM)
+de fin de periode avant application de la revalorisation au titre de la participation aux benefices
+et après versement des prestations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_prestations</em></p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichi  des calculs de provision mathématiques (pm)</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_pm_ap_pb">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_pm_ap_pb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resultat_total</span></em>, <em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">ppe</span></em>, <em class="sig-param"><span class="n">pvl_actifs</span></em>, <em class="sig-param"><span class="n">portefeuille_financier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_pm_ap_pb" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul du stock de PM après attribution de la participation au benefice et calcul de PPE et gestion de la PPE 8 ans</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resultat_total</strong> – somme du resultat technique et financier</p></li>
+<li><p><strong>mp</strong> – (Dataframe) model point enrichies</p></li>
+<li><p><strong>ppe</strong> – (Float) provision pour participation aux excédents</p></li>
+<li><p><strong>pvl_actifs</strong> – (Float) plus values latentes des types d’actifs non amortissables</p></li>
+<li><p><strong>portefeuille_financier</strong> – (Object : portefeuille_financier) portefeuille financier du type objet</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) mp, model point passif.</p>
+</dd>
+<dt class="field-odd">Renvoie</dt>
+<dd class="field-odd"><p>(Float) ppe, provision pour participation aux excédents.</p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Object : portefeuille_financier) portefeuille_financier</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_prestation">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_prestation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">rach</span></em>, <em class="sig-param"><span class="n">tm</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_prestation" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul les flux de prestations pour des contrats epargne en euros ou retraite euros en phases de restitution.
+Calcul des prestations en année t de projection :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Prestation avec revalorisation pour rachat total :</p></li>
+<li><p>Prestions avec revalorisation pour rachat total dynamique</p></li>
+<li><p>Prestation avec revalorisation pour rachat partiel dynamique</p></li>
+<li><p>Prestations avec revalorisation pour sinistre DC</p></li>
+<li><p>Prestations avec revalorisation pour contrat arrivé à échéance</p></li>
+<li><p>Chargements sur les différentes prestations</p></li>
+</ul>
+<p>_ Prestations avec revalorisation net global</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mp</strong> – (Dataframe) model point passif enrichie des colonnes de la fonction <em>calcul_des_primes</em></p></li>
+<li><p><strong>t</strong> – (Int) année de projection</p></li>
+<li><p><strong>rach</strong> – (Dataframe) table de donnée contenant la probabilité de rachat total d’une contrat en fonction de l’ancienneté</p></li>
+<li><p><strong>tm</strong> – (Dataframe) table de survie</p></li>
+</ul>
+</dd>
+</dl>
+<p>Le calcul des prestations fait appel aux fonctions suivantes :
+calcul_des_taux_min(mp) ; get_rachat_dyn_partiel_et_total(mp) ; get_proba_rachat_total(mp, rach) ; get_proba_deces(mp, tm) ; calcul_des_taux_de_prel_sociaux(mp)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie</dt>
+<dd class="field-odd"><p>(Dataframe) Model point enrichie des colonnes des prestations calculées</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_primes">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_primes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">projection_des_primes</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_primes" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul des primes. Par defaut les primes ne sont pas modélisées (primes = 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mp</strong> – (Dataframe) model point passif</p></li>
+<li><p><strong>projection_des_primes</strong> – (Bool) valeur par défaut « False ».  « True » si avec projection des primes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point enrichi des calculs des primes</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_taux_cibles">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_taux_cibles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_taux_cibles" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l’assreur souhaite revaloriser sa PM afin de minimiser 
+les effets de rachat dynamiques.
+# TODO : Implémenter le calcul des taux cibles par ligne de MP</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif</p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point passif enrichie des taux de revalorisation cibles</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_taux_de_prel_sociaux">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_taux_de_prel_sociaux</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">tx_soc</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_taux_de_prel_sociaux" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mp</strong> – (Dataframe) model point passif</p></li>
+<li><p><strong>tx_soc</strong> – (Numeric Default = 0.05) Taux des prelevements sociaux</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point passif enrichie des taux de prélèvement sociaux</p>
+</dd>
+</dl>
+<p>#TODO : calcul des taux de prelevement sociaux A revoir potentiellement</p>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_des_taux_min">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_des_taux_min</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_des_taux_min" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de calcul des taux techniques et tmg min pour chaque ligne de MP.
+# TODO : calcul des taux techniques et TMG min à revoir potentiellement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif</p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point passif enrichie des taux techniques ainsi que des taux minimum garantis annuels et semestriels</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_du_resultat_technique">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_du_resultat_technique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_du_resultat_technique" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul du resultat technique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_frais</em></p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichi du resultat technique</p>
+</dd>
+</dl>
+<p># TODO modéliser le choc de rachat : le rachat massif.</p>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_rachat_conjoncturel_acpr">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_rachat_conjoncturel_acpr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ecart</span></em>, <em class="sig-param"><span class="n">loi</span><span class="o">=</span><span class="default_value">'Min'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_rachat_conjoncturel_acpr" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction qui permet de calculer la probabilité de rachat conjoncturel (aussi appelé rachat dynamique)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ecart</strong> – (Numeric) calculé comme &lt;- taux servi - taux cible</p></li>
+<li><p><strong>loi</strong> – (String) prend la valeur “Min” ou “Max”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Numeric) Probabilité de rachat conjonturel.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.calcul_revalo_pm">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_revalo_pm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">rev_net_alloue</span></em>, <em class="sig-param"><span class="n">rev_brute_alloue_gar</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_revalo_pm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Docs</p>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.get_proba_deces">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">get_proba_deces</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">tm</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.get_proba_deces" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>calcul des qx (décès) à partir de la table de mortalité</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mp</strong> – (Dataframe) model point passif</p></li>
+<li><p><strong>tm</strong> – (Dataframe) table de survie</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point passif enrichie des probabilité de survie</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.get_proba_rachat_total">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">get_proba_rachat_total</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">rach</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.get_proba_rachat_total" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Import de la probabilite de rachat structurel total à partir de la table des hypothèses de rachats structurels totaux.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mp</strong> – (Dataframe) model point passif</p></li>
+<li><p><strong>rach</strong> – (Dataframe) table de donnée contenant la probabilité de rachat total d’une contrat en fonction de l’ancienneté</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model point passif enrichie des probabilité de rachats structurels totaux</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.get_rachat_dyn_partiel_et_total">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">get_rachat_dyn_partiel_et_total</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.get_rachat_dyn_partiel_et_total" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p># TODO : Implémenter les Rachats dynamiques (aussi appelé rachat conjoncturel) totaux et partiels (selon la methodologie transmise dans le ONC de l’ACPR de 2013.).
+Methode permettant de calculer la composante rachat dynamique selon la methodologie transmise dans le ONC de l’ACPR de 2013.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif</p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichie des rachats dynamiques totaux et partiels.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.initialisation_des_mp">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">initialisation_des_mp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_mp</span></em>, <em class="sig-param"><span class="n">df_ref_frais</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.initialisation_des_mp" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Enrichissement du fichier de Mp en input de toutes les colonnes nécéssaires pour les futurs calculs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_mp</strong> – (Dataframe) Dataframe du représentant le fichier de Model point en input</p></li>
+<li><p><strong>df_ref_frais</strong> – (Dataframe) référentiel des taux de frais (plusieurs type de frais) par produit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.projection_autres_passifs">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">projection_autres_passifs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">an</span></em>, <em class="sig-param"><span class="n">autre_passif</span></em>, <em class="sig-param"><span class="n">coef_inf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.projection_autres_passifs" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Méthode permettant de calculer les PM et les flux sur une annee pour des passif non modelises :</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param an</dt>
+<dd class="field-odd"><p>(int) année de projection</p>
+</dd>
+<dt class="field-even">Param autre_passif</dt>
+<dd class="field-even"><p>(Dataframe) dataframe représentant le passif non modélisé</p>
+</dd>
+<dt class="field-odd">Param coef_inf</dt>
+<dd class="field-odd"><p>(Float) coefiscient d’inflation pour les frais</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.recup_des_frais">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">recup_des_frais</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">df_ref_frais</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.recup_des_frais" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
+Ceci se fait par une jointure sur le num produit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_mp</strong> – (Dataframe) model points passif</p></li>
+<li><p><strong>df_ref_frais</strong> – (Dataframe) référentiel des taux de frais (plusieurs type de frais) par produit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>model points passif enrichie des taux frais</p>
+</dd>
+</dl>
+</dd></dl>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Lien permanent vers ce titre">¶</a></h1>

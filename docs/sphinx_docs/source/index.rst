@@ -16,6 +16,12 @@ This is something I want to say that is not in the docstring.
 .. automodule:: alm_actif.model_actif
    :members:
 
+.. automodule:: alm_actif.fonctionsfinance
+   :members:
+
+.. automodule:: alm_passif.model_passif
+   :members:
+
 Indices and tables
 ==================
 

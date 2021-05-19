@@ -7,7 +7,7 @@ import os
 
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
 
-def recup_des_frais(mp, df_ref_frais):
+def get_taux_frais_passif(mp, df_ref_frais):
     """
         Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
         Ceci se fait par une jointure sur le num produit.
@@ -56,7 +56,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
-        df_mp = recup_des_frais(df_mp, df_ref_frais)
+        df_mp = get_taux_frais_passif(df_mp, df_ref_frais)
 
     elif t>=2:
         df_mp = df_mp.loc[df_mp['t'] == (t-1), mp_variable_list]
@@ -66,7 +66,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp['anc'] = df_mp['anc'] + 1
         df_mp['pm_deb'] = df_mp['pm_fin']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
-        df_mp = recup_des_frais(df_mp, df_ref_frais)
+        df_mp = get_taux_frais_passif(df_mp, df_ref_frais)
     
     return df_mp
 
@@ -267,17 +267,13 @@ def calcul_des_prestation(mp,t, rach, tm):
     # Indicatrice de sortie en echeance    
     mp.loc[mp['terme'] > t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
     mp.loc[mp['terme'] <= t, 'ind_ech'] = 1 # si le contrat à terme
-    
     # Calcul du nombre de contrat en echeance
     mp['nb_ech'] = mp['nb_contr'] * mp['ind_ech']
-    
     # Extraction des taux de revalorisation minimum et des taux technique
     mp = calcul_des_taux_min(mp)
-    
     # Calcul des montant des prestations pour sortie en echeances avec la revalorisation
     mp['ech'] = mp['pm_deb'] * mp['ind_ech']
     mp['rev_ech'] = mp['ech'] * mp['tx_se']
-    
     # Calcul des flux  rachats totaux
     # Taux de rachat incluant les rachats structurels et conjoncturels
     mp = get_rachat_dyn_partiel_et_total(mp) # calcul de qx_rach_tot_dyn et de qx_rach_part_dyn
@@ -287,7 +283,6 @@ def calcul_des_prestation(mp,t, rach, tm):
     mp['nb_rach_tot'] = mp['nb_contr'] * mp['qx_rach_tot_glob']
     mp['rach_tot'] = mp['pm_deb'] * mp['qx_rach_tot_glob'] # Flux de rachats totaux
     mp['rev_rach_tot'] = mp['rach_tot'] * mp['tx_se'] # revalorisation au taux minimum
-    
     # Calcul des flux de deces
     # Taux de deces sur la population des non rachetes
     # mp = get_proba_deces(mp) # calcul de qx_dc
@@ -296,41 +291,34 @@ def calcul_des_prestation(mp,t, rach, tm):
     mp['dc'] = mp['pm_deb'] * mp['qx_dc_rach'] * mp['ind_ech'] # Flux de rachats totaux
     mp['rev_dc'] = mp['dc'] * mp['tx_se'] # revalorisation au taux minimum
     mp['nb_dc'] = mp['nb_contr'] * mp['qx_dc_rach'] 
-    
     # Calcul des flux rachats partiels
     # Taux de rachat incluant les rachats structurels et conjoncturels sur la population des non rachetes et vivants
     mp['qx_rach_part_glob'] = (1 - mp['qx_rach_tot_glob']) * (1 - mp['qx_dc']) * np.maximum(0, np.minimum(1, mp['qx_rach_part'] + mp['qx_rach_tot_dyn']))
     mp['rach_part'] = mp['pm_deb'] * mp['qx_rach_part_glob'] # Flux de rachats partiels
     mp['rev_rach_part'] = mp['rach_part'] * mp['tx_se']  # revalorisation au taux minimum
-    
     # Total des prestations
     mp['prest'] = mp['ech'] + mp['rach_tot'] + mp['dc'] + mp['rach_part'] # total prestations
     mp['rev_prest'] = mp['rev_ech'] + mp['rev_rach_tot'] + mp['rev_dc'] + mp['rev_rach_part'] # total revalorisation des prestations
-    
     # Total des mouvement des nombres de contrats
     mp['nb_sortie'] = mp['nb_ech'] + mp['nb_dc'] + mp['nb_rach_tot'] # nombre de sorties
     mp['nb_contr_fin'] = mp['nb_contr'] - mp['nb_sortie'] # nombre de contrats en cours en fin d'annee
     mp['nb_contr_moy'] = (mp['nb_contr'] + mp['nb_contr_fin']) / 2  # nombre de contrats moyen
-
     # Calcul du taux de chargement sur encours
     # Applique une limite sur le chargement sur encours selon la valeur de l'indicatrice
     # permettant les taux negatifs.
     mp['chgt_enc'] = np.minimum(mp['chgt_enc'], mp['tx_an'] / (1 + mp['tx_an'])) * mp['ind_chgt_enc_pos'] + mp['chgt_enc'] * (1 - mp['ind_chgt_enc_pos'])
-
     # Calcul des chargements sur encours
     mp['enc_charg'] = (mp['prest'] + mp['rev_prest']) * mp['chgt_enc'] / 2
-
     # Calcul de la revalorisation nette des prestations avec capitalisation sur un semestre
     mp['rev_prest_nette'] = mp['rev_prest'] - mp['enc_charg']
-
     # Calcul des autres chargements et des prelevements sociaux
     mp = calcul_des_taux_de_prel_sociaux(mp) # calcul de tx_soc
     mp['rach_charg'] = (mp['rach_tot'] + mp['rach_part'] + mp['rev_rach_tot'] + mp['rev_rach_part']) * mp['chgt_rach']
     mp['soc_prest'] = np.maximum(0, mp['rev_prest_nette']) * mp['tx_soc'] # prelevements sociaux
-
     # Calcul des interets techniques sur prestations
     mp['it_tech_prest'] = mp['prest'] * mp['tx_tech_se']
-
+    # Evaluation du besoin pour le financement des TMG sur prestations
+    mp['bes_tmg_prest'] = mp['rev_prest'] - mp['it_tech_prest']
     return mp
 
 def calcul_des_pm(mp):
@@ -414,8 +402,10 @@ def calcul_des_pm1(mp):
     # Evaluation des interets techniques
     mp['it_tech_stock']   = mp['diff_pm_prest'] * mp['tx_tech_an'] + mp['pri_net'] * mp['tx_tech_se']
     mp['it_tech'] = mp['it_tech_stock'] + mp['it_tech_prest']
-    # Evaluation du besoin de taux cible
-    mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net'])) 
+    # Evaluation du besoin pour le financement du taux cible
+    mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
+    # Evaluation du besoin pour le financement des TMG sur les stock
+    mp['bes_tmg_prest'] = mp['rev_stock_brut'] - mp['it_tech_stock']
     return mp
 
 def calcul_revalo_pm(mp, rev_net_alloue, rev_brute_alloue_gar):
@@ -570,7 +560,6 @@ def calcul_du_resultat_technique(mp):
                                     mp["frais_var_prest"] + 
                                     mp["frais_fixe_prest"]
                                  )
-
     # calcul des flux_fin d'annee :
     flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
     mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 

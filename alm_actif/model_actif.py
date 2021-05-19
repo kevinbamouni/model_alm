@@ -1,4 +1,5 @@
 
+from numpy.lib.function_base import place
 import pandas as pd
 import numpy as np
 import json
@@ -12,7 +13,7 @@ class portefeuille_financier():
     """
 
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
-    portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
+                        portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
         """
             Constructeur de la classe *portefeuille_financier* de l'objet portefeuille financier.
 
@@ -413,13 +414,13 @@ class portefeuille_financier():
         self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
         self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
 
-    def calcul_resultat_financier(self, frais_val_marche, frais_produits, charges_reserve_capi):
+    def calcul_resultat_financier(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
         """
         Fonction de calcul du resultat financier
 
-        :param frais_val_marche: montant des frais de marché
-        :param frais_produits: montant des frais sur les produits financiers
-        :param charges_reserve_capi: montant des charges sur la réserve de capitalisation
+        :param tx_frais_val_marche: montant des frais de marché
+        :param tx_frais_produits: montant des frais sur les produits financiers
+        :param tx_charges_reserve_capi: montant des charges sur la réserve de capitalisation
 
         :returns: resultat financier.
         """
@@ -432,20 +433,24 @@ class portefeuille_financier():
         + self.plus_moins_value_realised_action 
         + self.plus_moins_value_realised_immo
         + (self.portefeuille_oblig["val_nc_fin"] - self.portefeuille_oblig["val_nc"])
-        - frais_val_marche * self.allocation_courante['total_vm_portfi']
-        - charges_reserve_capi * self.reserve_capitalisation
-        - frais_produits * 0
+        - tx_frais_val_marche * self.allocation_courante['total_vm_portfi']
+        - tx_charges_reserve_capi * self.reserve_capitalisation
+        - tx_frais_produits * 0
 
         return resultat_fi
 
-    def calcul_tra(self, placement_moyen, resultat_financier):
+    def calcul_tra(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
         """
-            Calcul du taux de rendement financier 
+            Calcul du taux de rendement financier
         """
+        placement_moyen = (np.sum(self.portefeuille_action["val_nc_fin"]) + np.sum(self.portefeuille_action["val_nc"]))/2 + \
+                            (np.sum(self.portefeuille_immo["val_nc_fin"]) + np.sum(self.portefeuille_immo["val_nc"]))/2 + \
+                                (np.sum(self.portefeuille_oblig["val_nc_fin"]) + np.sum(self.portefeuille_oblig["val_nc"]))/2
+
         if placement_moyen == 0:
             return 0
         else:
-            return resultat_financier/placement_moyen
+            return self.calcul_resultat_financier(tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi)/placement_moyen
 
     def initialisation_ptf_financier(self):
         """
