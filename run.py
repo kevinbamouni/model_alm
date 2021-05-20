@@ -1,4 +1,6 @@
 from alm_passif.model_passif import *
+import alm_passif.ppb as ppb
+from alm_passif.revalorisation_contrats import *
 import alm_actif.model_actif as actif
 import pandas as pd
 import numpy as np
@@ -74,18 +76,21 @@ if __name__ == "__main__":
     rach_path = abs_path + "/tests/input_test_data/table_rachat.csv"
     ref_frais_path = abs_path + "/tests/input_test_data/ref_frais_produits.csv"
     taux_pb = abs_path + "/tests/input_test_data/taux_pb.csv"
+    param_revalo = abs_path + "/tests/input_test_data/param_revalo.csv"
 
     # Chargement des input.
     mp = pd.read_csv(mp_path) # model point
     tm = pd.read_csv(tm_path) #table de mortalite
     rach = pd.read_csv(rach_path) # loi de rachat
     ref_frais = pd.read_csv(ref_frais_path) # referentiel de frais par produit
+    param_revalo = pd.read_csv(param_revalo)
+    taux_pb = pd.read_csv(taux_pb)
     ppe = np.array([]) #initialisation de la ppe
+    ppbe = ppb.ppb(np.array([0]))
 
     ############################################################################################################
     # Projection : run BE
     ############################################################################################################
-
     # initialisation à t = 0
     mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
     #print(mp.columns)
@@ -103,25 +108,15 @@ if __name__ == "__main__":
         resultat_technique = np.sum(mp_t['resultat_technique'])
 
         # Modelisation de l'Actif
-        ptf_financier.veillissement_treso(time_index, maturite = 0.5)
+        ptf_financier.calcul_assiette_tresorerie(np.sum(mp_t['flux_milieu'] + mp_t['flux_fin']))
         ptf_financier.veillissement_treso(time_index, maturite = 0.5)
         ptf_financier.veillissement_action(time_index)
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
-        ptf_financier.calcul_assiette_tresorerie(0,np.sum(mp_t['rev_prest']))
         ptf_financier.allocation_strategique(time_index)
-        resultat_financier = ptf_financier.calcul_resultat_financier(frais_produits = 0, frais_val_marche = 0, charges_reserve_capi = 0)
+        resultat_financier = ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
+        mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
 
-        # Calcul du resultat total
-        resultat_total = resultat_financier + resultat_technique
-
-        pvl_actifs = 0
-        # mp_t, ppe, ptf_financier = calcul_des_pm_ap_pb(resultat_total = resultat_total,
-        #                                                 mp = mp_t,
-        #                                                 ppe = ppe,
-        #                                                 pvl_actifs = ptf_financier.calcul_des_pvl_action()+ptf_financier.calcul_des_pvl_immo(),
-        #                                                 portefeuille_financier = ptf_financier)
-    
         # Application de l'algorithme de profit share
         mp_global_projection = mp_global_projection.append(mp_t)
 

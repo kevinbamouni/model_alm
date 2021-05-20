@@ -14,9 +14,6 @@ class ppb():
         else:
             return 0
 
-    # def vieillissement_ppb(self):
-    #     pass
-
     def reprise_ppb(self, montant_a_reprendre):
         reste = np.min(montant_a_reprendre, np.sum(self.ppb_historique))
         self.reprises = np.append(self.reprises, montant_a_reprendre)
@@ -30,5 +27,10 @@ class ppb():
                 break
 
     def dotation_ppb(self, montant_a_doter):
-        self.ppb_historique = np.append(self.ppb_historique, montant_a_doter)
+        #self.ppb_historique = np.append(self.ppb_historique, montant_a_doter)
         self.dotations = np.append(self.dotations, montant_a_doter)
+    
+    def re_init_ppb(self):
+        self.ppb_historique = np.append(self.ppb_historique, np.sum(self.dotations))
+        self.reprises = np.array([])
+        self.dotations = np.array([])

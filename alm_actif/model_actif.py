@@ -11,7 +11,6 @@ class portefeuille_financier():
     """"
         Classe representation le portefeuille financier pour la modelisation de l'actif, sa projection et ses interactions.
     """
-
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
                         portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
         """
@@ -49,6 +48,8 @@ class portefeuille_financier():
 
         self.reserve_capitalisation = 0
         self.provision_risque_exigibilite = 0
+
+        self.resultat_financier = 0
         self.ppb = 0
 
     def veillissement_treso(self, t, maturite):
@@ -59,7 +60,8 @@ class portefeuille_financier():
         self.portefeuille_treso['t'] = t
         # self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
         self.portefeuille_treso['rdt'] = 0.001
-        self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
+        self.portefeuille_treso['val_marche'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite)
+        self.portefeuille_treso['val_nc'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
 
     def veillissement_immo(self, t):
         """
@@ -112,7 +114,7 @@ class portefeuille_financier():
         self.portefeuille_action['pvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_action['mvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
         
-    def calcul_assiette_tresorerie(self, total_frais_passif, total_prestations_passif):
+    def calcul_assiette_tresorerie(self, flux):
         """
             Calcul de l'assiette de treso =
             (dividendes + coupons + remboursement de nominal + loyer immo + interets monetaires)
@@ -122,13 +124,12 @@ class portefeuille_financier():
             :param total_prestations_passif: (Float) montant total des prestations 
 
             :returns: None, ajout au portefeuille des différents flux de produits et charges du portefeuille financier 
-        
         """
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
         + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"])
         + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal'])
-        - total_frais_passif - total_prestations_passif
+        + flux
 
     def debit_credit_tresorerie(self, montant):
         """
@@ -425,7 +426,7 @@ class portefeuille_financier():
         :returns: resultat financier.
         """
         self.calcul_alloc_strateg_crt()
-        resultat_fi = np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
+        self.resultat_financier = np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"])
         + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"])
         + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal']) 
@@ -437,9 +438,7 @@ class portefeuille_financier():
         - tx_charges_reserve_capi * self.reserve_capitalisation
         - tx_frais_produits * 0
 
-        return resultat_fi
-
-    def calcul_tra(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
+    def calcul_tra(self):
         """
             Calcul du taux de rendement financier
         """
@@ -450,7 +449,7 @@ class portefeuille_financier():
         if placement_moyen == 0:
             return 0
         else:
-            return self.calcul_resultat_financier(tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi)/placement_moyen
+            return self.resultat_financier/placement_moyen
 
     def initialisation_ptf_financier(self):
         """

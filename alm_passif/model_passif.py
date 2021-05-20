@@ -405,7 +405,7 @@ def calcul_des_pm1(mp):
     # Evaluation du besoin pour le financement du taux cible
     mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
     # Evaluation du besoin pour le financement des TMG sur les stock
-    mp['bes_tmg_prest'] = mp['rev_stock_brut'] - mp['it_tech_stock']
+    mp['bes_tmg_stock'] = mp['rev_stock_brut'] - mp['it_tech_stock']
     return mp
 
 def calcul_revalo_pm(mp, rev_net_alloue, rev_brute_alloue_gar):
@@ -549,7 +549,7 @@ def calcul_du_resultat_technique(mp):
     flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
     #  calcul des flux_milieu d'annee : primes - prestation - (charges sur prestations + charges sur primes) 
     # TODO intégrer les flux hors modèle (non modéliser)
-    flux_milieu = mp['pri_brut'] - (mp['rev_prest_nette'] + 
+    mp['flux_milieu'] = mp['pri_brut'] - (mp['rev_prest_nette'] + 
                                         mp['prest'] - 
                                         mp['rach_mass'] - 
                                         (mp['rach_charg'] - mp['rach_charg_mass'])
@@ -561,8 +561,8 @@ def calcul_du_resultat_technique(mp):
                                     mp["frais_fixe_prest"]
                                  )
     # calcul des flux_fin d'annee :
-    flux_fin = mp['frais_var_enc'] + mp['frais_var_enc']
-    mp['resultat_technique'] = flux_debut + flux_milieu + flux_fin - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
+    mp['flux_fin'] = mp['frais_var_enc'] + mp['frais_var_enc']
+    mp['resultat_technique'] = flux_debut + mp['flux_milieu'] + mp['flux_fin'] - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
     
     return mp
 
