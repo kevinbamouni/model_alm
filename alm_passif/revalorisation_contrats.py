@@ -3,6 +3,15 @@ from numpy.core.defchararray import array
 import pandas as pd
 from pandas.core.indexes import base
 
+def attribution_ppb_8ans(mp, ppb):
+    if len(ppb.ppb_historique) >= 8:
+        ppb_8ans =  ppb.ppb_historique[-8]
+        ppb.reprise_ppb_8ans()
+    else:
+        ppb_8ans =  0
+    mp['ppb8_ind'] = ppb_8ans * mp['pm_fin']/(np.sum(mp['pm_fin']))
+    return mp, ppb
+
 def calcul_base_produit_financier(tra, ppb, mp):
     """
         Calcul de la base des produits financier attribuables aux PM
@@ -75,7 +84,7 @@ def finance_tx_cible_ppb(mp, ppb):
         # Application de la revalorisation par produit
         mp['rev_stock_nette_contr'] = np.maximum(mp['bes_tx_cible'], mp['ppb8_ind'])
     else:
-        ppb = ppb.reprise_ppb(bes_add)
+        ppb.reprise_ppb(bes_add)
         # Application de la revalorisation par produit
         mp['rev_stock_nette_contr'] = mp['rev_stock_nette_contr'] + mp['ppb8_ind']
     return mp, ppb
@@ -151,7 +160,7 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     # Marge financier finale
     mp['marge_fi'] = mp['marge_fi'] - suppl * mp['marge_fi']/np.sum(mp['marge_fi'])
     # Dotation
-    ppb = ppb.dotation_ppb(suppl)
+    ppb.dotation_ppb(suppl)
     # Revalorisation residuelle du stock
     add_rev_regl = max(0, suppl - np.sum(ppb.dotations))
     # Calcul de la revalorisation du stock nette apres prise en compte de la contrainte legale
@@ -183,8 +192,9 @@ def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_fi
     # Etape 3 : Financement de la revalorisation du stock et prestations au TMG par la PPB
     ppb.reprise_ppb(np.sum(mp['bes_tmg_prest']+mp['bes_tmg_stock']))
     # Etape 4 : Application de la regle des 8 ans
-    ppb8ans = ppb.appliquer_ppb_8ans()
-    mp['ppb8_ind'] = ppb8ans * mp['pm_fin']/(np.sum(mp['pm_fin']))
+    #ppb8ans = ppb.appliquer_ppb_8ans()
+    #mp['ppb8_ind'] = ppb8ans * mp['pm_fin']/(np.sum(mp['pm_fin']))
+    mp, ppb = attribution_ppb_8ans(mp, ppb)
     # Etape 5 : Financement du taux cible par la PPB
     mp, ppb = finance_tx_cible_ppb(mp, ppb)
     # Etape 6 : Financement du taux cible par des cessions de PVL actions

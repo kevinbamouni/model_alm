@@ -9,14 +9,14 @@ class ppb():
         # TODO  codeer la consomation de PPB à tout instant depuis le début de l'année
         # TODO corriger les dotations reprises
 
-    def appliquer_ppb_8ans(self):
+    def reprise_ppb_8ans(self):
         if len(self.ppb_historique) >= 8:
             ppb_8ans =  self.ppb_historique[-8]
             self.ppb_historique[-8]  = 0
             self.consommation = self.consommation + ppb_8ans
-            return ppb_8ans
-        else:
-            return 0
+            #return ppb_8ans
+        #else:
+            #return 0
 
     def reprise_ppb(self, montant_a_reprendre):
         reste = np.min(montant_a_reprendre, np.sum(self.ppb_historique))
