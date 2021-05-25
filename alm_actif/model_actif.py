@@ -130,6 +130,7 @@ class portefeuille_financier():
         + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"])
         + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal'])
         + flux
+        - total_frais_passif - total_prestations_passif
 
     def debit_credit_tresorerie(self, montant):
         """

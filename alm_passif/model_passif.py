@@ -3,8 +3,6 @@ import uuid
 import numpy as np
 from tqdm import tqdm
 import os
-
-
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
 
 def get_taux_frais_passif(mp, df_ref_frais):
@@ -408,7 +406,7 @@ def calcul_des_pm1(mp):
     mp['bes_tmg_stock'] = mp['rev_stock_brut'] - mp['it_tech_stock']
     return mp
 
-def calcul_revalo_pm(mp, rev_net_alloue, rev_brute_alloue_gar):
+def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     """
         Docs
     """
@@ -420,7 +418,8 @@ def calcul_revalo_pm(mp, rev_net_alloue, rev_brute_alloue_gar):
     mp['rev_stock_nette_av_pb'] = np.maximum(0, mp['rev_stock_nette_av_pb']) * mp['ind_chgt_enc_pos'] + mp['rev_stock_nette_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
 
     # Calcul des chargements et de la revalorisation nette
-    if(rev_net_alloue == 0):
+    # mp['add_rev_nette_stock'] = rev_net_alloue
+    if(np.sum(mp['add_rev_nette_stock']) == 0):
         # chargements reels
         mp['chgt_enc_stock'] = mp['rev_stock_brut'] * mp['ind_chgt_enc_pos'] + mp['chgt_enc_stock_th_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
         # revaloristation nette
@@ -428,10 +427,10 @@ def calcul_revalo_pm(mp, rev_net_alloue, rev_brute_alloue_gar):
     else:
         #allocation de la revalorisation additionnelle selon le taux cible
         if(np.sum(mp['bes_tx_cible'])):
-            mp['rev_net_alloue_mp'] = rev_net_alloue * (mp['bes_tx_cible'] / np.sum(mp['bes_tx_cible']))
+            mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['bes_tx_cible'] / np.sum(mp['bes_tx_cible']))
         else:
             #  Attribution proportionnelle
-            mp['rev_net_alloue_mp'] = rev_net_alloue * (mp['nb_contr'] / np.sum(mp['nb_contr']))
+            mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
             # Revalorisation nette
             mp['rev_stock_nette'] = mp['rev_stock_nette_av_pb'] * (mp['rev_stock_nette_av_pb']>0) + mp['rev_net_alloue_mp']
             # Chargements reels

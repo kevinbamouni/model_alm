@@ -161,6 +161,12 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
         mp['rev_stock_nette_regl'] = mp['rev_stock_nette_contr'] + add_rev_regl * mp['base_prod_fi'] / sum_base_fin
     else: # Repartition au prorara si la base financiere est nulle
         mp['rev_stock_nette_regl'] = mp['rev_stock_nette_contr'] + add_rev_regl * 1 / len(mp['base_prod_fi'])
+    # On calcule le montant de revalorisation nette au dela de la revalorisation nette au taux minimum.
+
+    mp['add_rev_nette_stock'] = mp['rev_stock_nette_contr'] - (mp['rev_stock_brut'] - mp['ch_enc_th'] )
+    # Permet de gerer le cas ou la revalo nette apres PB est positive et la revalo nette avant est negative
+    ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) and (mp['rev_stock_nette_contr'] > 0)
+    mp['add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_contr'] * ind
     return mp, df_ref_revalo, ppb
 
         
@@ -168,6 +174,7 @@ def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_fi
     """
         Methode permettant de d'appliquer l'ensemble de la politique de revalorisation d'un assureur.
     """
+    # Calcul et recuperation du taux de rendement de l'actif
     tra = portefeuille_financier.calcul_tra()
     # Etape 1 : Evaluation de la base de produits financier
     mp = calcul_base_produit_financier(tra, ppb, mp)
@@ -190,4 +197,3 @@ def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_fi
     # Etape 8 : Application de la contrainte de PB reglementaire
     mp, df_ref_revalo, ppb = finance_contrainte_legale(mp,df_ref_revalo,ppb)
     return mp, df_ref_revalo, ppb, portefeuille_financier
-    
