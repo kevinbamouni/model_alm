@@ -174,7 +174,7 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
 
     mp['add_rev_nette_stock'] = mp['rev_stock_nette_contr'] - (mp['rev_stock_brut'] - mp['ch_enc_th'] )
     # Permet de gerer le cas ou la revalo nette apres PB est positive et la revalo nette avant est negative
-    ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) and (mp['rev_stock_nette_contr'] > 0)
+    ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) & (mp['rev_stock_nette_contr'] > 0)
     mp['add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_contr'] * ind
     return mp, df_ref_revalo, ppb
 
