@@ -19,7 +19,7 @@ class ppb():
             #return 0
 
     def reprise_ppb(self, montant_a_reprendre):
-        reste = np.min(montant_a_reprendre, np.sum(self.ppb_historique))
+        reste = min(montant_a_reprendre, np.sum(self.ppb_historique))
         self.reprises = np.append(self.reprises, montant_a_reprendre)
         self.consommation = self.consommation - montant_a_reprendre
         for i in range(len(self.ppb_historique),0,-1):
@@ -34,6 +34,7 @@ class ppb():
     def dotation_ppb(self, montant_a_doter):
         #self.ppb_historique = np.append(self.ppb_historique, montant_a_doter)
         self.dotations = np.append(self.dotations, montant_a_doter)
+        self.consommation = self.consommation + montant_a_doter
     
     def re_init_ppb(self):
         self.ppb_historique = np.append(self.ppb_historique, np.sum(self.dotations))

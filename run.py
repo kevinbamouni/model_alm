@@ -116,7 +116,12 @@ if __name__ == "__main__":
         ptf_financier.allocation_strategique(time_index)
         resultat_financier = ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
-        #mp_t = calcul_revalo_pm() 
+        mp_t = calcul_revalo_pm(mp_t, ppbe.consommation)
+        print(ppbe.consommation)
+        print(ppbe.reprises)
+        print(ppbe.dotations)
+        print(ppbe.ppb_historique)
+        ppbe.re_init_ppb()
 
         # Application de l'algorithme de profit share
         mp_global_projection = mp_global_projection.append(mp_t)

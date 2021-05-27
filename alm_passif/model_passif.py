@@ -416,7 +416,6 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     mp['rev_stock_nette_av_pb'] = mp['rev_stock_brut'] + mp['chgt_enc_stock_th_av_pb']
     # Application de la contrainte de taux negatif
     mp['rev_stock_nette_av_pb'] = np.maximum(0, mp['rev_stock_nette_av_pb']) * mp['ind_chgt_enc_pos'] + mp['rev_stock_nette_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
-
     # Calcul des chargements et de la revalorisation nette
     # mp['add_rev_nette_stock'] = rev_net_alloue
     if(np.sum(mp['add_rev_nette_stock']) == 0):
@@ -438,7 +437,6 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
             # Revalorisation brute
             mp['rev_stock_brut'] = mp['rev_stock_brut'] * (mp['rev_stock_nette_av_pb']>0) \
                                     + mp['chgt_enc_stock_th_av_pb'] * (mp['rev_stock_nette_av_pb']<=0) + mp['rev_net_alloue_mp'] / (1-mp['chgt_enc'])
-
     # Attribution de la revalorisation garantie
     if(rev_brute_alloue_gar != 0):
         # Allocation de la revalorisation additionnelle selon le taux cible
@@ -449,20 +447,15 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
             mp['rev_brute_alloue_gar_mp'] = mp['rev_brute_alloue_gar_mp'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
     else:
         mp['rev_brute_alloue_gar_mp'] = 0
-
     #Calcul du taux de revalorisation net
     mp['tx_rev_net'] = mp['rev_stock_nette'] / (mp['pm_deb'] - mp['prest'] + 0.5 * mp['pri_net'])
     mp['tx_rev_net'].fillna(0)
-
     # Prelevement sociaux 
     mp['soc_stock'] = np.maximum(0, mp['rev_stock_nette']) * mp['tx_soc']
-
     # Evaluation des PM avant PB
     mp['pm_fin_ap_pb'] = mp['pm_deb'] - mp['prest'] + mp['pri_net'] + mp['rev_stock_nette'] - mp['soc_stock'] 
-
     # PM garantie
     mp['pm_gar_ap_pb'] = mp['pm_gar'] + mp['rev_brute_alloue_gar_mp'] * (1 - mp['chgt_enc'] ) * (1-mp['tx_soc'])
-
     # Application d'un seuil pour eviter les problemes d'arrondi
     return mp
 
