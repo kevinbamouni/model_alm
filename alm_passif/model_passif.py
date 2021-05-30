@@ -413,7 +413,7 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     # chargement theorique avant pb
     mp['chgt_enc_stock_th_av_pb'] = mp['enc_charg_rmin_th'] + mp['enc_charg_base_th']
     # Revalorisation nette avant pb
-    mp['rev_stock_nette_av_pb'] = mp['rev_stock_brut'] + mp['chgt_enc_stock_th_av_pb']
+    mp['rev_stock_nette_av_pb'] = mp['rev_stock_brut'] - mp['chgt_enc_stock_th_av_pb']
     # Application de la contrainte de taux negatif
     mp['rev_stock_nette_av_pb'] = np.maximum(0, mp['rev_stock_nette_av_pb']) * mp['ind_chgt_enc_pos'] + mp['rev_stock_nette_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
     # Calcul des chargements et de la revalorisation nette
@@ -425,7 +425,7 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
         mp['rev_stock_nette'] = mp['rev_stock_nette_av_pb']
     else:
         #allocation de la revalorisation additionnelle selon le taux cible
-        if(np.sum(mp['bes_tx_cible'])):
+        if(np.sum(mp['bes_tx_cible']) != 0):
             mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['bes_tx_cible'] / np.sum(mp['bes_tx_cible']))
         else:
             #  Attribution proportionnelle

@@ -82,17 +82,17 @@ def finance_tx_cible_ppb(mp, ppb):
     if (bes_add<0):
         ppb.dotation_ppb(-bes_add)
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = np.maximum(mp['bes_tx_cible'], mp['ppb8_ind'])
+        mp['rev_stock_nette_cible'] = np.maximum(mp['bes_tx_cible'], mp['ppb8_ind'])
     else:
         ppb.reprise_ppb(bes_add)
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = mp['rev_stock_nette_contr'] + mp['ppb8_ind']
+        mp['rev_stock_nette_cible'] = mp['rev_stock_nette_contr'] + mp['ppb8_ind']
     return mp, ppb
 
 def finance_tx_cible_margefi(mp, df_ref_revalo):
     mp = get_param_revalo(mp, df_ref_revalo)
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
-    bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_contr']
+    bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_cible']
     bes_add = np.sum(bes_add_ind)
     mp['marge_min'] = mp['pm_moy'] * mp['tx_marge_min']
     # Evaluation du montant que peut financer la marge de l'assureur
@@ -100,12 +100,12 @@ def finance_tx_cible_margefi(mp, df_ref_revalo):
     if (bes_add<0):
         bes_finance = 0
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = mp['bes_tx_cible']
+        mp['rev_stock_nette_cible'] = mp['bes_tx_cible']
     else:
         # Besoin finance par la marge
         bes_finance = np.minimum(finance_marg, bes_add_ind)
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = mp['rev_stock_nette_contr']
+        mp['rev_stock_nette_cible'] = mp['rev_stock_nette_cible']
     mp['marge_fi'] = mp['marge_fi'] - bes_finance
     return mp
 
@@ -114,16 +114,16 @@ def finance_tx_cible_pmvl_action(mp, portefeuille_financier):
         Methode permettant de determiner le financement d'une revalorisation au taux cible par une cession de plus-values latentes en actions
     """
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
-    bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_contr']
+    bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_cible']
     bes_add = np.sum(bes_add_ind)
     if (bes_add<0):
         # Mise a zero des PMVL liquidees
         pmvl_liq = 0
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = mp['bes_tx_cible']
+        mp['rev_stock_nette_cible'] = mp['bes_tx_cible']
     else:
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_contr'] = mp['rev_stock_nette_contr']
+        mp['rev_stock_nette_cible'] = mp['rev_stock_nette_cible']
         # Les PMVL sont calcules apres compensation
         if bes_add != 0:
             # Montant de PMVL qu'il faudrait liquider
@@ -154,7 +154,7 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     # Calcul de la revalorisation legale
     rev_reg = np.maximum(0, mp['solde_pb'])
     # Montant de PB deja distribue
-    tot_rev_assure = np.sum(mp['rev_stock_nette_contr'] + mp['rev_prest_nette']) + np.sum(ppb.dotations)
+    tot_rev_assure = np.sum(mp['rev_stock_nette_cible'] + mp['rev_prest_nette']) + np.sum(ppb.dotations)
     # Reprise additionnelle
     suppl = np.maximum(0, (np.sum(rev_reg) - tot_rev_assure))
     # Marge financier finale
@@ -167,18 +167,16 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     # L'attribution s'effectue uniquement sur les produits modelises.
     sum_base_fin = np.sum(mp['base_prod_fi'])
     if sum_base_fin != 0:
-        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_contr'] + add_rev_regl * mp['base_prod_fi'] / sum_base_fin
+        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * mp['base_prod_fi'] / sum_base_fin
     else: # Repartition au prorara si la base financiere est nulle
-        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_contr'] + add_rev_regl * 1 / len(mp['base_prod_fi'])
+        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * 1 / len(mp['base_prod_fi'])
     # On calcule le montant de revalorisation nette au dela de la revalorisation nette au taux minimum.
-
-    mp['add_rev_nette_stock'] = mp['rev_stock_nette_contr'] - (mp['rev_stock_brut'] - mp['ch_enc_th'] )
+    mp['add_rev_nette_stock'] = mp['rev_stock_nette_cible'] - (mp['rev_stock_brut'] - mp['ch_enc_th'])
     # Permet de gerer le cas ou la revalo nette apres PB est positive et la revalo nette avant est negative
-    ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) & (mp['rev_stock_nette_contr'] > 0)
-    mp['add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_contr'] * ind
+    ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) & (mp['rev_stock_nette_cible'] > 0)
+    mp['add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_cible'] * ind
     return mp, df_ref_revalo, ppb
 
-        
 def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_financier):
     """
         Methode permettant de d'appliquer l'ensemble de la politique de revalorisation d'un assureur.
