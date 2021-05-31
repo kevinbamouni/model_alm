@@ -14,7 +14,9 @@ report_columns = ['t','pri_brut','pri_chgt','pri_net','enc_charg_stock','rach_ch
 
 results_global_projection = results_global_projection.loc[:,report_columns]
 
-with open('report.json') as json_file:
+# Chargement de l'allocaiton cible
+report_json = abs_path + "/Modele_ALM/run_tools/report.json"
+with open(report_json) as json_file:
     report_rename = json.load(json_file)
 
 results_global_projection = results_global_projection.rename(columns=report_rename, inplace=False)
@@ -22,4 +24,4 @@ results_global_projection = results_global_projection.rename(columns=report_rena
 # Rename : ancien nom : nouveau nom
 results_global_projection = results_global_projection.groupby(by=["annee"]).sum()
 results_global_projection = pd.pivot_table(data=results_global_projection, columns=["annee"], aggfunc=[np.sum])
-results_global_projection.to_excel(abs_path + "/tests/output_test_data/mp_global_projection_reporting.xlsx")
+results_global_projection.to_excel(abs_path + "/Modele_ALM/tests/output_test_data/mp_global_projection_reporting.xlsx")

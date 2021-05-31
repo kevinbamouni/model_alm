@@ -28,7 +28,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         :returns: Dataframe du fichier de Model point en input enrichi des colonnes qui seront calculées dans le run. 
     """
     mp_variable_list = ['num_mp', 'num_canton', 'num_prod', 'age', 'gen', 'num_tab_mort',
-       'chgt_enc', 'ind_chgt_enc_pos', 'pm_fin', 'nb_contr_fin', 'anc', 'terme',
+       'chgt_enc', 'ind_chgt_enc_pos', 'pm_fin_ap_pb', 'nb_contr_fin', 'anc', 'terme',
        'type_cot', 'periode_cot', 'tx_cible', 'chgt_prime', 'prime', 'tx_tech',
        'terme_tx_tech', 'tmg', 'terme_tmg', 'num_rach_tot', 'num_rach_part',
        'num_rach_dyn_tot', 'num_rach_dyn_part', 'chgt_rach', 'pm_gar',
@@ -37,7 +37,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
     # creation d'un identifiant unique pour chaque ligne de mp.
     if t==0 :
         #initialisation de t à 0.
-        df_mp = df_mp.rename(columns={"pm": "pm_fin"})
+        df_mp = df_mp.rename(columns={"pm": "pm_fin_ap_pb"})
         df_mp = df_mp.rename(columns={"nb_contr": "nb_contr_fin"})
         df_mp['t'] = t
         df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
@@ -52,7 +52,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp['t'] = t
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
-        df_mp['pm_deb'] = df_mp['pm_fin']
+        df_mp['pm_deb'] = df_mp['pm_fin_ap_pb']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
         df_mp = get_taux_frais_passif(df_mp, df_ref_frais)
 
@@ -62,7 +62,7 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp['t'] = t
         df_mp['age'] = df_mp['age'] + 1
         df_mp['anc'] = df_mp['anc'] + 1
-        df_mp['pm_deb'] = df_mp['pm_fin']
+        df_mp['pm_deb'] = df_mp['pm_fin_ap_pb']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
         df_mp = get_taux_frais_passif(df_mp, df_ref_frais)
     
@@ -413,7 +413,7 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     # Evaluation des PM avant PB
     mp['pm_fin_ap_pb'] = mp['pm_deb'] - mp['prest'] + mp['pri_net'] + mp['rev_stock_nette_ap_pb'] - mp['soc_stock'] 
     # PM garantie
-    mp['pm_gar_ap_pb'] = mp['pm_gar'] + mp['rev_brute_alloue_gar_mp'] * (1 - mp['chgt_enc'] ) * (1-mp['tx_soc'])
+    #mp['pm_gar_ap_pb'] = mp['pm_gar'] + mp['rev_brute_alloue_gar_mp'] * (1 - mp['chgt_enc'] ) * (1-mp['tx_soc'])
     # Application d'un seuil pour eviter les problemes d'arrondi
     return mp
 
