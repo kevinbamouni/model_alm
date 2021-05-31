@@ -8,19 +8,15 @@ Welcome to ALM Epargne Euro Individuel's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
+   :numbered:
+   :titlesonly:
+   :glob:
+   :hidden:
+   
+   alm_actif.rst
+   alm_passif.rst
 
 This is something I want to say that is not in the docstring.
-
-.. automodule:: alm_actif.model_actif
-   :members:
-
-.. automodule:: alm_actif.fonctionsfinance
-   :members:
-
-.. automodule:: alm_passif.model_passif
-   :members:
 
 Indices and tables
 ==================

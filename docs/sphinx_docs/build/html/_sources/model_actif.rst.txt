@@ -1,0 +1,8 @@
+**************************************************
+Module model_actif pour la modélisation de l'actif
+**************************************************
+
+This is something I want to say that is not in the docstring.
+
+.. automodule:: alm_actif.model_actif
+   :members:

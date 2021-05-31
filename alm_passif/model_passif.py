@@ -242,25 +242,25 @@ def calcul_des_taux_de_prel_sociaux(mp, tx_soc = 0.05):
 
 def calcul_des_prestation(mp,t, rach, tm):
     """ 
-        Calcul les flux de prestations pour des contrats epargne en euros ou retraite euros en phases de restitution.
-        Calcul des prestations en année t de projection : 
-            - Prestation avec revalorisation pour rachat total :
-            - Prestions avec revalorisation pour rachat total dynamique
-            - Prestation avec revalorisation pour rachat partiel dynamique
-            - Prestations avec revalorisation pour sinistre DC
-            - Prestations avec revalorisation pour contrat arrivé à échéance
-            - Chargements sur les différentes prestations
-            _ Prestations avec revalorisation net global
-        
-        :param mp: (Dataframe) model point passif enrichie des colonnes de la fonction *calcul_des_primes*
-        :param t: (Int) année de projection
-        :param rach: (Dataframe) table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
-        :param tm: (Dataframe) table de survie
+    Calcul les flux de prestations pour des contrats epargne en euros ou retraite euros en phases de restitution.
+    Calcul des prestations en année t de projection : 
+    - Prestation avec revalorisation pour rachat total
+    - Prestions avec revalorisation pour rachat total dynamique
+    - Prestation avec revalorisation pour rachat partiel dynamique
+    - Prestations avec revalorisation pour sinistre DC
+    - Prestations avec revalorisation pour contrat arrivé à échéance
+    - Chargements sur les différentes prestations
+    - Prestations avec revalorisation net global
+    
+    :param mp: (Dataframe) model point passif enrichie des colonnes de la fonction *calcul_des_primes*
+    :param t: (Int) année de projection
+    :param rach: (Dataframe) table de donnée contenant la probabilité de rachat total d'une contrat en fonction de l'ancienneté
+    :param tm: (Dataframe) table de survie
 
-        Le calcul des prestations fait appel aux fonctions suivantes :
-        calcul_des_taux_min(mp) ; get_rachat_dyn_partiel_et_total(mp) ; get_proba_rachat_total(mp, rach) ; get_proba_deces(mp, tm) ; calcul_des_taux_de_prel_sociaux(mp)
-        
-        :returns: (Dataframe) Model point enrichie des colonnes des prestations calculées
+    Le calcul des prestations fait appel aux fonctions suivantes :
+    calcul_des_taux_min(mp) ; get_rachat_dyn_partiel_et_total(mp) ; get_proba_rachat_total(mp, rach) ; get_proba_deces(mp, tm) ; calcul_des_taux_de_prel_sociaux(mp)
+    
+    :returns: (Dataframe) Model point enrichie des colonnes des prestations calculées
     """
     # Indicatrice de sortie en echeance    
     mp.loc[mp['terme'] > t, 'ind_ech'] = 0 # si le contrat n'est pas à terme
@@ -286,7 +286,7 @@ def calcul_des_prestation(mp,t, rach, tm):
     # mp = get_proba_deces(mp) # calcul de qx_dc
     mp = get_proba_deces(mp, tm)
     mp['qx_dc_rach'] = mp['qx_dc'] * (1 - mp['qx_rach_tot_glob'])
-    mp['dc'] = mp['pm_deb'] * mp['qx_dc_rach'] * mp['ind_ech'] # Flux de rachats totaux
+    mp['dc'] = mp['pm_deb'] * mp['qx_dc_rach'] * (1-mp['ind_ech']) # Flux de rachats totaux
     mp['rev_dc'] = mp['dc'] * mp['tx_se'] # revalorisation au taux minimum
     mp['nb_dc'] = mp['nb_contr'] * mp['qx_dc_rach'] 
     # Calcul des flux rachats partiels

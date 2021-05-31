@@ -4,6 +4,14 @@ import pandas as pd
 from pandas.core.indexes import base
 
 def attribution_ppb_8ans(mp, ppb):
+    """
+    Fonction permet d'attribuer la PPB 8ans reprise au pro rata de la PM
+
+    :param mp: (Dataframe) Model point
+    :param ppb: (Objet ppb) ppb
+
+    :returns: mp (Dataframe), ppb (Objet ppb).
+    """
     if len(ppb.ppb_historique) >= 8:
         ppb_8ans =  ppb.ppb_historique[-8]
         ppb.reprise_ppb_8ans()
@@ -14,12 +22,26 @@ def attribution_ppb_8ans(mp, ppb):
 
 def calcul_base_produit_financier(tra, ppb, mp):
     """
-        Calcul de la base des produits financier attribuables aux PM
+    Calcul de la base des produits financiers attribuables aux PM. A partir du taux de rendement de l'actif, la fonction calcul le rendement financier des PM. (PM x TRA)
+
+    :param tra: (Float) Taux de rendement de l'actif sur la période
+    :param ppb: (Objet ppb) ppb
+    :param mp: (Dataframe) Model point
+
+    :returns: mp (Dataframe).
     """
     mp['base_prod_fi'] = (mp['pm_moy'] + np.sum(ppb.ppb_historique)*(mp['pm_moy']/np.sum(mp['pm_moy']))) * tra
     return mp
 
 def calcul_marge_financiere(mp, ppb):
+    """
+    Fonction qui permet de calculer la marge financière de l'assureur.
+
+    :param mp: (Dataframe) Model point
+    :param ppb: (Objet ppb) ppb
+
+    :returns: mp (Dataframe), ppb (Objet ppb).
+    """
     # Calcul de la marge financiere avant revalorisation du stock
     # Retrait de la charge pour financement revalorisation des prestations
     # Ajout du financement venant de la PPB sur les TMG du stock et reprise pour taux cible
@@ -30,13 +52,13 @@ def calcul_marge_financiere(mp, ppb):
 
 def get_taux_pb(mp, df_ref_taux_pb):
     """
-        Fonction qui permet de recupérer les taux de pb par produit à partir du référentiel de pb par produit.
-        Ceci se fait par une jointure sur le num produit.
+    Fonction qui permet de recupérer les taux de pb par produit à partir du référentiel de pb par produit.
+    Ceci se fait par une jointure sur le num produit.
 
-        :param df_mp: (Dataframe) model points passif
-        :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
+    :param df_mp: (Dataframe) model points passif
+    :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
 
-        :returns: model points passif enrichie des taux pb
+    :returns: model points passif enrichie des taux pb
     """
     mp = pd.merge(mp, df_ref_taux_pb, how='left', on=['num_prod'],
          indicator=False, validate='many_to_one')
@@ -44,13 +66,13 @@ def get_taux_pb(mp, df_ref_taux_pb):
 
 def get_param_revalo(mp, df_ref_revalo):
     """
-        Fonction qui permet de recupérer les taux de pb par produit à partir du référentiel de pb par produit.
-        Ceci se fait par une jointure sur le num produit.
+    Fonction qui permet de recupérer les taux des résultats technique et financier attribuabla à la PM .
+    Ceci se fait par une jointure sur le num produit.
 
-        :param df_mp: (Dataframe) model points passif
-        :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
+    :param df_mp: (Dataframe) model points passif
+    :param df_ref_revalo: (Dataframe) référentiel des taux participation de la PM aux résultats techniques et financier.
 
-        :returns: model points passif enrichie des taux pb
+    :returns: model points passif enrichie des taux pb
     """
     mp = pd.merge(mp, df_ref_revalo, how='left', on=['num_prod'],
          indicator=False, validate='many_to_one')
@@ -58,8 +80,13 @@ def get_param_revalo(mp, df_ref_revalo):
 
 def calcul_pb_contractuelle(mp, ref_taux_pb):
     """
-        Fonction qui recupere les taux de pb contractuel par produit du referentiel de taux de pb puis calcul les taux de pb
-        par ligne de mp.
+    Fonction qui recupere les taux de pb contractuel par produit du referentiel de taux de pb puis calcul les taux de pb
+    par ligne de mp.
+
+    :param df_mp: (Dataframe) model points passif
+    :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
+
+    :returns: (Dataframe) model points passif enrichie de la revalorisation contractuelle
     """
     mp = get_taux_pb(mp, ref_taux_pb)
     mp['pb_contract'] = np.maximum(0, mp['base_prod_fi']) * mp['tx_pb']
@@ -76,6 +103,14 @@ def calcul_pb_contractuelle(mp, ref_taux_pb):
     return mp
 
 def finance_tx_cible_ppb(mp, ppb):
+    """
+    Fonction qui permet de fianancier le besoin de revalorisation au taux cible par reprise de la PPB
+
+    :param df_mp: (Dataframe) model points passif
+    :param ppb: (Objet ppb) Objet provision pour participation au bénéfice
+
+    :returns: (Dataframe) model points passif enrichie de la revalorisation au taux cible
+    """
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
     bes_add_ind = np.maximum(mp['bes_tx_cible'] - mp['ppb8_ind'], 0) - mp['rev_stock_nette_contr']
     bes_add = np.sum(bes_add_ind)
@@ -90,6 +125,14 @@ def finance_tx_cible_ppb(mp, ppb):
     return mp, ppb
 
 def finance_tx_cible_margefi(mp, df_ref_revalo):
+    """
+    Fonction qui permet de fianancier le besoin de revalorisation au taux cible par reprise de la PPB
+
+    :param df_mp: (Dataframe) model points passif
+    :param df_ref_revalo: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
+
+    :returns: mp (Dataframe) model points passif enrichie de la revalorisation au taux cible
+    """
     mp = get_param_revalo(mp, df_ref_revalo)
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
     bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_cible']
@@ -111,7 +154,13 @@ def finance_tx_cible_margefi(mp, df_ref_revalo):
 
 def finance_tx_cible_pmvl_action(mp, portefeuille_financier):
     """
-        Methode permettant de determiner le financement d'une revalorisation au taux cible par une cession de plus-values latentes en actions
+    Methode permettant de determiner le financement d'une revalorisation au taux cible par une cession de plus-values latentes en actions
+
+    :param df_mp: (Dataframe) model points passif
+    :param portefeuille_financier: (Objet portefeuille_financier) 
+
+    :returns: mp (Dataframe) model points passif enrichie de la revalorisation au taux cible
+    :returns: portefeuille_financier (Objet portefeuille_financier) avec réalisation de PVL action pour le financement du taux cible
     """
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
     bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_cible']
@@ -139,7 +188,15 @@ def finance_tx_cible_pmvl_action(mp, portefeuille_financier):
 
 def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     """
-        Methode permettant de calculer la contrainte legale de participation aux benefices et de l'appliquer si necessaire pour accroitre la revalorisation.
+    Methode permettant de calculer la contrainte legale de participation aux benefices et de l'appliquer si necessaire 
+    pour accroitre la revalorisation afin d'etre conforme à la reglementation.
+
+    :param df_mp: (Dataframe) model points passif
+    :param portefeuille_financier: (Objet portefeuille_financier)
+
+    :returns mp (Dataframe): model points passif enrichie de la revalorisation au taux cible
+    :returns df_ref_revalo (Dataframe): référentiel des taux de pb (plusieurs type de pb) par produit
+    :returns ppb (Objet ppb):
     """
     mp['ind_result_tech'] = (mp['resultat_technique'] > 0)
     mp['solde_pb'] = mp['taux_pb_fi'] * mp['base_prod_fi'] + mp['taux_pb_tech'] * mp['resultat_technique'] * mp['ind_result_tech'] + \
@@ -179,7 +236,22 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
 
 def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_financier):
     """
-        Methode permettant de d'appliquer l'ensemble de la politique de revalorisation d'un assureur.
+    Methode permettant de d'appliquer l'ensemble de la politique de revalorisation d'un assureur.
+    Fonctionnement du moteur de revalorisaiton :
+    - Evaluation de PB contractuelle
+    - Reprise de la PPB pour financement du besoin de revalorisation au TMG
+    - Reprise de la PPB (y compris la PPB 8 ans) pour financement du taux cible
+    - Si reprise de la PPB insuffisante pour financement du taux cible, Reprise de PVl action pour complément
+    - Si reprise de la PPB et de PVL action insuffisante pour financement du taux cible, Reprise de la marge de l'assureur pour complément
+    - Application de la contrainte légale Si la revalo cible est inférieure à la contrainte légale, reprise de la marge de l'assureur pour complément Sinon Possibilité de dotation de la PPB
+    
+    :param mp: (Dataframe)
+    :param df_ref_revalo: (Dataframe)
+    :param ref_taux_pb: (Dataframe)
+    :param ppb: (Objet ppb)
+    :param portefeuille_financier: (Objet portefeuille_financier)
+
+    :returns: mp (Dataframe), df_ref_revalo (Dataframe), ppb (Objet ppb), portefeuille_financier (Objet portefeuille_financier)
     """
     # Calcul et recuperation du taux de rendement de l'actif
     tra = portefeuille_financier.calcul_tra()

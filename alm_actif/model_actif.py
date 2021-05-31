@@ -8,8 +8,9 @@ from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioi
 
 
 class portefeuille_financier():
-    """"
-        Classe representation le portefeuille financier pour la modelisation de l'actif, sa projection et ses interactions.
+    """
+        Classe representant le portefeuille financier pour la modelisation de l'actif, sa projection et ses interactions.
+        Cette classe permet d'instancier et d'utiliser un objet representant l'actif avec ses différents type d'actifs et ses fonctions.
     """
     def __init__(self, portefeuille_action, portefeuille_oblig, portefeuille_immo, 
                         portefeuille_treso, scena_eco_action, scena_eco_oblig, scena_eco_immo, scena_eco_treso, alloc_strat_cible_portfi):
