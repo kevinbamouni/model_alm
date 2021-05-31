@@ -54,9 +54,9 @@ if __name__ == "__main__":
     treso_scena = pd.read_csv(treso_scena_path, sep=",")
 
     # Mise en forme du dataframe de l'oblig scena
-    oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'], 
+    oblig_scena = pd.melt(oblig_scena, id_vars=['scenario', 'month'],
                                     value_vars=['0.25', '0.5', '1', '2','3', '5', '7', '10', '20','30'], 
-                                    var_name='maturities', 
+                                    var_name='maturities',
                                     value_name='rates')
 
     # read file json de l'allocaiton cible
@@ -100,7 +100,7 @@ if __name__ == "__main__":
         # Modelisation du passif Avant Participation au Bénéfice
         mp_t = calcul_des_primes(mp_t)
         mp_t = calcul_des_prestation(mp_t, t = time_index, rach = rach, tm = tm)
-        mp_t = calcul_des_pm1(mp_t)
+        mp_t = calcul_des_pm(mp_t)
         mp_t = calcul_des_frais(mp_t)
         mp_t = calcul_du_resultat_technique(mp_t)
         # Modélisaiton du passif Après Participation au Bénéfice

@@ -59,7 +59,7 @@ def get_param_revalo(mp, df_ref_revalo):
 def calcul_pb_contractuelle(mp, ref_taux_pb):
     """
         Fonction qui recupere les taux de pb contractuel par produit du referentiel de taux de pb puis calcul les taux de pb
-        par ligne de mp
+        par ligne de mp.
     """
     mp = get_taux_pb(mp, ref_taux_pb)
     mp['pb_contract'] = np.maximum(0, mp['base_prod_fi']) * mp['tx_pb']
