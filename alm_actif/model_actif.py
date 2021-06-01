@@ -208,9 +208,7 @@ class portefeuille_financier():
 
         # Mise à jour de la treso
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + calcul_operation_alm_vm['treso']
-
         self.calcul_reserve_capitation(self.plus_moins_value_realised_oblig)
-
         self.calcul_provision_risque_exigibilite(t)
     
     def calcul_reserve_capitation(self, plus_ou_moins_value):

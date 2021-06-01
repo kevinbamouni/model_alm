@@ -7,6 +7,7 @@ import numpy as np
 from tqdm import tqdm
 import json
 import os
+from pathlib import Path
 
 """
     run.py est l'unique point d'entré pour lancer un run de projection.
@@ -22,26 +23,26 @@ if __name__ == "__main__":
     N = 40
     t = 0
     scenario = 1
-    abs_path = os.path.abspath(os.curdir)
+    abs_path = Path(os.path.dirname(os.path.abspath(__file__)))
 
     ############################################################################################################
     # Chargement des donnees de l'actif
     ############################################################################################################
 
     # Chargement des input : Model point portefeuille financier
-    oblig_path = abs_path + "/tests/input_test_data/ptf_oblig.csv"
-    action_path = abs_path + "/tests/input_test_data/ptf_action.csv"
-    treso_path = abs_path + "/tests/input_test_data/ptf_treso.csv"
-    immo_path = abs_path + "/tests/input_test_data/ptf_immo.csv"
+    oblig_path = abs_path / "tests/input_test_data/ptf_oblig.csv"
+    action_path = abs_path / "tests/input_test_data/ptf_action.csv"
+    treso_path = abs_path / "tests/input_test_data/ptf_treso.csv"
+    immo_path = abs_path / "tests/input_test_data/ptf_immo.csv"
 
     # Chargement des données ESG 
-    oblig_scena_path = abs_path + "/gse/gse_outputs/2009_ESWG_1000_scenarios.csv"
-    action_scena_path = abs_path + "/gse/gse_outputs/esg_stock.csv"
-    immo_scena_path = abs_path + "/gse/gse_outputs/esg_realestate.csv"
-    treso_scena_path = abs_path + "/gse/gse_outputs/esg_shortrate.csv"
+    oblig_scena_path = abs_path / "gse/gse_outputs/2009_ESWG_1000_scenarios.csv"
+    action_scena_path = abs_path / "gse/gse_outputs/esg_stock.csv"
+    immo_scena_path = abs_path / "gse/gse_outputs/esg_realestate.csv"
+    treso_scena_path = abs_path / "gse/gse_outputs/esg_shortrate.csv"
 
     # Chargement de l'allocaiton cible
-    alloc_strat_cible_portfi_path = abs_path + "/tests/input_test_data/alloc_strat_cible_portfi.json"
+    alloc_strat_cible_portfi_path = abs_path / "tests/input_test_data/alloc_strat_cible_portfi.json"
 
     oblig = pd.read_csv(oblig_path)
     action = pd.read_csv(action_path)
@@ -71,12 +72,12 @@ if __name__ == "__main__":
     # Chargement des donnees du passif
     ############################################################################################################
 
-    mp_path = abs_path + "/tests/input_test_data/mp.csv"
-    tm_path = abs_path + "/tests/input_test_data/th_dc_00_02.csv"
-    rach_path = abs_path + "/tests/input_test_data/table_rachat.csv"
-    ref_frais_path = abs_path + "/tests/input_test_data/ref_frais_produits.csv"
-    taux_pb = abs_path + "/tests/input_test_data/taux_pb.csv"
-    param_revalo = abs_path + "/tests/input_test_data/param_revalo.csv"
+    mp_path = abs_path / "tests/input_test_data/mp.csv"
+    tm_path = abs_path / "tests/input_test_data/th_dc_00_02.csv"
+    rach_path = abs_path / "tests/input_test_data/table_rachat.csv"
+    ref_frais_path = abs_path / "tests/input_test_data/ref_frais_produits.csv"
+    taux_pb = abs_path / "tests/input_test_data/taux_pb.csv"
+    param_revalo = abs_path / "tests/input_test_data/param_revalo.csv"
 
     # Chargement des input.
     mp = pd.read_csv(mp_path) # model point
@@ -114,16 +115,12 @@ if __name__ == "__main__":
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
         ptf_financier.allocation_strategique(time_index)
-        resultat_financier = ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
+        ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
         mp_t = calcul_revalo_pm(mp_t, ppbe.consommation)
-        print(ppbe.consommation)
-        print(ppbe.reprises)
-        print(ppbe.dotations)
-        print(ppbe.ppb_historique)
         ppbe.re_init_ppb()
 
         # Application de l'algorithme de profit share
         mp_global_projection = mp_global_projection.append(mp_t)
 
-    mp_global_projection.to_csv(abs_path + "/tests/output_test_data/mp_global_projection.csv", index = False)
+    mp_global_projection.to_csv(abs_path / "tests/output_test_data/mp_global_projection.csv", index = False)
