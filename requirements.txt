@@ -55,6 +55,7 @@ filelock==3.0.12
 flake8==3.8.3
 Flask==1.1.2
 fsspec==0.7.4
+furo==2021.4.11b34
 future==0.18.2
 gevent @ file:///opt/concourse/worker/volumes/live/78aec834-bbf0-47a7-799f-96dd2cf589ab/volume/gevent_1593009579767/work
 glob2==0.7
