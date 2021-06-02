@@ -13,6 +13,8 @@ Welcome to ALM Epargne Euro Individuel's documentation!
    :glob:
    :hidden:
    
+   environnement.rst
+   modele_alm.rst
    alm_actif.rst
    alm_passif.rst
 

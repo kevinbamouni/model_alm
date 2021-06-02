@@ -118,6 +118,8 @@ if __name__ == "__main__":
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
         mp_t = calcul_revalo_pm(mp_t, ppbe.consommation)
+        ptf_financier.allocation_strategique(time_index)
+        ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         ppbe.re_init_ppb()
 
         # Application de l'algorithme de profit share

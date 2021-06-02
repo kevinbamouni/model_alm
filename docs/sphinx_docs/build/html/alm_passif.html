@@ -2,10 +2,10 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="prev" title="1. Module alm_actif pour la modélisation de l’actif" href="alm_actif.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="prev" title="3. Module alm_actif pour la modélisation de l’actif" href="alm_actif.html" />
 
     <meta name="generator" content="sphinx-3.1.2, furo 2021.04.11.beta34"/>
-        <title>2. Module alm_passif pour la modélisation du passif - Documentation ALM Epargne Euro Individuel 0.1</title>
+        <title>4. Module alm_passif pour la modélisation du passif - Documentation ALM Epargne Euro Individuel 0.1</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=59ab60ac09ea94ccfe6deddff6d715cce948a6fc">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -14,27 +14,27 @@
 
 <style>
   :root {
-    --color-code-background: #f8f8f8;
+    --color-code-background: #eeffcc;
   --color-code-foreground: black;
   
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
   
     }
   }
 
   /* For allowing end-user-specific overrides */
   .override-light {
-    --color-code-background: #f8f8f8;
+    --color-code-background: #eeffcc;
   --color-code-foreground: black;
   
   }
   .override-dark {
-    --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+    --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
   
   }
 </style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
@@ -108,10 +108,12 @@
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="alm_actif.html">1. Module alm_actif pour la modélisation de l’actif</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="environnement.html">1. Configuration de l’environnement de developpement et de python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modele_alm.html">2. Configuration et Run du modèle</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="alm_actif.html">3. Module alm_actif pour la modélisation de l’actif</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">2. Module alm_passif pour la modélisation du passif</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">4. Module alm_passif pour la modélisation du passif</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -129,12 +131,12 @@
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
         <div class="section" id="module-alm-passif-pour-la-modelisation-du-passif">
-<h1><span class="section-number">2. </span>Module alm_passif pour la modélisation du passif<a class="headerlink" href="#module-alm-passif-pour-la-modelisation-du-passif" title="Lien permanent vers ce titre">¶</a></h1>
+<h1><span class="section-number">4. </span>Module alm_passif pour la modélisation du passif<a class="headerlink" href="#module-alm-passif-pour-la-modelisation-du-passif" title="Lien permanent vers ce titre">¶</a></h1>
 <p>alm_passif est le module permettant de modéliser le passif.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="section" id="model-passif">
-<h2><span class="section-number">2.1. </span>model_passif<a class="headerlink" href="#model-passif" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">4.1. </span>model_passif<a class="headerlink" href="#model-passif" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Contient les fonctions permettant de calculer les variables de modélisation du passif</p>
 <span class="target" id="module-alm_passif.model_passif"></span><dl class="py function">
 <dt id="alm_passif.model_passif.calcul_des_frais">
@@ -387,7 +389,7 @@ Ceci se fait par une jointure sur le num produit.</p>
 </dd></dl>
 </div>
 <div class="section" id="ppb">
-<h2><span class="section-number">2.2. </span>ppb<a class="headerlink" href="#ppb" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">4.2. </span>ppb<a class="headerlink" href="#ppb" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Contient la classe permettant de modéliser et gérer la provision pour participation au bénéfice</p>
 <span class="target" id="module-alm_passif.ppb"></span><dl class="py class">
 <dt id="alm_passif.ppb.ppb">
@@ -426,7 +428,7 @@ Ceci se fait par une jointure sur le num produit.</p>
 </dd></dl>
 </div>
 <div class="section" id="revalorisation-contrats">
-<h2><span class="section-number">2.3. </span>revalorisation_contrats<a class="headerlink" href="#revalorisation-contrats" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">4.3. </span>revalorisation_contrats<a class="headerlink" href="#revalorisation-contrats" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Contient le moteur de revalorisation : Taux minimum garanti, Participation au bénéfice.</p>
 <span class="target" id="module-alm_passif.revalorisation_contrats"></span><dl class="py function">
 <dt id="alm_passif.revalorisation_contrats.attribution_ppb_8ans">
@@ -642,7 +644,7 @@ Fonctionnement du moteur de revalorisaiton :
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">1. </span>Module alm_actif pour la modélisation de l’actif</div>
+                <div class="title"><span class="section-number">3. </span>Module alm_actif pour la modélisation de l’actif</div>
                 
               </div>
             </a>
@@ -676,10 +678,10 @@ Fonctionnement du moteur de revalorisaiton :
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">2. Module alm_passif pour la modélisation du passif</a><ul>
-<li><a class="reference internal" href="#model-passif">2.1. model_passif</a></li>
-<li><a class="reference internal" href="#ppb">2.2. ppb</a></li>
-<li><a class="reference internal" href="#revalorisation-contrats">2.3. revalorisation_contrats</a></li>
+<li><a class="reference internal" href="#">4. Module alm_passif pour la modélisation du passif</a><ul>
+<li><a class="reference internal" href="#model-passif">4.1. model_passif</a></li>
+<li><a class="reference internal" href="#ppb">4.2. ppb</a></li>
+<li><a class="reference internal" href="#revalorisation-contrats">4.3. revalorisation_contrats</a></li>
 </ul>
 </li>
 </ul>

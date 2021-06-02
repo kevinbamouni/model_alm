@@ -1,0 +1,269 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="2. Configuration et Run du modèle" href="modele_alm.html" /><link rel="prev" title="Welcome to ALM Epargne Euro Individuel’s documentation!" href="index.html" />
+
+    <meta name="generator" content="sphinx-3.1.2, furo 2021.04.11.beta34"/>
+        <title>1. Configuration de l’environnement de developpement et de python - Documentation ALM Epargne Euro Individuel 0.1</title>
+      <link rel="stylesheet" href="_static/styles/furo.css?digest=59ab60ac09ea94ccfe6deddff6d715cce948a6fc">
+    <link rel="stylesheet" href="_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
+    
+
+
+<style>
+  :root {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+  }
+</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Documentation ALM Epargne Euro Individuel 0.1</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Documentation ALM Epargne Euro Individuel 0.1</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html">
+  <input class="sidebar-search" placeholder=Recherche name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. Configuration de l’environnement de developpement et de python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modele_alm.html">2. Configuration et Run du modèle</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="alm_actif.html">3. Module alm_actif pour la modélisation de l’actif</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="alm_passif.html">4. Module alm_passif pour la modélisation du passif</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="configuration-de-l-environnement-de-developpement-et-de-python">
+<h1><span class="section-number">1. </span>Configuration de l’environnement de developpement et de python<a class="headerlink" href="#configuration-de-l-environnement-de-developpement-et-de-python" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="installer-python-3-x">
+<h2><span class="section-number">1.1. </span>Installer Python 3.x<a class="headerlink" href="#installer-python-3-x" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour installer python (Version 3.x) sur votre ordinateur vous avez le choix entre deux méthodes :
+1. Télécharger et installer Python à partir du site officiel de la Python Software Foundation
+2. Installer le bundle python Anaconda</p>
+<div class="section" id="installation-via-la-python-software-foundation">
+<h3><span class="section-number">1.1.1. </span>Installation via la Python Software Foundation<a class="headerlink" href="#installation-via-la-python-software-foundation" title="Lien permanent vers ce titre">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Télécharger la dernière version de python qui est (3.9) à ce jour ici : <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>. (Ne pas prendre de version 2.x, elle n’est plus supportée à ce jour)</p></li>
+<li><p>Installer python 3.x (En suivant les instructions d’installation)</p></li>
+<li><dl class="simple">
+<dt>Installer l’ensemble des bibliothèques nécéssaires en utilisant le fichier « requirements.txt » qui se situe à la racine du projet MODELE_ALM.</dt><dd><ol class="loweralpha simple">
+<li><p>Ouvrir l’éditeur de commande de votre ordinateur (Pour windows c’est le cmd ou powershell)</p></li>
+<li><p>Se déplacer dans le dossier racine du projet MODELE_ALM (qui contient le fichier requirements.txt) à l’aide de la commande <code class="docutils literal notranslate"><span class="pre">chdir</span></code> sur windows ou <code class="docutils literal notranslate"><span class="pre">cd</span></code> sur linux et macos.</p></li>
+<li><p>Exécuter la commande suivante : <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="installation-anaconda">
+<h3><span class="section-number">1.1.2. </span>Installation Anaconda<a class="headerlink" href="#installation-anaconda" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Anaconda est une distribution python intégrant tout un ensemble de packages prêts à être utilisés pour la data science. (Anaconda = Python + packages de data science)</p>
+<ol class="arabic simple">
+<li><p>Télécharger Anaconda ici : <a class="reference external" href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a></p></li>
+<li><p>Installer Anaconda</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition">
+<h2><span class="section-number">1.2. </span>Installer un environnement de developpement intégré : Microsoft Visual Studio Code ou Pycharm Comunity Edition<a class="headerlink" href="#installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour le developper/Exécuter/debugger le code python l’EDI qui a été utilisé est Visual Studio Code avec des Extensions utiles au developpement python.</p>
+<div class="section" id="installation-de-visual-studio-code">
+<h3><span class="section-number">1.2.1. </span>Installation de Visual Studio Code<a class="headerlink" href="#installation-de-visual-studio-code" title="Lien permanent vers ce titre">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Télécharger Visual Studio Code ici : <a class="reference external" href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a></p></li>
+<li><p>Se reférer au manuel de visual studio code pour configurer un environnement de developpement python pour la data science. (<a class="reference external" href="https://code.visualstudio.com/docs/languages/python">https://code.visualstudio.com/docs/languages/python</a>)</p></li>
+</ol>
+</div>
+<div class="section" id="installation-de-pycharm">
+<h3><span class="section-number">1.2.2. </span>Installation de Pycharm<a class="headerlink" href="#installation-de-pycharm" title="Lien permanent vers ce titre">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Télécharger Pycharm Comunity Edition (qui est gratuite) ici :  <a class="reference external" href="https://www.jetbrains.com/fr-fr/pycharm/">https://www.jetbrains.com/fr-fr/pycharm/</a></p></li>
+<li><p>Installer Pycharm Community Edition.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="modele_alm.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">2. </span>Configuration et Run du modèle</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, B.K.
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="_sources/environnement.rst.txt"
+               rel="nofollow">
+              Montrer le code source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contenu
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">1. Configuration de l’environnement de developpement et de python</a><ul>
+<li><a class="reference internal" href="#installer-python-3-x">1.1. Installer Python 3.x</a><ul>
+<li><a class="reference internal" href="#installation-via-la-python-software-foundation">1.1.1. Installation via la Python Software Foundation</a></li>
+<li><a class="reference internal" href="#installation-anaconda">1.1.2. Installation Anaconda</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition">1.2. Installer un environnement de developpement intégré : Microsoft Visual Studio Code ou Pycharm Comunity Edition</a><ul>
+<li><a class="reference internal" href="#installation-de-visual-studio-code">1.2.1. Installation de Visual Studio Code</a></li>
+<li><a class="reference internal" href="#installation-de-pycharm">1.2.2. Installation de Pycharm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
+</html>
