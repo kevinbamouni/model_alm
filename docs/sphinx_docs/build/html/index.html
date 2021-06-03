@@ -134,7 +134,38 @@
 <h1>Welcome to ALM Epargne Euro Individuel’s documentation!<a class="headerlink" href="#welcome-to-alm-epargne-euro-individuel-s-documentation" title="Lien permanent vers ce titre">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p>This is something I want to say that is not in the docstring.</p>
+<p>Ce modèle est une reprise en python du code source du Package R ‘SimBEL’ qui est un package de calcul du best estimate epargne (euro individuelle) sous Solvabilite 2.</p>
+<p>Il reprend l’algorithme du modèle source avec un developpement adaptée en python dans un but d’avoir un code simple/compréhensible, maintenable et extensible.</p>
+<p>Le code source est hébergé ici (repos git public): <a class="reference external" href="https://github.com/kevinbamouni/modele_alm/tree/test_debut_fin">https://github.com/kevinbamouni/modele_alm/tree/test_debut_fin</a></p>
+</div>
+<div class="section" id="to-do">
+<h1>TO DO :<a class="headerlink" href="#to-do" title="Lien permanent vers ce titre">¶</a></h1>
+<ol class="arabic simple">
+<li><p>Revue de l’algorithme de participation au bénéfice et de provision de participation au bénéfice.</p></li>
+<li><p>Revue de l’impact des différents flux sur la trésorerie à l’actif</p></li>
+<li><p>Revue de la modélisation de l’actif avec les scénarios économiques. (Viellissement de action, immo, obligations)</p></li>
+<li><p>Revue/Implémentation des actualisations des variables post revalo au participations au bénéfices (tresorerie, resultat technique, resultat financier…)</p></li>
+<li><p>Implémentation du run multiscénarios, pour l’instant un seul scénarions est exécuté. (à priori il suffira de boucler sur chaque scénarion du GSE)</p></li>
+<li><p>Implémentation du calcul de Best estimate</p></li>
+<li><p>Implémentation d’un module complet de reporting (le script à date étant basique)</p></li>
+<li><p>Recette fonctionnelle complete</p></li>
+<li><p>Historiser le portefeuille_financier et la PPB.</p></li>
+</ol>
+</div>
+<div class="section" id="references">
+<h1>Références :<a class="headerlink" href="#references" title="Lien permanent vers ce titre">¶</a></h1>
+<ol class="arabic simple">
+<li><p>Documentation : <a class="reference external" href="http://www.ressources-actuarielles.net/simbel">http://www.ressources-actuarielles.net/simbel</a></p></li>
+<li><p>Documentation R : <a class="reference external" href="https://rdrr.io/github/qguibert/SimBEL/">https://rdrr.io/github/qguibert/SimBEL/</a></p></li>
+<li><dl class="simple">
+<dt>Code source :</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/qguibert/SimBEL">https://github.com/qguibert/SimBEL</a></p></li>
+<li><p><a class="reference external" href="https://github.com/qguibert/Environnement">https://github.com/qguibert/Environnement</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Lien permanent vers ce titre">¶</a></h1>
@@ -190,6 +221,8 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Welcome to ALM Epargne Euro Individuel’s documentation!</a></li>
+<li><a class="reference internal" href="#to-do">TO DO :</a></li>
+<li><a class="reference internal" href="#references">Références :</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
