@@ -17,6 +17,7 @@ Welcome to ALM Epargne Euro Individuel's documentation!
    modele_alm.rst
    alm_actif.rst
    alm_passif.rst
+   sphynx.rst
 
 Ce modèle est une reprise en python du code source du Package R ‘SimBEL’ qui est un package de calcul du best estimate epargne (euro individuelle) sous Solvabilite 2.
 
