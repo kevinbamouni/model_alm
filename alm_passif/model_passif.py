@@ -5,6 +5,22 @@ from tqdm import tqdm
 import os
 #pd.set_option("display.max_rows", None, "display.max_columns", None)
 
+def description_mp(mp):
+    """
+        Description basique de quelques variables des MP.
+    """
+    try:
+        information_dict = {"anc": np.mean(mp['anc']),
+                            "age": np.mean(mp['age']),
+                            "nb_contr_fin":np.sum(mp['nb_contr_fin']),
+                            "pm_fin_ap_pb":np.sum(mp['pm_fin_ap_pb'])}
+    except KeyError:
+        information_dict = {"anc": np.mean(mp['anc']),
+                            "age": np.mean(mp['age']),
+                            "nb_contr": np.sum(mp['nb_contr']),
+                            "pm": np.sum(mp['pm'])}
+    return information_dict
+
 def get_taux_frais_passif(mp, df_ref_frais):
     """
         Fonction qui permet de recupérer les taux de frais par produit à partir du référentiel de frais par produit.
@@ -41,11 +57,6 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp = df_mp.rename(columns={"nb_contr": "nb_contr_fin"})
         df_mp['t'] = t
         df_mp['uuid'] = df_mp.apply(lambda _: uuid.uuid4(), axis=1)
-        
-
-        #for x in list_colonnes_a_enrichir:
-        #    df_mp[x]= None
-
     elif t==1 :
         df_mp = df_mp.loc[df_mp['t'] == (t-1), mp_variable_list]
         #initialisation de t.
@@ -55,7 +66,6 @@ def initialisation_des_mp(df_mp, df_ref_frais, t):
         df_mp['pm_deb'] = df_mp['pm_fin_ap_pb']
         df_mp['nb_contr'] = df_mp['nb_contr_fin']
         df_mp = get_taux_frais_passif(df_mp, df_ref_frais)
-
     elif t>=2:
         df_mp = df_mp.loc[df_mp['t'] == (t-1), mp_variable_list]
         #initialisation de t.
@@ -139,19 +149,14 @@ def calcul_rachat_conjoncturel_acpr(ecart, loi='Min'):
             delta = 0.03
             RCmin = -0.05
             RCmax = 0.3
-    
     if ecart<alpha:
         rachat = RCmax
-    
     if alpha<ecart and ecart<beta:
         rachat = RCmax*(ecart-beta)/(alpha-beta)
-
     if beta<ecart and ecart<gamma:
         rachat = 0
-
     if gamma<ecart and ecart<delta:
         rachat = RCmin*(ecart-gamma)/(delta-beta)
-    
     if ecart>delta:
         rachat = RCmin
     
@@ -190,13 +195,11 @@ def calcul_des_taux_min(mp):
      # TODO : calcul des taux techniques et TMG min à revoir potentiellement.
 
      :param mp: (Dataframe) model point passif
-     
      :returns: model point passif enrichie des taux techniques ainsi que des taux minimum garantis annuels et semestriels
     """ 
-    # calcul du taux technique    
+    # calcul du taux technique
     mp['tx_tech_an'] = np.maximum(mp['tx_tech'], 0)
     mp['tx_tech_se'] = mp['tx_tech_an'] / 2 # taux semestriel
-
     # Calcul du taux minimum
     mp['tx_an'] = np.maximum(np.maximum(mp['tx_tech_an'], mp['tmg']), 0) # taux annuel minimum
     mp['tx_se'] = mp['tx_an'] / 2 # taux semestriel
@@ -288,7 +291,7 @@ def calcul_des_prestation(mp,t, rach, tm):
     mp['qx_dc_rach'] = mp['qx_dc'] * (1 - mp['qx_rach_tot_glob'])
     mp['dc'] = mp['pm_deb'] * mp['qx_dc_rach'] * (1-mp['ind_ech']) # Flux de rachats totaux
     mp['rev_dc'] = mp['dc'] * mp['tx_se'] # revalorisation au taux minimum
-    mp['nb_dc'] = mp['nb_contr'] * mp['qx_dc_rach'] 
+    mp['nb_dc'] = mp['nb_contr'] * mp['qx_dc_rach']
     # Calcul des flux rachats partiels
     # Taux de rachat incluant les rachats structurels et conjoncturels sur la population des non rachetes et vivants
     mp['qx_rach_part_glob'] = (1 - mp['qx_rach_tot_glob']) * (1 - mp['qx_dc']) * np.maximum(0, np.minimum(1, mp['qx_rach_part'] + mp['qx_rach_tot_dyn']))
@@ -304,6 +307,7 @@ def calcul_des_prestation(mp,t, rach, tm):
     # Calcul du taux de chargement sur encours
     # Applique une limite sur le chargement sur encours selon la valeur de l'indicatrice
     # permettant les taux negatifs.
+    # TODO: refactorer le nom de la variable pour préciser que c'est bien un taux de chargement sur les encours
     mp['chgt_enc'] = np.minimum(mp['chgt_enc'], mp['tx_an'] / (1 + mp['tx_an'])) * mp['ind_chgt_enc_pos'] + mp['chgt_enc'] * (1 - mp['ind_chgt_enc_pos'])
     # Calcul des chargements sur encours
     mp['enc_charg'] = (mp['prest'] + mp['rev_prest']) * mp['chgt_enc'] / 2
@@ -316,7 +320,7 @@ def calcul_des_prestation(mp,t, rach, tm):
     # Calcul des interets techniques sur prestations
     mp['it_tech_prest'] = mp['prest'] * mp['tx_tech_se']
     # Evaluation du besoin pour le financement des TMG sur prestations
-    mp['bes_tmg_prest'] = mp['rev_prest'] - mp['it_tech_prest']
+    mp['bes_tmg_prest'] = np.minimum(mp['rev_prest'] - mp['it_tech_prest'], 0)
     return mp
 
 def calcul_des_pm(mp):
@@ -330,25 +334,22 @@ def calcul_des_pm(mp):
     :returns: (Dataframe) model point passif enrichi  des calculs de provision mathématiques (pm)
     """
     # Calculs effectues plusieurs fois
-    mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest'] # PM restant après versement en milieu d'année des prestations
+    mp['diff_pm_prest'] = mp['pm_deb'] - mp['prest']
     # Calcul des taux cibles
     mp = calcul_des_taux_cibles(mp)
-    # Calcul des taux de chargement sur encours
-    # Applique une limite sur le chargement sur encours selon la valeur de l'indicatrice permettant les taux négatifs
-    mp['chgt_enc']= np.minimum(mp['chgt_enc'], mp['tx_an']/(1+mp['tx_an'])) * mp['ind_chgt_enc_pos'] + mp['chgt_enc'] *(1 - mp['ind_chgt_enc_pos'])
     # Calcul de la revalorisation brute
     mp['rev_stock_brut'] = mp['diff_pm_prest'] * mp['tx_an'] + mp['pri_net'] * mp['tx_se']
     # Chargement sur encours
     mp['enc_charg_stock'] = mp['diff_pm_prest'] * (1+mp['tx_an'])  * mp['chgt_enc'] + mp['pri_net'] * (1 + mp['tx_se']) * (mp['chgt_enc']/2)
     # Chargement sur encours théorique en decomposant la part relative au passif non revalorisés et à la revalorisation
     mp['enc_charg_base_th'] = mp['diff_pm_prest'] * mp['chgt_enc'] + mp['pri_net'] * (mp['chgt_enc']/2)
-    mp['enc_charg_rmin_th'] = (mp['diff_pm_prest'] * mp['chgt_enc']) * mp['tx_an'] + (mp['pri_net'] * (mp['chgt_enc']/2)) * mp['tx_se']
+    mp['enc_charg_rmin_th'] = mp['diff_pm_prest'] * mp['chgt_enc'] * mp['tx_an'] + mp['pri_net'] * (mp['chgt_enc']/2) * mp['tx_se']
     # Base utilise pour appliques le calcul du taux de chargement sur encours
     mp['base_enc_th'] = mp['diff_pm_prest'] * (1+mp['tx_an']) + mp['pri_net'] * (1+mp['tx_se'])
     # Calcul de la revalorisation sur stock
     mp['rev_stock_nette'] = mp['rev_stock_brut'] - mp['enc_charg_stock']
     # Revalorisation nette totale
-    mp['rev_total_nette'] = mp['rev_stock_nette'] + mp['enc_charg_stock']
+    mp['rev_total_nette'] = mp['rev_stock_nette'] + mp['rev_prest_nette']
     # Prelevement sociaux
     mp['soc_stock'] = np.maximum(0, mp['rev_stock_nette']) * mp['tx_soc']
     # Evaluation des provisions mathématiques avant PB
@@ -361,12 +362,18 @@ def calcul_des_pm(mp):
     # Evaluation du besoin pour le financement du taux cible
     mp['bes_tx_cible'] = np.maximum(0, (mp['tx_cible_an'] * mp['diff_pm_prest'] + mp['tx_cible_se'] * mp['pri_net']))
     # Evaluation du besoin pour le financement des TMG sur les stock
-    mp['bes_tmg_stock'] = mp['rev_stock_brut'] - mp['it_tech_stock']
+    mp['bes_tmg_stock'] = np.minimum(mp['rev_stock_brut'] - mp['it_tech_stock'],0)
     return mp
 
 def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     """
-        Docs
+    calcul_revalo_pm() est une methode permettant de calculer les provisions mathematiques (PM)
+    de fin de periode après application de la revalorisation au titre de la participation aux benefices
+    et après versement des prestations.
+
+    :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_pm*
+
+    :returns: (Dataframe) model point passif enrichi des calculs de participation au bénéfice (pm)
     """
     # chargement theorique avant pb
     mp['chgt_enc_stock_th_av_pb'] = mp['enc_charg_rmin_th'] + mp['enc_charg_base_th']
@@ -388,13 +395,13 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
         else:
             #  Attribution proportionnelle
             mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
-            # Revalorisation nette
-            mp['rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb'] * (mp['rev_stock_nette_av_pb']>0) + mp['rev_net_alloue_mp']
-            # Chargements reels
-            mp['enc_charg_stock_ap_pb'] = mp['chgt_enc_stock_th_av_pb'] + mp['rev_net_alloue_mp'] / (1 - mp['chgt_enc']) * mp['chgt_enc']
-            # Revalorisation brute
-            mp['rev_stock_brut_ap_pb'] = mp['rev_stock_brut'] * (mp['rev_stock_nette_av_pb']>0) \
-                                    + mp['chgt_enc_stock_th_av_pb'] * (mp['rev_stock_nette_av_pb']<=0) + mp['rev_net_alloue_mp'] / (1-mp['chgt_enc'])
+        # Revalorisation nette
+        mp['rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb'] * (mp['rev_stock_nette_av_pb']>0) + mp['rev_net_alloue_mp']
+        # Chargements reels
+        mp['enc_charg_stock_ap_pb'] = mp['chgt_enc_stock_th_av_pb'] + mp['rev_net_alloue_mp'] / (1 - mp['chgt_enc']) * mp['chgt_enc']
+        # Revalorisation brute
+        mp['rev_stock_brut_ap_pb'] = mp['rev_stock_brut'] * (mp['rev_stock_nette_av_pb']>0) \
+                                + mp['chgt_enc_stock_th_av_pb'] * (mp['rev_stock_nette_av_pb']<=0) + mp['rev_net_alloue_mp'] / (1-mp['chgt_enc'])
     # Attribution de la revalorisation garantie
     if(rev_brute_alloue_gar != 0):
         # Allocation de la revalorisation additionnelle selon le taux cible
@@ -406,7 +413,7 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     else:
         mp['rev_brute_alloue_gar_mp'] = 0
     #Calcul du taux de revalorisation net
-    mp['tx_rev_net'] = mp['rev_stock_nette_ap_pb'] / (mp['pm_deb'] - mp['prest'] + 0.5 * mp['pri_net'])
+    mp['tx_rev_net'] = mp['rev_stock_nette_ap_pb'] / (mp['pm_deb'] - mp['prest'] + (0.5 * mp['pri_net']))
     mp['tx_rev_net'].fillna(0)
     # Prelevement sociaux 
     mp['soc_stock_ap_pb'] = np.maximum(0, mp['rev_stock_nette_ap_pb']) * mp['tx_soc']
@@ -444,10 +451,9 @@ def calcul_du_resultat_technique(mp):
     """ 
         Calcul du resultat technique.
 
-        :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*
+        :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*.
 
         :returns: (Dataframe) model point passif enrichi du resultat technique
-
         # TODO modéliser le choc de rachat : le rachat massif.
     """
     # calcul des flux debut d'annee: rach_mass est le choc de rachat massif non encore implémenter,
@@ -457,9 +463,7 @@ def calcul_du_resultat_technique(mp):
     #  calcul des flux_milieu d'annee : primes - prestation - (charges sur prestations + charges sur primes) 
     # TODO intégrer les flux hors modèle (non modéliser)
     mp['flux_milieu'] = mp['pri_brut'] - (mp['rev_prest_nette'] + 
-                                        mp['prest'] - 
-                                        mp['rach_mass'] - 
-                                        (mp['rach_charg'] - mp['rach_charg_mass'])
+                                        mp['prest']
                                  ) - \
                                  (
                                      mp["frais_var_prime"] + 
@@ -468,9 +472,8 @@ def calcul_du_resultat_technique(mp):
                                     mp["frais_fixe_prest"]
                                  )
     # calcul des flux_fin d'annee :
-    mp['flux_fin'] = mp['frais_var_enc'] + mp['frais_var_enc']
-    mp['resultat_technique'] = flux_debut + mp['flux_milieu'] + mp['flux_fin'] - (mp['pm_fin'] - mp['pm_deb']) # TODO intégrer les flux hors modèle (non modéliser) 
-    
+    mp['flux_fin'] = mp['frais_var_enc'] + mp['frais_fixe_enc']
+    mp['resultat_technique'] = mp['pm_deb'] - mp['pm_fin'] +  mp['flux_milieu'] + mp['flux_fin']   #TODO intégrer les flux hors modèle (non modélisé)
     return mp
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
@@ -483,48 +486,4 @@ def projection_autres_passifs(an, autre_passif, coef_inf):
     """
     autre_passif = autre_passif.loc[autre_passif['annee'] == an,:]
     autre_passif = autre_passif['pm_moy'] * coef_inf
-
-# Execution main :
-if __name__ == "__main__":
-
-    # Variable à configurer :
-    Date_t0="31/12/2019" # Jour j de projection
-    N = 40 # Nombre d'années de projections
-    abs_path = os.path.abspath(os.curdir)
-    mp_path =  abs_path + "/tests/input_test_data/mp.csv"
-    tm_path =  abs_path + "/tests/input_test_data/th_dc_00_02.csv"
-    rach_path =  abs_path + "/tests/input_test_data/table_rachat.csv"
-    ref_frais_path =  abs_path + "/tests/input_test_data/ref_frais_produits.csv"
-
-    # Chargement des input.
-    mp = pd.read_csv(mp_path) # model point
-    tm = pd.read_csv(tm_path) #table de mortalite
-    rach = pd.read_csv(rach_path) # loi de rachat
-    ref_frais = pd.read_csv(ref_frais_path) # referentiel de frais par produit
-
-    # initialisation à t = 0
-    # mp = initialisation_des_mp(mp, variables_de_calculs, ref_frais, 0)
-
-    # initialisation à t = 0
-    mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
-    #print(mp.columns)
-    for time_index in tqdm(range(1,41,1)):
-        # initialisation à t = 1
-        mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
-        # 0 : Primes
-        mp_t = calcul_des_primes(mp_t)
-        # 1 : Taux min
-        # 2 : Calcul proba flux (deces, rachat_part, rachat_tot)
-        # 3 : Calcul proba de rachat dynamique
-        # 4 : Prestations normales & garanties
-        mp_t =  calcul_des_prestation(mp_t, t=time_index, rach= rach, tm = tm)
-        # 5 : Taux cible des rendements
-        # 6 : PM
-        mp_t = calcul_des_pm(mp_t)
-        # Calcul des frais 
-        mp_t = calcul_des_frais(mp_t)
-        mp_t = calcul_du_resultat_technique(mp_t)
-
-        mp_global_projection = mp_global_projection.append(mp_t)
-
-    mp_global_projection.to_csv( abs_path + "/tests/output_test_data/mp_global_projection.csv", index = False)
+    return  autre_passif
