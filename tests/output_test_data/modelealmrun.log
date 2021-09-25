@@ -1,0 +1,165 @@
+09/25/2021 08:14:09 PM  INFO - ===== Modele ALM version XX.XX =====
+09/25/2021 08:14:09 PM  INFO - ===== Initialisation =====
+09/25/2021 08:14:09 PM  INFO - allocation_courante : {'somme_vm_action': 40038357.69928999, 'somme_vm_oblig': 18816187.161556877, 'somme_vm_immo': 63352098.513, 'somme_vm_treso': 15909764.82, 'propor_action': 0.2898884949505494, 'propor_oblig': 0.13623426360138394, 'propor_immo': 0.45868625850800515, 'propor_treso': 0.11519098294006162, 'total_vm_portfi': 138 116 408.19384685}
+09/25/2021 08:14:09 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 1 ==========
+09/25/2021 08:14:09 PM  INFO - NumExpr defaulting to 8 threads.
+09/25/2021 08:14:09 PM  INFO - allocation_courante : {'somme_vm_action': 36216632.5053172, 'somme_vm_oblig': 19136223.99154326, 'somme_vm_immo': 58434495.732131876, 'somme_vm_treso': 5689367.611449618, 'propor_action': 0.3031271075543719, 'propor_oblig': 0.16016696823531135, 'propor_immo': 0.48908687659126915, 'propor_treso': 0.04761904761904762, 'total_vm_portfi': 119 476 719.84044196}
+09/25/2021 08:14:09 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:09 PM  INFO - ========== FIN DU RUN / Horizon = 1 ==========
+09/25/2021 08:14:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 2 ==========
+09/25/2021 08:14:10 PM  INFO - allocation_courante : {'somme_vm_action': 45113746.97119094, 'somme_vm_oblig': 19411764.29579578, 'somme_vm_immo': 10608111914503.742, 'somme_vm_treso': 530408822000.7505, 'propor_action': 4.050222349604447e-06, 'propor_oblig': 1.7427495358852077e-06, 'propor_immo': 0.9523751594090669, 'propor_treso': 0.04761904761904762, 'total_vm_portfi': 11138585262015.76} 
+09/25/2021 08:14:10 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:10 PM  INFO - ========== FIN DU RUN / Horizon = 2 ==========
+09/25/2021 08:14:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 3 ==========
+09/25/2021 08:14:10 PM  INFO - allocation_courante : {'somme_vm_action': 57037929.165576436, 'somme_vm_oblig': 19568699.74724036, 'somme_vm_immo': 1.9306311007758266e+28, 'somme_vm_treso': 9.653155503879134e+26, 'propor_action': 2.8136829080770366e-21, 'propor_oblig': 9.6532459746683e-22, 'propor_immo': 0.9523809523809523, 'propor_treso': 0.04761904761904762, 'total_vm_portfi': 2.027162655814618e+28} 
+09/25/2021 08:14:10 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:10 PM  INFO - ========== FIN DU RUN / Horizon = 3 ==========
+09/25/2021 08:14:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 4 ==========
+09/25/2021 08:14:10 PM  INFO - allocation_courante : {'somme_vm_action': 52896780.56065923, 'somme_vm_oblig': 19749838.884489756, 'somme_vm_immo': 1.3934065061429297e+64, 'somme_vm_treso': 6.967032530714649e+62, 'propor_action': 3.615447898811471e-57, 'propor_oblig': 1.3498839199658033e-57, 'propor_immo': 0.9523809523809523, 'propor_treso': 0.04761904761904762, 'total_vm_portfi': 1.4630768314500762e+64} 
+09/25/2021 08:14:10 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:10 PM  INFO - ========== FIN DU RUN / Horizon = 4 ==========
+09/25/2021 08:14:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 5 ==========
+09/25/2021 08:14:10 PM  INFO - allocation_courante : {'somme_vm_action': 45333341.55012379, 'somme_vm_oblig': 19925047.72348265, 'somme_vm_immo': 1.7476416727009246e+146, 'somme_vm_treso': 8.738208363504624e+144, 'propor_action': 2.470449845327441e-139, 'propor_oblig': 1.0858196061323694e-139, 'propor_immo': 0.9523809523809523, 'propor_treso': 0.047619047619047616, 'total_vm_portfi': 1.835023756335971e+146} 
+09/25/2021 08:14:10 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:10 PM  INFO - ========== FIN DU RUN / Horizon = 5 ==========
+09/25/2021 08:14:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 6 ==========
+09/25/2021 08:14:10 PM  INFO - allocation_courante : {'somme_vm_action': 38843982.52350153, 'somme_vm_oblig': 20122703.219720993, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:10 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:10 PM  INFO - ========== FIN DU RUN / Horizon = 6 ==========
+09/25/2021 08:14:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 7 ==========
+09/25/2021 08:14:11 PM  INFO - allocation_courante : {'somme_vm_action': 28660507.173030496, 'somme_vm_oblig': 20008826.215341467, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:11 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:11 PM  INFO - ========== FIN DU RUN / Horizon = 7 ==========
+09/25/2021 08:14:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 8 ==========
+09/25/2021 08:14:11 PM  INFO - allocation_courante : {'somme_vm_action': 33911975.44997364, 'somme_vm_oblig': 20139550.7412757, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:11 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:11 PM  INFO - ========== FIN DU RUN / Horizon = 8 ==========
+09/25/2021 08:14:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 9 ==========
+09/25/2021 08:14:11 PM  INFO - allocation_courante : {'somme_vm_action': 44063749.538087755, 'somme_vm_oblig': 20008275.18985597, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:11 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:11 PM  INFO - ========== FIN DU RUN / Horizon = 9 ==========
+09/25/2021 08:14:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 10 ==========
+09/25/2021 08:14:11 PM  INFO - allocation_courante : {'somme_vm_action': 37777756.26167978, 'somme_vm_oblig': 20533197.09770612, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:11 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:11 PM  INFO - ========== FIN DU RUN / Horizon = 10 ==========
+09/25/2021 08:14:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 11 ==========
+09/25/2021 08:14:12 PM  INFO - allocation_courante : {'somme_vm_action': 47493752.15413804, 'somme_vm_oblig': 20754922.490678366, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:12 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:12 PM  INFO - ========== FIN DU RUN / Horizon = 11 ==========
+09/25/2021 08:14:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 12 ==========
+09/25/2021 08:14:12 PM  INFO - allocation_courante : {'somme_vm_action': 35950565.07553828, 'somme_vm_oblig': 20375887.557339977, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:12 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:12 PM  INFO - ========== FIN DU RUN / Horizon = 12 ==========
+09/25/2021 08:14:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 13 ==========
+09/25/2021 08:14:12 PM  INFO - allocation_courante : {'somme_vm_action': 52928633.20841685, 'somme_vm_oblig': 19980298.01334694, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:12 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:12 PM  INFO - ========== FIN DU RUN / Horizon = 13 ==========
+09/25/2021 08:14:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 14 ==========
+09/25/2021 08:14:12 PM  INFO - allocation_courante : {'somme_vm_action': 46780676.876665406, 'somme_vm_oblig': 19752147.449541703, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:12 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:12 PM  INFO - ========== FIN DU RUN / Horizon = 14 ==========
+09/25/2021 08:14:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 15 ==========
+09/25/2021 08:14:12 PM  INFO - allocation_courante : {'somme_vm_action': 44520412.627630785, 'somme_vm_oblig': 19672602.350797877, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:12 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:12 PM  INFO - ========== FIN DU RUN / Horizon = 15 ==========
+09/25/2021 08:14:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 16 ==========
+09/25/2021 08:14:13 PM  INFO - allocation_courante : {'somme_vm_action': 42796482.30786242, 'somme_vm_oblig': 19436222.940003823, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:13 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:13 PM  INFO - ========== FIN DU RUN / Horizon = 16 ==========
+09/25/2021 08:14:13 PM  INFO - ========== DEBUT DU RUN / Horizon = 17 ==========
+09/25/2021 08:14:13 PM  INFO - allocation_courante : {'somme_vm_action': 29901365.411686167, 'somme_vm_oblig': 19282652.064518888, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:13 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:13 PM  INFO - ========== FIN DU RUN / Horizon = 17 ==========
+09/25/2021 08:14:13 PM  INFO - ========== DEBUT DU RUN / Horizon = 18 ==========
+09/25/2021 08:14:13 PM  INFO - allocation_courante : {'somme_vm_action': 24277564.62838706, 'somme_vm_oblig': 18955716.273462463, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:13 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:13 PM  INFO - ========== FIN DU RUN / Horizon = 18 ==========
+09/25/2021 08:14:13 PM  INFO - ========== DEBUT DU RUN / Horizon = 19 ==========
+09/25/2021 08:14:13 PM  INFO - allocation_courante : {'somme_vm_action': 39050002.34433842, 'somme_vm_oblig': 18943809.887664374, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:13 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:13 PM  INFO - ========== FIN DU RUN / Horizon = 19 ==========
+09/25/2021 08:14:13 PM  INFO - ========== DEBUT DU RUN / Horizon = 20 ==========
+09/25/2021 08:14:13 PM  INFO - allocation_courante : {'somme_vm_action': 27839549.93608567, 'somme_vm_oblig': 18867845.979923688, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:13 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:13 PM  INFO - ========== FIN DU RUN / Horizon = 20 ==========
+09/25/2021 08:14:13 PM  INFO - ========== DEBUT DU RUN / Horizon = 21 ==========
+09/25/2021 08:14:14 PM  INFO - allocation_courante : {'somme_vm_action': 32236337.90123294, 'somme_vm_oblig': 18807661.803502735, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:14 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:14 PM  INFO - ========== FIN DU RUN / Horizon = 21 ==========
+09/25/2021 08:14:14 PM  INFO - ========== DEBUT DU RUN / Horizon = 22 ==========
+09/25/2021 08:14:14 PM  INFO - allocation_courante : {'somme_vm_action': 31044437.151016563, 'somme_vm_oblig': 20108151.981744222, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:14 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:14 PM  INFO - ========== FIN DU RUN / Horizon = 22 ==========
+09/25/2021 08:14:14 PM  INFO - ========== DEBUT DU RUN / Horizon = 23 ==========
+09/25/2021 08:14:14 PM  INFO - allocation_courante : {'somme_vm_action': 38262570.69808075, 'somme_vm_oblig': 18872499.99179735, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:14 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:14 PM  INFO - ========== FIN DU RUN / Horizon = 23 ==========
+09/25/2021 08:14:14 PM  INFO - ========== DEBUT DU RUN / Horizon = 24 ==========
+09/25/2021 08:14:14 PM  INFO - allocation_courante : {'somme_vm_action': 35332865.1839357, 'somme_vm_oblig': 18222770.177988835, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:14 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:14 PM  INFO - ========== FIN DU RUN / Horizon = 24 ==========
+09/25/2021 08:14:14 PM  INFO - ========== DEBUT DU RUN / Horizon = 25 ==========
+09/25/2021 08:14:14 PM  INFO - allocation_courante : {'somme_vm_action': 32519469.994973395, 'somme_vm_oblig': 16686897.784137202, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:14 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:14 PM  INFO - ========== FIN DU RUN / Horizon = 25 ==========
+09/25/2021 08:14:14 PM  INFO - ========== DEBUT DU RUN / Horizon = 26 ==========
+09/25/2021 08:14:15 PM  INFO - allocation_courante : {'somme_vm_action': 37372289.049624406, 'somme_vm_oblig': 16968531.2165632, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:15 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:15 PM  INFO - ========== FIN DU RUN / Horizon = 26 ==========
+09/25/2021 08:14:15 PM  INFO - ========== DEBUT DU RUN / Horizon = 27 ==========
+09/25/2021 08:14:15 PM  INFO - allocation_courante : {'somme_vm_action': 35931575.28984032, 'somme_vm_oblig': 17893135.057711907, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:15 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:15 PM  INFO - ========== FIN DU RUN / Horizon = 27 ==========
+09/25/2021 08:14:15 PM  INFO - ========== DEBUT DU RUN / Horizon = 28 ==========
+09/25/2021 08:14:15 PM  INFO - allocation_courante : {'somme_vm_action': 37427967.03156113, 'somme_vm_oblig': 18307336.786202133, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:15 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:15 PM  INFO - ========== FIN DU RUN / Horizon = 28 ==========
+09/25/2021 08:14:15 PM  INFO - ========== DEBUT DU RUN / Horizon = 29 ==========
+09/25/2021 08:14:15 PM  INFO - allocation_courante : {'somme_vm_action': 47898468.588232614, 'somme_vm_oblig': 19512066.938172262, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:15 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:15 PM  INFO - ========== FIN DU RUN / Horizon = 29 ==========
+09/25/2021 08:14:15 PM  INFO - ========== DEBUT DU RUN / Horizon = 30 ==========
+09/25/2021 08:14:15 PM  INFO - allocation_courante : {'somme_vm_action': 47936048.68496141, 'somme_vm_oblig': 18858302.84850157, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:15 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:15 PM  INFO - ========== FIN DU RUN / Horizon = 30 ==========
+09/25/2021 08:14:15 PM  INFO - ========== DEBUT DU RUN / Horizon = 31 ==========
+09/25/2021 08:14:16 PM  INFO - allocation_courante : {'somme_vm_action': 37765826.564936645, 'somme_vm_oblig': 17730703.418763697, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:16 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:16 PM  INFO - ========== FIN DU RUN / Horizon = 31 ==========
+09/25/2021 08:14:16 PM  INFO - ========== DEBUT DU RUN / Horizon = 32 ==========
+09/25/2021 08:14:16 PM  INFO - allocation_courante : {'somme_vm_action': 46074235.628090285, 'somme_vm_oblig': 19268422.338467065, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:16 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:16 PM  INFO - ========== FIN DU RUN / Horizon = 32 ==========
+09/25/2021 08:14:16 PM  INFO - ========== DEBUT DU RUN / Horizon = 33 ==========
+09/25/2021 08:14:16 PM  INFO - allocation_courante : {'somme_vm_action': 52376066.0648669, 'somme_vm_oblig': 17015815.990745943, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:16 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:16 PM  INFO - ========== FIN DU RUN / Horizon = 33 ==========
+09/25/2021 08:14:16 PM  INFO - ========== DEBUT DU RUN / Horizon = 34 ==========
+09/25/2021 08:14:16 PM  INFO - allocation_courante : {'somme_vm_action': 50655680.32147911, 'somme_vm_oblig': 18213915.792429235, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:16 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:16 PM  INFO - ========== FIN DU RUN / Horizon = 34 ==========
+09/25/2021 08:14:16 PM  INFO - ========== DEBUT DU RUN / Horizon = 35 ==========
+09/25/2021 08:14:16 PM  INFO - allocation_courante : {'somme_vm_action': 51823093.14305194, 'somme_vm_oblig': 16755701.39194009, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:16 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:16 PM  INFO - ========== FIN DU RUN / Horizon = 35 ==========
+09/25/2021 08:14:16 PM  INFO - ========== DEBUT DU RUN / Horizon = 36 ==========
+09/25/2021 08:14:17 PM  INFO - allocation_courante : {'somme_vm_action': 59135646.36747368, 'somme_vm_oblig': 17304509.3399853, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:17 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:17 PM  INFO - ========== FIN DU RUN / Horizon = 36 ==========
+09/25/2021 08:14:17 PM  INFO - ========== DEBUT DU RUN / Horizon = 37 ==========
+09/25/2021 08:14:17 PM  INFO - allocation_courante : {'somme_vm_action': 98914692.5151994, 'somme_vm_oblig': 14309630.716798881, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:17 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:17 PM  INFO - ========== FIN DU RUN / Horizon = 37 ==========
+09/25/2021 08:14:17 PM  INFO - ========== DEBUT DU RUN / Horizon = 38 ==========
+09/25/2021 08:14:17 PM  INFO - allocation_courante : {'somme_vm_action': 160478832.7501507, 'somme_vm_oblig': 12635600.000141446, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:17 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:17 PM  INFO - ========== FIN DU RUN / Horizon = 38 ==========
+09/25/2021 08:14:17 PM  INFO - ========== DEBUT DU RUN / Horizon = 39 ==========
+09/25/2021 08:14:17 PM  INFO - allocation_courante : {'somme_vm_action': 196635500.97515818, 'somme_vm_oblig': 12601261.039547766, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:17 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:17 PM  INFO - ========== FIN DU RUN / Horizon = 39 ==========
+09/25/2021 08:14:17 PM  INFO - ========== DEBUT DU RUN / Horizon = 40 ==========
+09/25/2021 08:14:17 PM  INFO - allocation_courante : {'somme_vm_action': 224231079.12747508, 'somme_vm_oblig': 12118813.729501652, 'somme_vm_immo': inf, 'somme_vm_treso': inf, 'propor_action': 0.0, 'propor_oblig': 0.0, 'propor_immo': nan, 'propor_treso': nan, 'total_vm_portfi': inf} 
+09/25/2021 08:14:17 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+09/25/2021 08:14:17 PM  INFO - ========== FIN DU RUN / Horizon = 40 ==========

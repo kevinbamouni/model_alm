@@ -8,9 +8,10 @@ from tqdm import tqdm
 import json
 import os
 from pathlib import Path
+import logging
 
 """
-    run.py est l'unique point d'entré pour lancer un run de projection.
+    run.py est l'unique point d'entré pour lancer un run.
 """
 
 # Execution main :
@@ -25,6 +26,12 @@ if __name__ == "__main__":
     scenario = 1
     abs_path = Path(os.path.dirname(os.path.abspath(__file__)))
 
+    logging.basicConfig(filename=abs_path/'tests/output_test_data/modelealmrun.log',
+                        level=logging.INFO, filemode='w',
+                        format='%(asctime)s  %(levelname)s - %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p')
+    logging.info('===== Modele ALM version XX.XX =====')
+    logging.info('===== Initialisation =====')
     ############################################################################################################
     # Chargement des donnees de l'actif
     ############################################################################################################
@@ -67,6 +74,10 @@ if __name__ == "__main__":
 
     # Creation de l'objet portefeuille financier pour la Modelisation de actif
     ptf_financier = actif.portefeuille_financier(action, oblig, immo, treso, action_scena, oblig_scena, immo_scena, treso_scena, alloc_strat_cible_portfi)
+    ptf_financier.calcul_alloc_strateg_crt()
+    logging.info('allocation_courante : %s ', ptf_financier.allocation_courante)
+    logging.info('allocation_cible : %s ', ptf_financier.alloc_strat_cible_portfi)
+
 
     ############################################################################################################
     # Chargement des donnees du passif
@@ -96,10 +107,11 @@ if __name__ == "__main__":
     mp_global_projection = initialisation_des_mp(mp, ref_frais, t = 0)
     #print(mp.columns)
     for time_index in tqdm(range(1,41,1)):
+        logging.info('========== DEBUT DU RUN / Horizon = %s ==========', time_index)
         # Modelisaiton du Passif
         mp_t = initialisation_des_mp(mp_global_projection, ref_frais, t = time_index)
         # Modelisation du passif Avant Participation au Bénéfice
-        mp_t = calcul_des_primes(mp_t)
+        mp_t = calcul_des_primes(mp_t, projection_des_primes=False)
         mp_t = calcul_des_prestation(mp_t, t = time_index, rach = rach, tm = tm)
         mp_t = calcul_des_pm(mp_t)
         mp_t = calcul_des_frais(mp_t)
@@ -117,11 +129,13 @@ if __name__ == "__main__":
         ptf_financier.allocation_strategique(time_index)
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
-        mp_t = calcul_revalo_pm(mp_t, ppbe.consommation)
+        mp_t = calcul_revalo_pm(mp_t, rev_brute_alloue_gar = ppbe.consommation)
         ptf_financier.allocation_strategique(time_index)
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         ppbe.re_init_ppb()
-
+        logging.info('allocation_courante : %s ', ptf_financier.allocation_courante)
+        logging.info('allocation_cible : %s ', ptf_financier.alloc_strat_cible_portfi)
+        logging.info('========== FIN DU RUN / Horizon = %s ==========', time_index)
         # Application de l'algorithme de profit share
         mp_global_projection = mp_global_projection.append(mp_t)
 
