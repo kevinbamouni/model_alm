@@ -73,8 +73,8 @@ class portefeuille_financier():
             :returns: None, vieilli d'une année le portefeuille immo de l'objet courant
         """
         self.portefeuille_immo['t'] = t
-        self.portefeuille_immo['rdt'] = ((self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) - 1) + (self.portefeuille_immo['loyer'] * self.portefeuille_immo['ind_invest'])
-        self.portefeuille_immo['loyer'] = self.portefeuille_immo['val_marche'] * np.sqrt(1 + self.portefeuille_immo['rdt']) * self.portefeuille_immo['loyer']
+        self.portefeuille_immo['rdt'] = ((self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) - 1) + (self.portefeuille_immo['tx_loyer'] * self.portefeuille_immo['ind_invest'])
+        self.portefeuille_immo['loyer'] = self.portefeuille_immo['val_marche'] * np.sqrt(1 + self.portefeuille_immo['rdt']) * self.portefeuille_immo['tx_loyer']
         self.portefeuille_immo['val_marche'] = self.portefeuille_immo['val_marche'] * (1 + self.portefeuille_immo['rdt'])
         self.portefeuille_immo['dur_det'] = self.portefeuille_immo['dur_det'] + 1
         self.portefeuille_immo['pvl'] = self.portefeuille_immo.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
@@ -86,7 +86,6 @@ class portefeuille_financier():
             :param t: (Int) année t de projection
 
             :returns: None, vieilli d'une année le portefeuille obligation de l'objet courant
-        
         """
         courbe = self.scena_eco_oblig.loc[(self.scena_eco_oblig['scenario']==scenario) & (self.scena_eco_oblig['month']==t),['maturities','rates']]
         self.portefeuille_oblig['t'] = t
@@ -128,8 +127,8 @@ class portefeuille_financier():
         """
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] \
                                                 + np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"]) \
-                                                + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"]) \
-                                                + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"]) \
+                                                + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["tx_loyer"]) \
+                                                + np.sum(self.portefeuille_oblig["nominal"] * self.portefeuille_oblig["tx_coupon"]) \
                                                 + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal']) \
                                                 + flux
 
@@ -170,7 +169,6 @@ class portefeuille_financier():
         :param t: (Int) année t de projection
 
         :returns: None, Réalocation stratégique du portefeuille financier de l'objet en cours.
-
         """
         # Calcul de l'allocaiton strategique courante
         self.calcul_alloc_strateg_crt()
@@ -178,15 +176,13 @@ class portefeuille_financier():
         self.plus_moins_value_realised_oblig = 0
         self.plus_moins_value_realised_action = 0
         self.plus_moins_value_realised_immo = 0
-
         # Montant total de l'actif à allouer après versement des prestations
         # montant_total_actif_a_allouer = self.allocation_courante['total_vm_portfi'] - prestations_en_t
         # Calcul des opération à effecteuer pour atteindre l'allocation strategique cible après prestations et mise à jour des VM des actifs
         calcul_operation_alm_vm = {'action' : self.alloc_strat_cible_portfi["propor_action_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_action'],
-        'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_oblig'],
-        'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_immo'],
-        'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_treso']}
-        
+                                    'oblig' : self.alloc_strat_cible_portfi["propor_oblig_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_oblig'],
+                                    'immo' : self.alloc_strat_cible_portfi["propor_immo_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_immo'],
+                                    'treso' : self.alloc_strat_cible_portfi["propor_treso_cible"] * self.allocation_courante['total_vm_portfi'] - self.allocation_courante['somme_vm_treso']}
         # Operations achats-ventes action
         if calcul_operation_alm_vm['action'] > 0:
             self.acheter_des_actions(calcul_operation_alm_vm['action'])
@@ -206,11 +202,11 @@ class portefeuille_financier():
         self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + calcul_operation_alm_vm['treso']
         self.calcul_reserve_capitation(self.plus_moins_value_realised_oblig)
         self.calcul_provision_risque_exigibilite(t)
+        self.calcul_alloc_strateg_crt()
     
     def calcul_reserve_capitation(self, plus_ou_moins_value):
         """ 
             Fonction qui permet de calculer la reserve capitalisation après la vente d'obligations.
-
             Definition : https://assurance-vie.ooreka.fr/astuce/voir/503241/reserve-de-capitalisation (24/01/2021)
             La réserve de capitalisation est une réserve obligatoirement mise en place par les organismes d'assurance.
             Elle est alimentée par les plus-values réalisées sur les cessions d’obligations.
@@ -227,7 +223,6 @@ class portefeuille_financier():
     def calcul_provision_risque_exigibilite(self, t):
         """
             Fonction qui permet de calculer la provision pour risque d'exigibilite aka P.R.E.
-
             copy-paste de "argus de l'assurance"
             La provision pour risque d’exigibilité (PRE) a pour fonction de permettre à l’entreprise d’assurance de faire 
             face à ses engagements dans le cas de moins-value de certains actifs (C. assur., art. R. 332-20). 
@@ -264,7 +259,6 @@ class portefeuille_financier():
             :param montant_a_acheter: (Float) montant total à acheter
 
             :returns: None, modificaiton du portefeuille immobilier
-
         """
         # 2 - Calcul du nombre a acheter
         self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["nb_unit_ref"] / self.portefeuille_immo["val_marche"]

@@ -449,13 +449,13 @@ def calcul_des_frais(mp):
 
 def calcul_du_resultat_technique(mp):
     """ 
-        Calcul du resultat technique.
+    Calcul du resultat technique.
 
-        :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*.
+    :param mp: (Dataframe) model point passif enrichi des colonnes de la fonction *calcul_des_frais*.
 
-        :returns: (Dataframe) model point passif enrichi du resultat technique
-        # TODO modéliser le choc de rachat : le rachat massif.
+    :returns: (Dataframe) model point passif enrichi du resultat technique
     """
+    # TODO modéliser le choc de rachat : le rachat massif.
     # calcul des flux debut d'annee: rach_mass est le choc de rachat massif non encore implémenter,
     mp['rach_mass'] = 0
     mp['rach_charg_mass'] = 0

@@ -2,7 +2,7 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="prev" title="3. Module alm_actif pour la modélisation de l’actif" href="alm_actif.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="5. Document python package with Sphynx." href="sphynx.html" /><link rel="prev" title="3. Module alm_actif pour la modélisation de l’actif" href="alm_actif.html" />
 
     <meta name="generator" content="sphinx-3.1.2, furo 2021.04.11.beta34"/>
         <title>4. Module alm_passif pour la modélisation du passif - Documentation ALM Epargne Euro Individuel 0.1</title>
@@ -116,6 +116,7 @@
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">4. Module alm_passif pour la modélisation du passif</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sphynx.html">5. Document python package with Sphynx.</a></li>
 </ul>
 
 </div>
@@ -263,13 +264,12 @@ les effets de rachat dynamiques.
 <dd><p>Calcul du resultat technique.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_frais</em></p>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_frais</em>.</p>
 </dd>
 <dt class="field-even">Renvoie</dt>
 <dd class="field-even"><p>(Dataframe) model point passif enrichi du resultat technique</p>
 </dd>
 </dl>
-<p># TODO modéliser le choc de rachat : le rachat massif.</p>
 </dd></dl>
 <dl class="py function">
 <dt id="alm_passif.model_passif.calcul_rachat_conjoncturel_acpr">
@@ -289,8 +289,22 @@ les effets de rachat dynamiques.
 </dd></dl>
 <dl class="py function">
 <dt id="alm_passif.model_passif.calcul_revalo_pm">
-<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_revalo_pm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em>, <em class="sig-param"><span class="n">rev_brute_alloue_gar</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_revalo_pm" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Docs</p>
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">calcul_revalo_pm</code><span class="sig-paren">(</span><em class="sig-param">) est une methode permettant de calculer les provisions mathematiques (PM</em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.calcul_revalo_pm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>de fin de periode après application de la revalorisation au titre de la participation aux benefices
+et après versement des prestations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>mp</strong> – (Dataframe) model point passif enrichi des colonnes de la fonction <em>calcul_des_pm</em></p>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>(Dataframe) model point passif enrichi des calculs de participation au bénéfice (pm)</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="alm_passif.model_passif.description_mp">
+<code class="sig-prename descclassname">alm_passif.model_passif.</code><code class="sig-name descname">description_mp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_passif.model_passif.description_mp" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Description basique de quelques variables des MP.</p>
 </dd></dl>
 <dl class="py function">
 <dt id="alm_passif.model_passif.get_proba_deces">
@@ -636,7 +650,15 @@ Fonctionnement du moteur de revalorisaiton :
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="sphynx.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">5. </span>Document python package with Sphynx.</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="alm_actif.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">

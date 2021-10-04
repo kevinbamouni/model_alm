@@ -16,7 +16,6 @@ import logging
 
 # Execution main :
 if __name__ == "__main__":
-
     ############################################################################################################
     # Parametres globaux
     ############################################################################################################
@@ -127,14 +126,16 @@ if __name__ == "__main__":
         ptf_financier.veillissement_immo(time_index)
         ptf_financier.veillissement_obligation(scenario, time_index)
         ptf_financier.allocation_strategique(time_index)
+        logging.info('allocation_courante avant pb : %s ', ptf_financier.allocation_courante)
+        logging.info('allocation_cible avant pb : %s ', ptf_financier.alloc_strat_cible_portfi)
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         mp_t, param_revalo, ppbe, ptf_financier = moteur_politique_revalo(mp_t, param_revalo, taux_pb, ppbe, ptf_financier)
         mp_t = calcul_revalo_pm(mp_t, rev_brute_alloue_gar = ppbe.consommation)
         ptf_financier.allocation_strategique(time_index)
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         ppbe.re_init_ppb()
-        logging.info('allocation_courante : %s ', ptf_financier.allocation_courante)
-        logging.info('allocation_cible : %s ', ptf_financier.alloc_strat_cible_portfi)
+        logging.info('allocation_courante après pb : %s ', ptf_financier.allocation_courante)
+        logging.info('allocation_cible après pb : %s ', ptf_financier.alloc_strat_cible_portfi)
         logging.info('Describe passif : %s ', description_mp(mp_t))
         logging.info('========== FIN DU RUN / Horizon = %s ==========', time_index)
         # Application de l'algorithme de profit share

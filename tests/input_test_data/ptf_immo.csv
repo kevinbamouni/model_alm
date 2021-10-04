@@ -1,4 +1,4 @@
-,num_mp,val_marche,val_nc,val_achat,presence,cessible,nb_unit,dur_det,pdd,num_index,loyer,ind_invest,t,nb_unit_ref
+,num_mp,val_marche,val_nc,val_achat,presence,cessible,nb_unit,dur_det,pdd,num_index,tx_loyer,ind_invest,t,nb_unit_ref
 0,1,12924233.93,12057533.89,12057533.89,1,1,1.0,10,0,1,0.032792485,1,0,0.2040064059969208
 1,2,6242655.837,6058259.0,6058259.0,1,1,8009.901999999999,22,0,1,0.027000000000000003,1,0,0.09853905369399868
 2,3,6783982.7870000005,6824633.0,6824633.0,1,1,7582.981,22,0,1,0.006999999999999999,1,0,0.10708378958603734
