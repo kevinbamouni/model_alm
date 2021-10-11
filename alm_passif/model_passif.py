@@ -1,9 +1,6 @@
 import pandas as pd
 import uuid
 import numpy as np
-from tqdm import tqdm
-import os
-#pd.set_option("display.max_rows", None, "display.max_columns", None)
 
 def description_mp(mp):
     """

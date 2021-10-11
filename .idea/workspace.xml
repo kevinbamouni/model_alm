@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB">
+    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alm_actif/model_actif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_actif/model_actif.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alm_passif/model_passif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_passif/model_passif.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_actif.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_actif.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_actif.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_actif.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/input_test_data/ptf_immo.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input_test_data/ptf_immo.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" afterDir="false" />
     </list>
@@ -109,7 +99,7 @@
       <workItem from="1628768034771" duration="43000" />
       <workItem from="1630741689137" duration="25000" />
       <workItem from="1631695686378" duration="33510000" />
-      <workItem from="1632496474031" duration="27587000" />
+      <workItem from="1632496474031" duration="43007000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB">
       <created>1632596273853</created>
@@ -125,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632624706979</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction...">
+      <created>1633355466859</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1633355466859</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,9 +154,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB" />
+    <MESSAGE value="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction..." />
+    <option name="LAST_COMMIT_MESSAGE" value="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction..." />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.allocation_courante['somme_vm_action']-calcul_operation_alm_vm['action'] " language="Python" />
+        <watch expression="self.allocation_courante['somme_vm_action']-calcul_operation_alm_vm['action'] " language="Python" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1633353089863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1633985477392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

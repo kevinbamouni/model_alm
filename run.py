@@ -134,6 +134,7 @@ if __name__ == "__main__":
         ptf_financier.allocation_strategique(time_index)
         ptf_financier.calcul_resultat_financier(tx_frais_val_marche=0, tx_frais_produits=0, tx_charges_reserve_capi=0)
         ppbe.re_init_ppb()
+        #ptf_financier.initialisation_ptf_financier()
         logging.info('allocation_courante après pb : %s ', ptf_financier.allocation_courante)
         logging.info('allocation_cible après pb : %s ', ptf_financier.alloc_strat_cible_portfi)
         logging.info('Describe passif : %s ', description_mp(mp_t))
