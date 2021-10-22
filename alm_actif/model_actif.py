@@ -58,7 +58,7 @@ class portefeuille_financier():
         self.portefeuille_treso['t'] = t
         # self.portefeuille_treso['rdt'] = (1 + self.scena_eco_treso.iloc[1,t]) / (1 + self.scena_eco_treso.iloc[1,t-1]) - 1
         self.portefeuille_treso['rdt'] = 0.001
-        self.portefeuille_treso['val_marche_fin'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite)
+        self.portefeuille_treso['val_marche_fin'] = self.portefeuille_treso['val_marche_fin'] + self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite)
         self.portefeuille_treso['val_nc'] = self.portefeuille_treso['val_marche'] * (1 + self.portefeuille_treso['rdt'] * maturite) 
 
     def veillissement_immo(self, t):
@@ -72,7 +72,7 @@ class portefeuille_financier():
         self.portefeuille_immo['t'] = t
         self.portefeuille_immo['rdt'] = ((self.scena_eco_immo.iloc[1,t] / self.scena_eco_immo.iloc[1,t-1]) - 1) + (self.portefeuille_immo['tx_loyer'] * self.portefeuille_immo['ind_invest'])
         self.portefeuille_immo['loyer'] = self.portefeuille_immo['val_marche'] * np.sqrt(1 + self.portefeuille_immo['rdt']) * self.portefeuille_immo['tx_loyer']
-        self.portefeuille_immo['val_marche'] = self.portefeuille_immo['val_marche'] * (1 + self.portefeuille_immo['rdt'])
+        self.portefeuille_immo['val_marche_fin'] = self.portefeuille_immo['val_marche'] * (1 + self.portefeuille_immo['rdt'])
         self.portefeuille_immo['dur_det'] = self.portefeuille_immo['dur_det'] + 1
         self.portefeuille_immo['pvl'] = self.portefeuille_immo.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_immo['mvl'] = self.portefeuille_immo.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
@@ -87,7 +87,7 @@ class portefeuille_financier():
         courbe = self.scena_eco_oblig.loc[(self.scena_eco_oblig['scenario']==scenario) & (self.scena_eco_oblig['month']==t),['maturities','rates']]
         self.portefeuille_oblig['t'] = t
         self.portefeuille_oblig['coupon'] = self.portefeuille_oblig['tx_coupon'] * self.portefeuille_oblig['nominal'] * self.portefeuille_oblig['par'] * self.portefeuille_oblig['nb_unit']  
-        self.portefeuille_oblig['val_marche'] = self.portefeuille_oblig.apply(lambda row : valeur_marche_oblig(row['tx_coupon'], row['nominal'], courbe, row['mat_res'], t), axis = 1)
+        self.portefeuille_oblig['val_marche_fin'] = self.portefeuille_oblig.apply(lambda row : valeur_marche_oblig(row['tx_coupon'], row['nominal'], courbe, row['mat_res'], t), axis = 1)
         self.portefeuille_oblig['duration'] = self.portefeuille_oblig.apply(lambda row : duration_obligatioin(row['tx_coupon'], row['nominal'], courbe, row['mat_res'], t), axis = 1)
         self.portefeuille_oblig['zspread'] = 0
         self.portefeuille_oblig['dur_det'] = self.portefeuille_oblig['dur_det'] + 1
@@ -106,7 +106,7 @@ class portefeuille_financier():
         self.portefeuille_action['t'] = t
         self.portefeuille_action['rdt'] = ((self.scena_eco_action.iloc[1,t] / self.scena_eco_action.iloc[1,t-1]) - 1) + (self.portefeuille_action['div'] * self.portefeuille_action['ind_invest'])
         self.portefeuille_action['dividende'] = self.portefeuille_action['val_marche'] * np.sqrt(1 + self.portefeuille_action['rdt']) * self.portefeuille_action['div']
-        self.portefeuille_action['val_marche'] = self.portefeuille_action['val_marche'] * (1 + self.portefeuille_action['rdt']) 
+        self.portefeuille_action['val_marche_fin'] = self.portefeuille_action['val_marche'] * (1 + self.portefeuille_action['rdt'])
         self.portefeuille_action['dur_det'] = self.portefeuille_action['dur_det'] + 1
         self.portefeuille_action['pvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']>row['val_nc'] else 0, axis = 1)
         self.portefeuille_action['mvl'] = self.portefeuille_action.apply(lambda row : row['val_marche']-row['val_nc'] if row['val_marche']<=row['val_nc'] else 0, axis = 1)
@@ -122,7 +122,7 @@ class portefeuille_financier():
 
             :returns: None, ajout au portefeuille des différents flux de produits et charges du portefeuille financier 
         """
-        self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] \
+        self.portefeuille_treso["val_marche_fin"] = self.portefeuille_treso["val_marche"] \
                                                 + np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"]) \
                                                 + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["tx_loyer"]) \
                                                 + np.sum(self.portefeuille_oblig["nominal"] * self.portefeuille_oblig["tx_coupon"]) \
@@ -147,24 +147,24 @@ class portefeuille_financier():
         """
         try:
             self.allocation_courante  = {'somme_vm_action': sum(self.portefeuille_action['val_marche_fin']),
-            'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche_fin']),
-            'somme_vm_immo': sum(self.portefeuille_immo['val_marche_fin']),
-            'somme_vm_treso': sum(self.portefeuille_treso['val_marche']),
-            'propor_action': sum(self.portefeuille_action['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_oblig': sum(self.portefeuille_oblig['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_immo': sum(self.portefeuille_immo['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche'])),
-            'total_vm_portfi': sum(self.portefeuille_action['val_marche_fin']) + sum(self.portefeuille_oblig['val_marche_fin']) + sum(self.portefeuille_immo['val_marche_fin']) + sum(self.portefeuille_treso['val_marche'])}
+                                        'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche_fin']),
+                                        'somme_vm_immo': sum(self.portefeuille_immo['val_marche_fin']),
+                                        'somme_vm_treso': sum(self.portefeuille_treso['val_marche_fin']),
+                                        'propor_action': sum(self.portefeuille_action['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche_fin'])),
+                                        'propor_oblig': sum(self.portefeuille_oblig['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche_fin'])),
+                                        'propor_immo': sum(self.portefeuille_immo['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche_fin'])),
+                                        'propor_treso': sum(self.portefeuille_treso['val_marche_fin']) / (sum(self.portefeuille_action['val_marche_fin'])+sum(self.portefeuille_oblig['val_marche_fin'])+sum(self.portefeuille_immo['val_marche_fin'])+sum(self.portefeuille_treso['val_marche_fin'])),
+                                        'total_vm_portfi': sum(self.portefeuille_action['val_marche_fin']) + sum(self.portefeuille_oblig['val_marche_fin']) + sum(self.portefeuille_immo['val_marche_fin']) + sum(self.portefeuille_treso['val_marche_fin'])}
         except KeyError:
             self.allocation_courante  = {'somme_vm_action': sum(self.portefeuille_action['val_marche']),
-            'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche']),
-            'somme_vm_immo': sum(self.portefeuille_immo['val_marche']),
-            'somme_vm_treso': sum(self.portefeuille_treso['val_marche']),
-            'propor_action': sum(self.portefeuille_action['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_oblig': sum(self.portefeuille_oblig['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_immo': sum(self.portefeuille_immo['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-            'propor_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
-            'total_vm_portfi': sum(self.portefeuille_action['val_marche']) + sum(self.portefeuille_oblig['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche'])}
+                                        'somme_vm_oblig': sum(self.portefeuille_oblig['val_marche']),
+                                        'somme_vm_immo': sum(self.portefeuille_immo['val_marche']),
+                                        'somme_vm_treso': sum(self.portefeuille_treso['val_marche']),
+                                        'propor_action': sum(self.portefeuille_action['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+                                        'propor_oblig': sum(self.portefeuille_oblig['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+                                        'propor_immo': sum(self.portefeuille_immo['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+                                        'propor_treso': sum(self.portefeuille_treso['val_marche']) / (sum(self.portefeuille_action['val_marche'])+sum(self.portefeuille_oblig['val_marche'])+sum(self.portefeuille_immo['val_marche'])+sum(self.portefeuille_treso['val_marche'])),
+                                        'total_vm_portfi': sum(self.portefeuille_action['val_marche']) + sum(self.portefeuille_oblig['val_marche']) + sum(self.portefeuille_immo['val_marche']) + sum(self.portefeuille_treso['val_marche'])}
 
 
 
@@ -197,20 +197,20 @@ class portefeuille_financier():
         if calcul_operation_alm_vm['action'] > 0:
             self.acheter_des_actions(calcul_operation_alm_vm['action'])
         elif calcul_operation_alm_vm['action'] < 0:
-            self.vendres_des_actions(calcul_operation_alm_vm['action'])
+            self.vendre_des_actions(calcul_operation_alm_vm['action'])
         # Operations achats-ventes immo
         if calcul_operation_alm_vm['immo'] > 0:
             self.acheter_des_immo(calcul_operation_alm_vm['immo'])
         elif calcul_operation_alm_vm['immo'] < 0:
-            self.vendres_des_immo(calcul_operation_alm_vm['immo'])
+            self.vendre_des_immo(calcul_operation_alm_vm['immo'])
         # Operations achats-ventes oblig
         if calcul_operation_alm_vm['oblig'] > 0:
             self.acheter_des_oblig(calcul_operation_alm_vm['oblig'])
         elif calcul_operation_alm_vm['oblig'] < 0:
-            self.vendres_des_oblig(calcul_operation_alm_vm['oblig'])
+            self.vendre_des_oblig(calcul_operation_alm_vm['oblig'])
         # Mise à jour de la treso
+        self.portefeuille_treso["val_marche_fin"] = self.portefeuille_treso["val_marche_fin"] + calcul_operation_alm_vm['treso']
         self.calcul_alloc_strateg_crt()
-        self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + calcul_operation_alm_vm['treso']
         self.calcul_reserve_capitation(self.plus_moins_value_realised_oblig)
         self.calcul_provision_risque_exigibilite(t)
 
@@ -257,10 +257,11 @@ class portefeuille_financier():
             :returns: None, modification du portefeuille action de l'objet courant
         """
         # 2 - Calcul du nombre a acheter
-        self.portefeuille_action["nb_unit_achat"] = montant_a_acheter * self.portefeuille_action["nb_unit_ref"] / self.portefeuille_action["val_marche"]
-        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] + self.portefeuille_action["val_nc"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
-        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + self.portefeuille_action["val_achat"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
-        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche"] + self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"] * self.portefeuille_action["nb_unit_achat"]
+        self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche_fin"] / np.sum(self.portefeuille_action["val_marche_fin"])
+        self.portefeuille_action["nb_unit_achat"] = montant_a_acheter * self.portefeuille_action["alloc"] / (self.portefeuille_action["val_marche_fin"]/self.portefeuille_action["nb_unit"])
+        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] + montant_a_acheter *  self.portefeuille_action["alloc"]
+        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + montant_a_acheter *  self.portefeuille_action["alloc"]
+        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche_fin"] + montant_a_acheter *  self.portefeuille_action["alloc"]
         self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] + self.portefeuille_action["nb_unit_achat"]
 
     def acheter_des_immo(self, montant_a_acheter):
@@ -272,10 +273,11 @@ class portefeuille_financier():
             :returns: None, modificaiton du portefeuille immobilier
         """
         # 2 - Calcul du nombre a acheter
-        self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["nb_unit_ref"] / self.portefeuille_immo["val_marche"]
-        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + self.portefeuille_immo["val_nc"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
-        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] + self.portefeuille_immo["val_achat"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
-        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche"] + self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"] * self.portefeuille_immo["nb_unit_achat"]
+        self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche_fin"] / np.sum(self.portefeuille_immo["val_marche_fin"])
+        self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["alloc"] / (self.portefeuille_immo["val_marche_fin"] / self.portefeuille_immo["nb_unit"])
+        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + montant_a_acheter * self.portefeuille_immo["alloc"]
+        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] + montant_a_acheter * self.portefeuille_immo["alloc"]
+        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche_fin"] + montant_a_acheter * self.portefeuille_immo["alloc"]
         self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] + self.portefeuille_immo["nb_unit_achat"]
 
     def acheter_des_oblig(self, montant_a_acheter):
@@ -287,31 +289,13 @@ class portefeuille_financier():
             :returns: None, modificaiton du portefeuille obligation
         """
         # 2 - Calcul du nombre a acheter
-        self.portefeuille_oblig["nb_unit_achat"] = montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"] / self.portefeuille_oblig["val_marche"]
-        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + self.portefeuille_oblig["val_nc"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
-        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + self.portefeuille_oblig["val_achat"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
-        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche"] + self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"] * self.portefeuille_oblig["nb_unit_achat"]
+        self.portefeuille_oblig["nb_unit_achat"] = montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"] / (self.portefeuille_oblig["val_marche_fin"] /self.portefeuille_oblig["nb_unit"])
+        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
+        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
+        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche_fin"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
         self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] + self.portefeuille_oblig["nb_unit_achat"]
 
-    def vendres_des_actions(self, montant_a_vendre):
-        """
-            Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
-            TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
 
-            :param montant_a_vendre: (Float) montant total à vendre
-
-            :returns: None, modificaiton du portefeuille actions
-        """
-        self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche"] / np.sum(self.portefeuille_action["val_marche"]) 
-        self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * (-1 * montant_a_vendre)) / (self.portefeuille_action["val_marche"] / self.portefeuille_action["nb_unit"])
-        #self.portefeuille_action["pct_to_sold"] = self.portefeuille_action["nb_to_sold"] / self.portefeuille_action["nb_unit"]
-        self.plus_moins_value_realised_action = np.sum((self.portefeuille_action["val_achat"] - self.portefeuille_action["val_nc"]) * self.portefeuille_action["alloc"])
-        self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_action
-        # Actualisation des données de portefeuille
-        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] * (1 - self.portefeuille_action["alloc"])
-        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche"] * (1 - self.portefeuille_action["alloc"])
-        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] *  (1 - self.portefeuille_action["alloc"])
-        self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] - self.portefeuille_action["nb_to_sold"]
 
     def calcul_des_pvl_action(self):
         """
@@ -335,13 +319,13 @@ class portefeuille_financier():
         actions_en_pvl = self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]]
         actions_en_pvl["alloc"] = actions_en_pvl["val_marche"] / np.sum(actions_en_pvl["val_marche"]) 
         actions_en_pvl["nb_to_sold"] = (actions_en_pvl["alloc"] * (-1 * montant_a_vendre)) / (actions_en_pvl["val_marche"] / actions_en_pvl["nb_unit"])
-        actions_en_pvl["pct_to_sold"] = actions_en_pvl["nb_to_sold"] / actions_en_pvl["nb_unit"]
-        self.portefeuille_treso["val_marche"] = np.sum((actions_en_pvl["val_achat"] - actions_en_pvl["val_nc"]) * actions_en_pvl["pct_to_sold"])
+        #actions_en_pvl["pct_to_sold"] = actions_en_pvl["nb_to_sold"] / actions_en_pvl["nb_unit"]
+        self.portefeuille_treso["val_marche"] = np.sum((actions_en_pvl["val_achat"] - actions_en_pvl["val_nc"]) * actions_en_pvl["alloc"])
         # Actualisation des données de portefeuille
-        actions_en_pvl["val_achat_fin"] = actions_en_pvl["val_achat"] * (1 - actions_en_pvl["pct_to_sold"])
-        actions_en_pvl["val_marche_fin"] = actions_en_pvl["val_marche"] * (1 - actions_en_pvl["pct_to_sold"])
-        actions_en_pvl["val_nc_fin"] = actions_en_pvl["val_nc"] *  (1 - actions_en_pvl["pct_to_sold"])
-        actions_en_pvl["nb_unit_fin"] = actions_en_pvl["nb_unit"] * (1 - actions_en_pvl["pct_to_sold"])
+        actions_en_pvl["val_achat_fin"] = actions_en_pvl["val_achat"] * (1 - actions_en_pvl["alloc"])
+        actions_en_pvl["val_marche_fin"] = actions_en_pvl["val_marche"] * (1 - actions_en_pvl["alloc"])
+        actions_en_pvl["val_nc_fin"] = actions_en_pvl["val_nc"] *  (1 - actions_en_pvl["alloc"])
+        actions_en_pvl["nb_unit_fin"] = actions_en_pvl["nb_unit"] * (1 - actions_en_pvl["alloc"])
         self.portefeuille_action.loc[self.portefeuille_action["val_marche_fin"]>self.portefeuille_action["val_nc"]] = actions_en_pvl
 
     def realiser_les_pvl_immo(self, montant_a_vendre):
@@ -352,17 +336,37 @@ class portefeuille_financier():
         immo_en_pvl = self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]]
         immo_en_pvl["alloc"] = immo_en_pvl["val_marche"] / np.sum(immo_en_pvl["val_marche"]) 
         immo_en_pvl["nb_to_sold"] = (immo_en_pvl["alloc"] * -1 * montant_a_vendre) / (immo_en_pvl["val_marche"] / immo_en_pvl["nb_unit"])
-        immo_en_pvl["pct_to_sold"] = immo_en_pvl["nb_to_sold"] / immo_en_pvl["nb_unit"]
-        self.portefeuille_treso["val_marche"] = np.sum((immo_en_pvl["val_achat"] - immo_en_pvl["val_nc"]) * immo_en_pvl["pct_to_sold"])
+        #immo_en_pvl["pct_to_sold"] = immo_en_pvl["nb_to_sold"] / immo_en_pvl["nb_unit"]
+        self.portefeuille_treso["val_marche"] = np.sum((immo_en_pvl["val_achat"] - immo_en_pvl["val_nc"]) * immo_en_pvl["alloc"])
         # Actualisation des données de portefeuille
-        immo_en_pvl["val_achat_fin"] = immo_en_pvl["val_achat"] * (1 - immo_en_pvl["pct_to_sold"])
-        immo_en_pvl["val_marche_fin"] = immo_en_pvl["val_marche"] * (1 - immo_en_pvl["pct_to_sold"])
-        immo_en_pvl["val_nc_fin"] = immo_en_pvl["val_nc"] *  (1 - immo_en_pvl["pct_to_sold"])
-        immo_en_pvl["nb_unit_fin"] = immo_en_pvl["nb_unit"] * (1 - immo_en_pvl["pct_to_sold"])
-
+        immo_en_pvl["val_achat_fin"] = immo_en_pvl["val_achat"] * (1 - immo_en_pvl["alloc"])
+        immo_en_pvl["val_marche_fin"] = immo_en_pvl["val_marche"] * (1 - immo_en_pvl["alloc"])
+        immo_en_pvl["val_nc_fin"] = immo_en_pvl["val_nc"] *  (1 - immo_en_pvl["alloc"])
+        immo_en_pvl["nb_unit_fin"] = immo_en_pvl["nb_unit"] * (1 - immo_en_pvl["alloc"])
         self.portefeuille_immo.loc[self.portefeuille_immo["val_marche_fin"]>self.portefeuille_immo["val_nc"]] = immo_en_pvl
 
-    def vendres_des_immo(self, montant_a_vendre):
+    def vendre_des_actions(self, montant_a_vendre):
+        """
+            Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
+            TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
+
+            :param montant_a_vendre: (Float) montant négatif représentant le montant de vente des actions
+
+            :returns: None, modificaiton du portefeuille actions
+        """
+        self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche_fin"] / np.sum(self.portefeuille_action["val_marche_fin"])
+        self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_action["val_marche_fin"] / self.portefeuille_action["nb_unit"])
+        #self.portefeuille_action["pct_to_sold"] = self.portefeuille_action["nb_to_sold"] / self.portefeuille_action["nb_unit"]
+        self.plus_moins_value_realised_action = np.sum((self.portefeuille_action["val_achat"] - self.portefeuille_action["val_nc"]) * self.portefeuille_action["alloc"])
+        self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_action
+        # Actualisation des données de portefeuille
+        self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + montant_a_vendre * self.portefeuille_action["alloc"]
+        self.portefeuille_action["val_marche_fin"] = self.portefeuille_action["val_marche_fin"]  + montant_a_vendre * self.portefeuille_action["alloc"]
+        self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] + montant_a_vendre * self.portefeuille_action["alloc"]
+        self.portefeuille_action["nb_unit_fin"] = self.portefeuille_action["nb_unit"] - self.portefeuille_action["nb_to_sold"]
+        #self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.abs(montant_a_vendre)
+
+    def vendre_des_immo(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
@@ -371,18 +375,19 @@ class portefeuille_financier():
 
             :returns: None, modificaiton du portefeuille immobilier
         """
-        self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche"] / np.sum(self.portefeuille_immo["val_marche"]) 
-        self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche"] / self.portefeuille_immo["nb_unit"])
-        self.portefeuille_immo["pct_to_sold"] = self.portefeuille_immo["nb_to_sold"] / self.portefeuille_immo["nb_unit"]
-        self.plus_moins_value_realised_immo = np.sum((self.portefeuille_immo["val_achat"] - self.portefeuille_immo["val_nc"]) * self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche_fin"] / np.sum(self.portefeuille_immo["val_marche_fin"])
+        self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche_fin"] / self.portefeuille_immo["nb_unit"])
+        #self.portefeuille_immo["pct_to_sold"] = self.portefeuille_immo["nb_to_sold"] / self.portefeuille_immo["nb_unit"]
+        self.plus_moins_value_realised_immo = np.sum((self.portefeuille_immo["val_achat"] - self.portefeuille_immo["val_nc"]) * self.portefeuille_immo["alloc"])
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
         # Actualisation des données de portefeuille
-        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] * (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche"] * (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] *  (1 - self.portefeuille_immo["pct_to_sold"])
-        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] * (1 - self.portefeuille_immo["pct_to_sold"])
+        self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] + montant_a_vendre * self.portefeuille_immo["alloc"]
+        self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche_fin"] + montant_a_vendre * self.portefeuille_immo["alloc"]
+        self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + montant_a_vendre * self.portefeuille_immo["alloc"]
+        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] * (1 - self.portefeuille_immo["alloc"])
+        #self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.abs(montant_a_vendre)
 
-    def vendres_des_oblig(self, montant_a_vendre):
+    def vendre_des_oblig(self, montant_a_vendre):
         """
             Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
             TODO : gérer le cas où le le nombre d'actif à vendre est supérieur au nombre d'actifs disponible
@@ -391,16 +396,17 @@ class portefeuille_financier():
 
             :returns: None, modificaiton du portefeuille obligation
         """
-        self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche"] / np.sum(self.portefeuille_oblig["val_marche"]) 
-        self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche"] / self.portefeuille_oblig["nb_unit"])
-        self.portefeuille_oblig["pct_to_sold"] = self.portefeuille_oblig["nb_to_sold"] / self.portefeuille_oblig["nb_unit"]
-        self.plus_moins_value_realised_oblig = np.sum((self.portefeuille_oblig["val_achat"] - self.portefeuille_oblig["val_nc"]) * self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche_fin"] / np.sum(self.portefeuille_oblig["val_marche_fin"])
+        self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche_fin"] / self.portefeuille_oblig["nb_unit"])
+        #self.portefeuille_oblig["pct_to_sold"] = self.portefeuille_oblig["nb_to_sold"] / self.portefeuille_oblig["nb_unit"]
+        self.plus_moins_value_realised_oblig = np.sum((self.portefeuille_oblig["val_achat"] - self.portefeuille_oblig["val_nc"]) * self.portefeuille_oblig["alloc"])
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
         # Actualisation des données de portefeuille
-        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] * (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche"] * (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] *  (1 - self.portefeuille_oblig["pct_to_sold"])
-        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["pct_to_sold"])
+        self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
+        self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche_fin"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
+        self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
+        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["alloc"])
+        #self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.abs(montant_a_vendre)
 
     def calcul_resultat_financier(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
         """
