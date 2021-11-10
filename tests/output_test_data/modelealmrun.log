@@ -1,286 +1,479 @@
-10/22/2021 01:49:04 PM  INFO - ===== Modele ALM version XX.XX =====
-10/22/2021 01:49:04 PM  INFO - ===== Initialisation =====
-10/22/2021 01:49:04 PM  INFO - allocation_courante : {'somme_vm_action': 40038357.69928999, 'somme_vm_oblig': 18816187.161556877, 'somme_vm_immo': 63352098.513, 'somme_vm_treso': 15909764.82, 'propor_action': 0.2898884949505494, 'propor_oblig': 0.13623426360138394, 'propor_immo': 0.45868625850800515, 'propor_treso': 0.11519098294006162, 'total_vm_portfi': 138116408.19384685} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:04 PM  INFO - Describe passif : {'anc': 0.0, 'age': 38.97, 'nb_contr': 100, 'pm': 14199883.243270002} 
-10/22/2021 01:49:04 PM  INFO - ========== DEBUT DU RUN / Horizon = 1 ==========
-10/22/2021 01:49:04 PM  INFO - NumExpr defaulting to 8 threads.
-10/22/2021 01:49:04 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14852010.245552888, 'somme_vm_oblig': 118816081.96442315, 'somme_vm_immo': 7426005.122776434, 'somme_vm_treso': 7426005.122776445, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999992, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 148520102.45552891} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:04 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14852010.245552892, 'somme_vm_oblig': 118816081.96442313, 'somme_vm_immo': 7426005.122776446, 'somme_vm_treso': 7426005.122776446, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 148520102.45552891} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:04 PM  INFO - Describe passif : {'anc': 1.0, 'age': 39.97, 'nb_contr_fin': 95.46000036087601, 'pm_fin_ap_pb': 14111151.031688306} 
-10/22/2021 01:49:04 PM  INFO - ========== FIN DU RUN / Horizon = 1 ==========
-10/22/2021 01:49:04 PM  INFO - ========== DEBUT DU RUN / Horizon = 2 ==========
-10/22/2021 01:49:04 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15365860.541770317, 'somme_vm_oblig': 122926884.33416255, 'somme_vm_immo': 7682930.270885155, 'somme_vm_treso': 7682930.270885158, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.04999999999999996, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 153658605.4177032} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:04 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15365860.541770322, 'somme_vm_oblig': 122926884.33416258, 'somme_vm_immo': 7682930.270885158, 'somme_vm_treso': 7682930.270885161, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999975, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 153658605.41770324} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:04 PM  INFO - Describe passif : {'anc': 2.0, 'age': 40.97, 'nb_contr_fin': 91.30433568543872, 'pm_fin_ap_pb': 14064028.5163026} 
-10/22/2021 01:49:04 PM  INFO - ========== FIN DU RUN / Horizon = 2 ==========
-10/22/2021 01:49:04 PM  INFO - ========== DEBUT DU RUN / Horizon = 3 ==========
-10/22/2021 01:49:04 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15276331.071966184, 'somme_vm_oblig': 122210648.57572953, 'somme_vm_immo': 7638165.535983099, 'somme_vm_treso': 7638165.535983095, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05, 'total_vm_portfi': 152763310.7196619} 
-10/22/2021 01:49:04 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15276331.071966184, 'somme_vm_oblig': 122210648.57572949, 'somme_vm_immo': 7638165.53598309, 'somme_vm_treso': 7638165.535983093, 'propor_action': 0.1, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 152763310.71966183} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - Describe passif : {'anc': 3.0, 'age': 41.97, 'nb_contr_fin': 87.46419398803668, 'pm_fin_ap_pb': 14049664.32730386} 
-10/22/2021 01:49:05 PM  INFO - ========== FIN DU RUN / Horizon = 3 ==========
-10/22/2021 01:49:05 PM  INFO - ========== DEBUT DU RUN / Horizon = 4 ==========
-10/22/2021 01:49:05 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 12004049.012356363, 'somme_vm_oblig': 96032392.0988509, 'somme_vm_immo': 6002024.506178177, 'somme_vm_treso': 6002024.506178182, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 120040490.12356363} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - allocation_courante après pb : {'somme_vm_action': 12004049.012356367, 'somme_vm_oblig': 96032392.09885092, 'somme_vm_immo': 6002024.5061781835, 'somme_vm_treso': 6002024.506178183, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 120040490.12356366} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - Describe passif : {'anc': 4.0, 'age': 42.97, 'nb_contr_fin': 83.89720726735452, 'pm_fin_ap_pb': 14061382.74019736} 
-10/22/2021 01:49:05 PM  INFO - ========== FIN DU RUN / Horizon = 4 ==========
-10/22/2021 01:49:05 PM  INFO - ========== DEBUT DU RUN / Horizon = 5 ==========
-10/22/2021 01:49:05 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11657401.726670176, 'somme_vm_oblig': 93259213.81336138, 'somme_vm_immo': 5828700.863335089, 'somme_vm_treso': 5828700.863335087, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05, 'total_vm_portfi': 116574017.26670173} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11657401.726670176, 'somme_vm_oblig': 93259213.81336139, 'somme_vm_immo': 5828700.863335088, 'somme_vm_treso': 5828700.863335088, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 116574017.26670174} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - Describe passif : {'anc': 5.0, 'age': 43.97, 'nb_contr_fin': 80.52032339553818, 'pm_fin_ap_pb': 14087265.980035473} 
-10/22/2021 01:49:05 PM  INFO - ========== FIN DU RUN / Horizon = 5 ==========
-10/22/2021 01:49:05 PM  INFO - ========== DEBUT DU RUN / Horizon = 6 ==========
-10/22/2021 01:49:05 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13278486.859913263, 'somme_vm_oblig': 106227894.87930614, 'somme_vm_immo': 6639243.429956632, 'somme_vm_treso': 6639243.429956633, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 132784868.59913266} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13278486.859913267, 'somme_vm_oblig': 106227894.87930614, 'somme_vm_immo': 6639243.429956634, 'somme_vm_treso': 6639243.429956634, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 132784868.59913266} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - Describe passif : {'anc': 6.0, 'age': 44.97, 'nb_contr_fin': 77.2892299113853, 'pm_fin_ap_pb': 14118751.800130427} 
-10/22/2021 01:49:05 PM  INFO - ========== FIN DU RUN / Horizon = 6 ==========
-10/22/2021 01:49:05 PM  INFO - ========== DEBUT DU RUN / Horizon = 7 ==========
-10/22/2021 01:49:05 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11528836.805554232, 'somme_vm_oblig': 92230694.44443388, 'somme_vm_immo': 5764418.402777114, 'somme_vm_treso': 5764418.402777117, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999997, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 115288368.05554235} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11528836.80555424, 'somme_vm_oblig': 92230694.4444339, 'somme_vm_immo': 5764418.4027771205, 'somme_vm_treso': 5764418.402777119, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 115288368.05554238} 
-10/22/2021 01:49:05 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:05 PM  INFO - Describe passif : {'anc': 7.0, 'age': 45.97, 'nb_contr_fin': 74.17438871583356, 'pm_fin_ap_pb': 14148641.192651497} 
-10/22/2021 01:49:05 PM  INFO - ========== FIN DU RUN / Horizon = 7 ==========
-10/22/2021 01:49:05 PM  INFO - ========== DEBUT DU RUN / Horizon = 8 ==========
-10/22/2021 01:49:06 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14906058.7081871, 'somme_vm_oblig': 119248469.66549675, 'somme_vm_immo': 7453029.35409355, 'somme_vm_treso': 7453029.354093546, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 149060587.08187094} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14906058.7081871, 'somme_vm_oblig': 119248469.66549678, 'somme_vm_immo': 7453029.354093549, 'somme_vm_treso': 7453029.354093549, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 149060587.08187097} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - Describe passif : {'anc': 8.0, 'age': 46.97, 'nb_contr_fin': 71.14128858570456, 'pm_fin_ap_pb': 14167132.119858835} 
-10/22/2021 01:49:06 PM  INFO - ========== FIN DU RUN / Horizon = 8 ==========
-10/22/2021 01:49:06 PM  INFO - ========== DEBUT DU RUN / Horizon = 9 ==========
-10/22/2021 01:49:06 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14196602.812642405, 'somme_vm_oblig': 113572822.50113921, 'somme_vm_immo': 7098301.406321206, 'somme_vm_treso': 7098301.4063212015, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000004, 'propor_treso': 0.05, 'total_vm_portfi': 141966028.126424} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14196602.812642405, 'somme_vm_oblig': 113572822.50113921, 'somme_vm_immo': 7098301.406321202, 'somme_vm_treso': 7098301.406321202, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 141966028.126424} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - Describe passif : {'anc': 9.0, 'age': 47.97, 'nb_contr_fin': 68.19584242069497, 'pm_fin_ap_pb': 14181308.339234157} 
-10/22/2021 01:49:06 PM  INFO - ========== FIN DU RUN / Horizon = 9 ==========
-10/22/2021 01:49:06 PM  INFO - ========== DEBUT DU RUN / Horizon = 10 ==========
-10/22/2021 01:49:06 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15203947.348471332, 'somme_vm_oblig': 121631578.78777067, 'somme_vm_immo': 7601973.67423566, 'somme_vm_treso': 7601973.674235668, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999995, 'propor_treso': 0.05, 'total_vm_portfi': 152039473.48471335} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15203947.348471338, 'somme_vm_oblig': 121631578.7877707, 'somme_vm_immo': 7601973.674235669, 'somme_vm_treso': 7601973.674235669, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 152039473.48471338} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - Describe passif : {'anc': 10.0, 'age': 48.97, 'nb_contr_fin': 65.23135967913827, 'pm_fin_ap_pb': 14183371.292032335} 
-10/22/2021 01:49:06 PM  INFO - ========== FIN DU RUN / Horizon = 10 ==========
-10/22/2021 01:49:06 PM  INFO - ========== DEBUT DU RUN / Horizon = 11 ==========
-10/22/2021 01:49:06 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 16083101.616516128, 'somme_vm_oblig': 128664812.93212906, 'somme_vm_immo': 8041550.808258069, 'somme_vm_treso': 8041550.808258066, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 160831016.1651613} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - allocation_courante après pb : {'somme_vm_action': 16083101.616516132, 'somme_vm_oblig': 128664812.93212906, 'somme_vm_immo': 8041550.808258065, 'somme_vm_treso': 8041550.808258066, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 160831016.1651613} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - Describe passif : {'anc': 11.0, 'age': 49.97, 'nb_contr_fin': 62.28382222835248, 'pm_fin_ap_pb': 14176848.666921161} 
-10/22/2021 01:49:06 PM  INFO - ========== FIN DU RUN / Horizon = 11 ==========
-10/22/2021 01:49:06 PM  INFO - ========== DEBUT DU RUN / Horizon = 12 ==========
-10/22/2021 01:49:06 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13430187.830059694, 'somme_vm_oblig': 107441502.64047757, 'somme_vm_immo': 6715093.9150298685, 'somme_vm_treso': 6715093.915029848, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.05000000000000014, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 134301878.30059698} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13430187.8300597, 'somme_vm_oblig': 107441502.6404776, 'somme_vm_immo': 6715093.91502985, 'somme_vm_treso': 6715093.91502985, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 134301878.300597} 
-10/22/2021 01:49:06 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:06 PM  INFO - Describe passif : {'anc': 12.0, 'age': 50.97, 'nb_contr_fin': 59.31992101560887, 'pm_fin_ap_pb': 14156121.647895912} 
-10/22/2021 01:49:06 PM  INFO - ========== FIN DU RUN / Horizon = 12 ==========
-10/22/2021 01:49:06 PM  INFO - ========== DEBUT DU RUN / Horizon = 13 ==========
-10/22/2021 01:49:07 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14785078.667849423, 'somme_vm_oblig': 118280629.34279536, 'somme_vm_immo': 7392539.333924714, 'somme_vm_treso': 7392539.333924711, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 147850786.67849422} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14785078.667849422, 'somme_vm_oblig': 118280629.34279537, 'somme_vm_immo': 7392539.33392471, 'somme_vm_treso': 7392539.333924711, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 147850786.67849422} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - Describe passif : {'anc': 13.0, 'age': 51.97, 'nb_contr_fin': 56.37213821139645, 'pm_fin_ap_pb': 14115940.952702973} 
-10/22/2021 01:49:07 PM  INFO - ========== FIN DU RUN / Horizon = 13 ==========
-10/22/2021 01:49:07 PM  INFO - ========== DEBUT DU RUN / Horizon = 14 ==========
-10/22/2021 01:49:07 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13590427.977959925, 'somme_vm_oblig': 108723423.82367942, 'somme_vm_immo': 6795213.9889799645, 'somme_vm_treso': 6795213.988979962, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 135904279.77959928} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13590427.977959927, 'somme_vm_oblig': 108723423.82367943, 'somme_vm_immo': 6795213.9889799645, 'somme_vm_treso': 6795213.9889799645, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 135904279.77959928} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - Describe passif : {'anc': 14.0, 'age': 52.97, 'nb_contr_fin': 53.43996081707627, 'pm_fin_ap_pb': 14037234.280246599} 
-10/22/2021 01:49:07 PM  INFO - ========== FIN DU RUN / Horizon = 14 ==========
-10/22/2021 01:49:07 PM  INFO - ========== DEBUT DU RUN / Horizon = 15 ==========
-10/22/2021 01:49:07 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 16703817.478009664, 'somme_vm_oblig': 133630539.82407735, 'somme_vm_immo': 8351908.739004834, 'somme_vm_treso': 8351908.739004834, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 167038174.78009665} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - allocation_courante après pb : {'somme_vm_action': 16703817.478009662, 'somme_vm_oblig': 133630539.82407731, 'somme_vm_immo': 8351908.739004833, 'somme_vm_treso': 8351908.739004832, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 167038174.78009662} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - Describe passif : {'anc': 15.0, 'age': 53.97, 'nb_contr_fin': 50.57137072926516, 'pm_fin_ap_pb': 13923106.729342079} 
-10/22/2021 01:49:07 PM  INFO - ========== FIN DU RUN / Horizon = 15 ==========
-10/22/2021 01:49:07 PM  INFO - ========== DEBUT DU RUN / Horizon = 16 ==========
-10/22/2021 01:49:07 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 12845660.27938539, 'somme_vm_oblig': 102765282.23508307, 'somme_vm_immo': 6422830.139692706, 'somme_vm_treso': 6422830.139692691, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.0500000000000001, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 128456602.79385386} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - allocation_courante après pb : {'somme_vm_action': 12845660.279385388, 'somme_vm_oblig': 102765282.2350831, 'somme_vm_immo': 6422830.139692694, 'somme_vm_treso': 6422830.139692694, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 128456602.79385388} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - Describe passif : {'anc': 16.0, 'age': 54.97, 'nb_contr_fin': 47.790799071834655, 'pm_fin_ap_pb': 13769406.983990733} 
-10/22/2021 01:49:07 PM  INFO - ========== FIN DU RUN / Horizon = 16 ==========
-10/22/2021 01:49:07 PM  INFO - ========== DEBUT DU RUN / Horizon = 17 ==========
-10/22/2021 01:49:07 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11315908.082499824, 'somme_vm_oblig': 90527264.65999866, 'somme_vm_immo': 5657954.041249929, 'somme_vm_treso': 5657954.041249915, 'propor_action': 0.09999999999999992, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000011, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 113159080.82499833} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11315908.082499836, 'somme_vm_oblig': 90527264.65999867, 'somme_vm_immo': 5657954.041249917, 'somme_vm_treso': 5657954.041249917, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 113159080.82499833} 
-10/22/2021 01:49:07 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:07 PM  INFO - Describe passif : {'anc': 17.0, 'age': 55.97, 'nb_contr_fin': 45.10459166997619, 'pm_fin_ap_pb': 13585521.244889164} 
-10/22/2021 01:49:07 PM  INFO - ========== FIN DU RUN / Horizon = 17 ==========
-10/22/2021 01:49:07 PM  INFO - ========== DEBUT DU RUN / Horizon = 18 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13058433.35553684, 'somme_vm_oblig': 104467466.84429471, 'somme_vm_immo': 6529216.677768409, 'somme_vm_treso': 6529216.6777684195, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999926, 'propor_treso': 0.05, 'total_vm_portfi': 130584333.55536838} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13058433.35553684, 'somme_vm_oblig': 104467466.84429473, 'somme_vm_immo': 6529216.677768421, 'somme_vm_treso': 6529216.67776842, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 130584333.55536842} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - Describe passif : {'anc': 18.0, 'age': 56.97, 'nb_contr_fin': 42.55951388003824, 'pm_fin_ap_pb': 13396397.811397266} 
-10/22/2021 01:49:08 PM  INFO - ========== FIN DU RUN / Horizon = 18 ==========
-10/22/2021 01:49:08 PM  INFO - ========== DEBUT DU RUN / Horizon = 19 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15493722.164480295, 'somme_vm_oblig': 123949777.31584235, 'somme_vm_immo': 7746861.082240147, 'somme_vm_treso': 7746861.0822401475, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 154937221.6448029} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15493722.164480291, 'somme_vm_oblig': 123949777.31584233, 'somme_vm_immo': 7746861.082240146, 'somme_vm_treso': 7746861.082240146, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 154937221.6448029} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - Describe passif : {'anc': 19.0, 'age': 57.97, 'nb_contr_fin': 40.120581819057726, 'pm_fin_ap_pb': 13202831.955214666} 
-10/22/2021 01:49:08 PM  INFO - ========== FIN DU RUN / Horizon = 19 ==========
-10/22/2021 01:49:08 PM  INFO - ========== DEBUT DU RUN / Horizon = 20 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 10921639.079988472, 'somme_vm_oblig': 87373112.63990776, 'somme_vm_immo': 5460819.53999424, 'somme_vm_treso': 5460819.539994236, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000004, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 109216390.7998847} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - allocation_courante après pb : {'somme_vm_action': 10921639.079988474, 'somme_vm_oblig': 87373112.6399078, 'somme_vm_immo': 5460819.539994238, 'somme_vm_treso': 5460819.539994237, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 109216390.79988477} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - Describe passif : {'anc': 20.0, 'age': 58.97, 'nb_contr_fin': 37.72313351150211, 'pm_fin_ap_pb': 12995020.585179461} 
-10/22/2021 01:49:08 PM  INFO - ========== FIN DU RUN / Horizon = 20 ==========
-10/22/2021 01:49:08 PM  INFO - ========== DEBUT DU RUN / Horizon = 21 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13378109.48718165, 'somme_vm_oblig': 107024875.89745316, 'somme_vm_immo': 6689054.743590826, 'somme_vm_treso': 6689054.743590823, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05, 'total_vm_portfi': 133781094.87181646} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13378109.48718165, 'somme_vm_oblig': 107024875.8974532, 'somme_vm_immo': 6689054.743590823, 'somme_vm_treso': 6689054.743590824, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 133781094.87181649} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - Describe passif : {'anc': 21.0, 'age': 59.97, 'nb_contr_fin': 35.38780710209527, 'pm_fin_ap_pb': 12774977.035298545} 
-10/22/2021 01:49:08 PM  INFO - ========== FIN DU RUN / Horizon = 21 ==========
-10/22/2021 01:49:08 PM  INFO - ========== DEBUT DU RUN / Horizon = 22 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14052644.487388907, 'somme_vm_oblig': 112421155.8991113, 'somme_vm_immo': 7026322.243694468, 'somme_vm_treso': 7026322.243694456, 'propor_action': 0.09999999999999995, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.05000000000000008, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 140526444.87388915} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14052644.487388916, 'somme_vm_oblig': 112421155.89911135, 'somme_vm_immo': 7026322.243694458, 'somme_vm_treso': 7026322.243694458, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 140526444.87388918} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:08 PM  INFO - Describe passif : {'anc': 22.0, 'age': 60.97, 'nb_contr_fin': 33.05336790551747, 'pm_fin_ap_pb': 12507421.335295167} 
-10/22/2021 01:49:08 PM  INFO - ========== FIN DU RUN / Horizon = 22 ==========
-10/22/2021 01:49:08 PM  INFO - ========== DEBUT DU RUN / Horizon = 23 ==========
-10/22/2021 01:49:08 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15753682.828193914, 'somme_vm_oblig': 126029462.62555137, 'somme_vm_immo': 7876841.4140969645, 'somme_vm_treso': 7876841.414096958, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000004, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 157536828.28193918} 
-10/22/2021 01:49:08 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15753682.828193914, 'somme_vm_oblig': 126029462.62555134, 'somme_vm_immo': 7876841.414096959, 'somme_vm_treso': 7876841.414096959, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 157536828.28193915} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - Describe passif : {'anc': 23.0, 'age': 61.97, 'nb_contr_fin': 30.812800036624882, 'pm_fin_ap_pb': 12221630.040321177} 
-10/22/2021 01:49:09 PM  INFO - ========== FIN DU RUN / Horizon = 23 ==========
-10/22/2021 01:49:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 24 ==========
-10/22/2021 01:49:09 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 12153529.43555767, 'somme_vm_oblig': 97228235.48446134, 'somme_vm_immo': 6076764.717778829, 'somme_vm_treso': 6076764.717778832, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999997, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 121535294.35557666} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - allocation_courante après pb : {'somme_vm_action': 12153529.435557667, 'somme_vm_oblig': 97228235.48446134, 'somme_vm_immo': 6076764.717778832, 'somme_vm_treso': 6076764.717778834, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.05, 'total_vm_portfi': 121535294.35557666} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - Describe passif : {'anc': 24.0, 'age': 62.97, 'nb_contr_fin': 28.687730881226656, 'pm_fin_ap_pb': 11932549.464707231} 
-10/22/2021 01:49:09 PM  INFO - ========== FIN DU RUN / Horizon = 24 ==========
-10/22/2021 01:49:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 25 ==========
-10/22/2021 01:49:09 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11763677.481055826, 'somme_vm_oblig': 94109419.84844661, 'somme_vm_immo': 5881838.740527911, 'somme_vm_treso': 5881838.740527913, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999998, 'propor_treso': 0.05, 'total_vm_portfi': 117636774.81055826} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11763677.481055826, 'somme_vm_oblig': 94109419.84844661, 'somme_vm_immo': 5881838.740527913, 'somme_vm_treso': 5881838.740527913, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 117636774.81055826} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - Describe passif : {'anc': 25.0, 'age': 63.97, 'nb_contr_fin': 26.720070806488966, 'pm_fin_ap_pb': 11661508.92328639} 
-10/22/2021 01:49:09 PM  INFO - ========== FIN DU RUN / Horizon = 25 ==========
-10/22/2021 01:49:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 26 ==========
-10/22/2021 01:49:09 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13400633.523078462, 'somme_vm_oblig': 107205068.18462765, 'somme_vm_immo': 6700316.761539226, 'somme_vm_treso': 6700316.761539227, 'propor_action': 0.10000000000000005, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 134006335.23078455} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13400633.523078453, 'somme_vm_oblig': 107205068.18462765, 'somme_vm_immo': 6700316.761539228, 'somme_vm_treso': 6700316.761539228, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 134006335.23078457} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - Describe passif : {'anc': 26.0, 'age': 64.97, 'nb_contr_fin': 24.92534909409979, 'pm_fin_ap_pb': 11424906.771819245} 
-10/22/2021 01:49:09 PM  INFO - ========== FIN DU RUN / Horizon = 26 ==========
-10/22/2021 01:49:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 27 ==========
-10/22/2021 01:49:09 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11844203.206569675, 'somme_vm_oblig': 94753625.65255749, 'somme_vm_immo': 5922101.603284835, 'somme_vm_treso': 5922101.603284841, 'propor_action': 0.09999999999999994, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999994, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 118442032.06569684} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11844203.206569687, 'somme_vm_oblig': 94753625.65255749, 'somme_vm_immo': 5922101.603284843, 'somme_vm_treso': 5922101.603284843, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 118442032.06569687} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:09 PM  INFO - Describe passif : {'anc': 27.0, 'age': 65.97, 'nb_contr_fin': 23.26894644960206, 'pm_fin_ap_pb': 11220114.598420857} 
-10/22/2021 01:49:09 PM  INFO - ========== FIN DU RUN / Horizon = 27 ==========
-10/22/2021 01:49:09 PM  INFO - ========== DEBUT DU RUN / Horizon = 28 ==========
-10/22/2021 01:49:09 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11728508.211847443, 'somme_vm_oblig': 93828065.69477963, 'somme_vm_immo': 5864254.105923734, 'somme_vm_treso': 5864254.105923726, 'propor_action': 0.09999999999999992, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.050000000000000065, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 117285082.11847453} 
-10/22/2021 01:49:09 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11728508.211847454, 'somme_vm_oblig': 93828065.69477963, 'somme_vm_immo': 5864254.105923727, 'somme_vm_treso': 5864254.105923727, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 117285082.11847454} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - Describe passif : {'anc': 28.0, 'age': 66.97, 'nb_contr_fin': 21.74225405424495, 'pm_fin_ap_pb': 11043512.973473212} 
-10/22/2021 01:49:10 PM  INFO - ========== FIN DU RUN / Horizon = 28 ==========
-10/22/2021 01:49:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 29 ==========
-10/22/2021 01:49:10 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13003302.606005795, 'somme_vm_oblig': 104026420.84804636, 'somme_vm_immo': 6501651.3030029, 'somme_vm_treso': 6501651.303002898, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000003, 'propor_treso': 0.05, 'total_vm_portfi': 130033026.06005794} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13003302.606005795, 'somme_vm_oblig': 104026420.84804636, 'somme_vm_immo': 6501651.303002897, 'somme_vm_treso': 6501651.303002898, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 130033026.06005794} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - Describe passif : {'anc': 29.0, 'age': 67.97, 'nb_contr_fin': 20.314671217680313, 'pm_fin_ap_pb': 10881705.553554783} 
-10/22/2021 01:49:10 PM  INFO - ========== FIN DU RUN / Horizon = 29 ==========
-10/22/2021 01:49:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 30 ==========
-10/22/2021 01:49:10 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13612188.351749614, 'somme_vm_oblig': 108897506.81399693, 'somme_vm_immo': 6806094.175874799, 'somme_vm_treso': 6806094.175874806, 'propor_action': 0.1, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999994, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 136121883.51749614} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13612188.351749614, 'somme_vm_oblig': 108897506.81399691, 'somme_vm_immo': 6806094.175874807, 'somme_vm_treso': 6806094.175874807, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 136121883.51749614} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - Describe passif : {'anc': 30.0, 'age': 68.97, 'nb_contr_fin': 18.956899902979007, 'pm_fin_ap_pb': 10726278.266942162} 
-10/22/2021 01:49:10 PM  INFO - ========== FIN DU RUN / Horizon = 30 ==========
-10/22/2021 01:49:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 31 ==========
-10/22/2021 01:49:10 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 12164331.724589232, 'somme_vm_oblig': 97314653.79671384, 'somme_vm_immo': 6082165.862294614, 'somme_vm_treso': 6082165.862294614, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 121643317.2458923} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - allocation_courante après pb : {'somme_vm_action': 12164331.72458923, 'somme_vm_oblig': 97314653.79671384, 'somme_vm_immo': 6082165.862294615, 'somme_vm_treso': 6082165.862294615, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 121643317.2458923} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - Describe passif : {'anc': 31.0, 'age': 69.97, 'nb_contr_fin': 17.65379311994966, 'pm_fin_ap_pb': 10561109.74978698} 
-10/22/2021 01:49:10 PM  INFO - ========== FIN DU RUN / Horizon = 31 ==========
-10/22/2021 01:49:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 32 ==========
-10/22/2021 01:49:10 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13901275.422418458, 'somme_vm_oblig': 111210203.37934762, 'somme_vm_immo': 6950637.711209222, 'somme_vm_treso': 6950637.711209225, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999996, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 139012754.22418454} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13901275.422418458, 'somme_vm_oblig': 111210203.37934768, 'somme_vm_immo': 6950637.71120923, 'somme_vm_treso': 6950637.711209229, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 139012754.2241846} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:10 PM  INFO - Describe passif : {'anc': 32.0, 'age': 70.97, 'nb_contr_fin': 16.361988397252446, 'pm_fin_ap_pb': 10354968.816115532} 
-10/22/2021 01:49:10 PM  INFO - ========== FIN DU RUN / Horizon = 32 ==========
-10/22/2021 01:49:10 PM  INFO - ========== DEBUT DU RUN / Horizon = 33 ==========
-10/22/2021 01:49:10 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 11631722.466427414, 'somme_vm_oblig': 93053779.73141934, 'somme_vm_immo': 5815861.2332136985, 'somme_vm_treso': 5815861.233213707, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999992, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 116317224.66427416} 
-10/22/2021 01:49:10 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - allocation_courante après pb : {'somme_vm_action': 11631722.466427414, 'somme_vm_oblig': 93053779.73141932, 'somme_vm_immo': 5815861.233213708, 'somme_vm_treso': 5815861.233213708, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 116317224.66427416} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - Describe passif : {'anc': 33.0, 'age': 71.97, 'nb_contr_fin': 14.97094437462219, 'pm_fin_ap_pb': 10007692.53014956} 
-10/22/2021 01:49:11 PM  INFO - ========== FIN DU RUN / Horizon = 33 ==========
-10/22/2021 01:49:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 34 ==========
-10/22/2021 01:49:11 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 12074516.30425964, 'somme_vm_oblig': 96596130.43407722, 'somme_vm_immo': 6037258.152129828, 'somme_vm_treso': 6037258.152129825, 'propor_action': 0.0999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 120745163.04259652} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - allocation_courante après pb : {'somme_vm_action': 12074516.304259654, 'somme_vm_oblig': 96596130.43407723, 'somme_vm_immo': 6037258.152129827, 'somme_vm_treso': 6037258.152129827, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 120745163.04259655} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - Describe passif : {'anc': 34.0, 'age': 72.97, 'nb_contr_fin': 13.583002588844614, 'pm_fin_ap_pb': 9576943.988605026} 
-10/22/2021 01:49:11 PM  INFO - ========== FIN DU RUN / Horizon = 34 ==========
-10/22/2021 01:49:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 35 ==========
-10/22/2021 01:49:11 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14872810.304579407, 'somme_vm_oblig': 118982482.43663529, 'somme_vm_immo': 7436405.152289718, 'somme_vm_treso': 7436405.1522897035, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000008, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 148728103.04579413} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14872810.304579416, 'somme_vm_oblig': 118982482.43663532, 'somme_vm_immo': 7436405.152289708, 'somme_vm_treso': 7436405.152289707, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 148728103.04579416} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - Describe passif : {'anc': 35.0, 'age': 73.97, 'nb_contr_fin': 12.255486154683851, 'pm_fin_ap_pb': 9100871.32944377} 
-10/22/2021 01:49:11 PM  INFO - ========== FIN DU RUN / Horizon = 35 ==========
-10/22/2021 01:49:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 36 ==========
-10/22/2021 01:49:11 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14274301.194946537, 'somme_vm_oblig': 114194409.55957219, 'somme_vm_immo': 7137150.597473265, 'somme_vm_treso': 7137150.597473262, 'propor_action': 0.10000000000000006, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 142743011.94946527} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14274301.194946527, 'somme_vm_oblig': 114194409.5595722, 'somme_vm_immo': 7137150.597473264, 'somme_vm_treso': 7137150.597473264, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 142743011.94946527} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - Describe passif : {'anc': 36.0, 'age': 74.97, 'nb_contr_fin': 11.058953092218879, 'pm_fin_ap_pb': 8644567.523645977} 
-10/22/2021 01:49:11 PM  INFO - ========== FIN DU RUN / Horizon = 36 ==========
-10/22/2021 01:49:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 37 ==========
-10/22/2021 01:49:11 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 15546842.904876811, 'somme_vm_oblig': 124374743.2390145, 'somme_vm_immo': 7773421.452438394, 'somme_vm_treso': 7773421.452438405, 'propor_action': 0.1, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.049999999999999926, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 155468429.0487681} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - allocation_courante après pb : {'somme_vm_action': 15546842.904876815, 'somme_vm_oblig': 124374743.2390145, 'somme_vm_immo': 7773421.452438408, 'somme_vm_treso': 7773421.452438407, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 155468429.04876816} 
-10/22/2021 01:49:11 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:11 PM  INFO - Describe passif : {'anc': 37.0, 'age': 75.97, 'nb_contr_fin': 10.023595927362065, 'pm_fin_ap_pb': 8251442.598735786} 
-10/22/2021 01:49:11 PM  INFO - ========== FIN DU RUN / Horizon = 37 ==========
-10/22/2021 01:49:11 PM  INFO - ========== DEBUT DU RUN / Horizon = 38 ==========
-10/22/2021 01:49:12 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14754497.340472184, 'somme_vm_oblig': 118035978.7237775, 'somme_vm_immo': 7377248.670236095, 'somme_vm_treso': 7377248.670236093, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 147544973.40472186} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14754497.340472186, 'somme_vm_oblig': 118035978.72377749, 'somme_vm_immo': 7377248.670236094, 'somme_vm_treso': 7377248.670236093, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 147544973.40472186} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - Describe passif : {'anc': 38.0, 'age': 76.97, 'nb_contr_fin': 9.13045937804926, 'pm_fin_ap_pb': 7923994.689718562} 
-10/22/2021 01:49:12 PM  INFO - ========== FIN DU RUN / Horizon = 38 ==========
-10/22/2021 01:49:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 39 ==========
-10/22/2021 01:49:12 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 13154694.858965576, 'somme_vm_oblig': 105237558.87172459, 'somme_vm_immo': 6577347.429482787, 'somme_vm_treso': 6577347.429482786, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 131546948.58965574} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - allocation_courante après pb : {'somme_vm_action': 13154694.858965576, 'somme_vm_oblig': 105237558.8717246, 'somme_vm_immo': 6577347.429482788, 'somme_vm_treso': 6577347.429482788, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 131546948.58965576} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - Describe passif : {'anc': 39.0, 'age': 77.97, 'nb_contr_fin': 8.342339948789174, 'pm_fin_ap_pb': 7640264.348000656} 
-10/22/2021 01:49:12 PM  INFO - ========== FIN DU RUN / Horizon = 39 ==========
-10/22/2021 01:49:12 PM  INFO - ========== DEBUT DU RUN / Horizon = 40 ==========
-10/22/2021 01:49:12 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14637803.657213656, 'somme_vm_oblig': 117102429.25770928, 'somme_vm_immo': 7318901.828606828, 'somme_vm_treso': 7318901.828606829, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 146378036.57213658} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14637803.657213656, 'somme_vm_oblig': 117102429.25770928, 'somme_vm_immo': 7318901.828606829, 'somme_vm_treso': 7318901.828606829, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 146378036.57213658} 
-10/22/2021 01:49:12 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
-10/22/2021 01:49:12 PM  INFO - Describe passif : {'anc': 40.0, 'age': 78.97, 'nb_contr_fin': 7.6231857928927775, 'pm_fin_ap_pb': 7369932.818237323} 
-10/22/2021 01:49:12 PM  INFO - ========== FIN DU RUN / Horizon = 40 ==========
+11/10/2021 04:50:46 PM  INFO - ===== Modele ALM version XX.XX =====
+11/10/2021 04:50:46 PM  INFO - ===== Initialisation =====
+11/10/2021 04:50:46 PM  INFO - allocation_courante : {'somme_vm_action': 40038357.69928999, 'somme_vm_oblig': 18816187.161556877, 'somme_vm_immo': 63352098.513, 'somme_vm_treso': 15909764.82, 'propor_action': 0.2898884949505494, 'propor_oblig': 0.13623426360138394, 'propor_immo': 0.45868625850800515, 'propor_treso': 0.11519098294006162, 'total_vm_portfi': 138116408.19384685} 
+11/10/2021 04:50:46 PM  INFO - allocation_cible : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:46 PM  INFO - Describe passif : {'anc': 0.0, 'age': 38.97, 'nb_contr': 100, 'pm': 14199883.243270002} 
+11/10/2021 04:50:46 PM  INFO - ========== DEBUT DU RUN / Horizon = 1 ==========
+11/10/2021 04:50:46 PM  INFO - Vendre des actions  : -21364622.259764314
+11/10/2021 04:50:46 PM  INFO - Vendre des immo  : -51008490.60935542
+11/10/2021 04:50:46 PM  INFO - Acheter des obligations  : 99679857.97287986
+11/10/2021 04:50:46 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 14852010.245552888, 'somme_vm_oblig': 118816081.96442309, 'somme_vm_immo': 7426005.122776448, 'somme_vm_treso': 7426005.122776445, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000003, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 148520102.45552886} 
+11/10/2021 04:50:46 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:46 PM  INFO - Vendre des actions  : -1.862645149230957e-09
+11/10/2021 04:50:46 PM  INFO - Vendre des immo  : -4.6566128730773926e-09
+11/10/2021 04:50:46 PM  INFO - allocation_courante après pb : {'somme_vm_action': 14852010.245552886, 'somme_vm_oblig': 118816081.96442309, 'somme_vm_immo': 7426005.122776445, 'somme_vm_treso': 7426005.122776443, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 148520102.45552886} 
+11/10/2021 04:50:46 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:46 PM  INFO - Describe passif : {'anc': 1.0, 'age': 39.97, 'nb_contr_fin': 95.46000036087601, 'pm_fin_ap_pb': 14111151.031688306} 
+11/10/2021 04:50:46 PM  INFO - ========== FIN DU RUN / Horizon = 1 ==========
+11/10/2021 04:50:46 PM  INFO - ========== DEBUT DU RUN / Horizon = 2 ==========
+11/10/2021 04:50:47 PM  INFO - Vendre des actions  : -12188497.54831608
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -6390423.184681414
+11/10/2021 04:50:47 PM  INFO - Acheter des obligations  : 31085143.87445383
+11/10/2021 04:50:47 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 6312113.5212812, 'somme_vm_oblig': 50496908.1702496, 'somme_vm_immo': 3156056.7606406016, 'somme_vm_treso': 3156056.7606406007, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 63121135.212812} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -1.3969838619232178e-09
+11/10/2021 04:50:47 PM  INFO - allocation_courante après pb : {'somme_vm_action': 6312113.5212812, 'somme_vm_oblig': 50496908.1702496, 'somme_vm_immo': 3156056.7606406007, 'somme_vm_treso': 3156056.7606406, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 63121135.212812} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Describe passif : {'anc': 2.0, 'age': 40.97, 'nb_contr_fin': 91.30433568543872, 'pm_fin_ap_pb': 14064028.516302599} 
+11/10/2021 04:50:47 PM  INFO - ========== FIN DU RUN / Horizon = 2 ==========
+11/10/2021 04:50:47 PM  INFO - ========== DEBUT DU RUN / Horizon = 3 ==========
+11/10/2021 04:50:47 PM  INFO - Vendre des actions  : -4154083.966368346
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -2053518.9625719434
+11/10/2021 04:50:47 PM  INFO - Acheter des obligations  : 11042562.237507097
+11/10/2021 04:50:47 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 3826407.7480934313, 'somme_vm_oblig': 30611261.984747455, 'somme_vm_immo': 1913203.8740467161, 'somme_vm_treso': 1913203.874046716, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 38264077.480934314} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:47 PM  INFO - allocation_courante après pb : {'somme_vm_action': 3826407.7480934323, 'somme_vm_oblig': 30611261.984747455, 'somme_vm_immo': 1913203.874046716, 'somme_vm_treso': 1913203.874046716, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 38264077.480934314} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Describe passif : {'anc': 3.0, 'age': 41.97, 'nb_contr_fin': 87.46419398803668, 'pm_fin_ap_pb': 14049664.32730386} 
+11/10/2021 04:50:47 PM  INFO - ========== FIN DU RUN / Horizon = 3 ==========
+11/10/2021 04:50:47 PM  INFO - ========== DEBUT DU RUN / Horizon = 4 ==========
+11/10/2021 04:50:47 PM  INFO - Vendre des actions  : -620359.3623332381
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -353906.6198953504
+11/10/2021 04:50:47 PM  INFO - Acheter des obligations  : 3676065.9565772302
+11/10/2021 04:50:47 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2928238.1051333733, 'somme_vm_oblig': 23425904.841066983, 'somme_vm_immo': 1464119.0525666869, 'somme_vm_treso': 1464119.0525666866, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 29282381.051333733} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:47 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:47 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2928238.1051333733, 'somme_vm_oblig': 23425904.841066986, 'somme_vm_immo': 1464119.0525666866, 'somme_vm_treso': 1464119.0525666866, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 29282381.051333733} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Describe passif : {'anc': 4.0, 'age': 42.97, 'nb_contr_fin': 83.89720726735452, 'pm_fin_ap_pb': 14061382.74019736} 
+11/10/2021 04:50:47 PM  INFO - ========== FIN DU RUN / Horizon = 4 ==========
+11/10/2021 04:50:47 PM  INFO - ========== DEBUT DU RUN / Horizon = 5 ==========
+11/10/2021 04:50:47 PM  INFO - Acheter des actions  : 194506.09872394335
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -20376.30258716666
+11/10/2021 04:50:47 PM  INFO - Acheter des obligations  : 1707356.073641941
+11/10/2021 04:50:47 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2704050.4746405743, 'somme_vm_oblig': 21632403.797124587, 'somme_vm_immo': 1352025.2373202872, 'somme_vm_treso': 1352025.237320287, 'propor_action': 0.10000000000000005, 'propor_oblig': 0.8, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 27040504.746405732} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Vendre des actions  : -9.313225746154785e-10
+11/10/2021 04:50:47 PM  INFO - Vendre des immo  : -4.656612873077393e-10
+11/10/2021 04:50:47 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2704050.4746405734, 'somme_vm_oblig': 21632403.797124587, 'somme_vm_immo': 1352025.2373202865, 'somme_vm_treso': 1352025.2373202867, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.05, 'total_vm_portfi': 27040504.746405732} 
+11/10/2021 04:50:47 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:47 PM  INFO - Describe passif : {'anc': 5.0, 'age': 43.97, 'nb_contr_fin': 80.52032339553818, 'pm_fin_ap_pb': 14087265.980035469} 
+11/10/2021 04:50:47 PM  INFO - ========== FIN DU RUN / Horizon = 5 ==========
+11/10/2021 04:50:48 PM  INFO - ========== DEBUT DU RUN / Horizon = 6 ==========
+11/10/2021 04:50:48 PM  INFO - Acheter des actions  : 387757.70343486127
+11/10/2021 04:50:48 PM  INFO - Vendre des immo  : -257199.12531887647
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 1515135.526851397
+11/10/2021 04:50:48 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2704729.8433215492, 'somme_vm_oblig': 21637838.74657239, 'somme_vm_immo': 1352364.9216607744, 'somme_vm_treso': 1352364.9216607744, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 27047298.433215488} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:48 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2704729.843321548, 'somme_vm_oblig': 21637838.74657239, 'somme_vm_immo': 1352364.9216607744, 'somme_vm_treso': 1352364.9216607744, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 27047298.433215484} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Describe passif : {'anc': 6.0, 'age': 44.97, 'nb_contr_fin': 77.2892299113853, 'pm_fin_ap_pb': 14118751.800130427} 
+11/10/2021 04:50:48 PM  INFO - ========== FIN DU RUN / Horizon = 6 ==========
+11/10/2021 04:50:48 PM  INFO - ========== DEBUT DU RUN / Horizon = 7 ==========
+11/10/2021 04:50:48 PM  INFO - Acheter des actions  : 638002.5761939948
+11/10/2021 04:50:48 PM  INFO - Vendre des immo  : -24259.79097751947
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 1060381.0799425393
+11/10/2021 04:50:48 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2633650.911910501, 'somme_vm_oblig': 21069207.295284007, 'somme_vm_immo': 1316825.4559552504, 'somme_vm_treso': 1316825.4559552504, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26336509.11910501} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:48 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:48 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2633650.9119105013, 'somme_vm_oblig': 21069207.29528401, 'somme_vm_immo': 1316825.4559552507, 'somme_vm_treso': 1316825.4559552507, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26336509.119105015} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Describe passif : {'anc': 7.0, 'age': 45.97, 'nb_contr_fin': 74.17438871583356, 'pm_fin_ap_pb': 14148641.192651497} 
+11/10/2021 04:50:48 PM  INFO - ========== FIN DU RUN / Horizon = 7 ==========
+11/10/2021 04:50:48 PM  INFO - ========== DEBUT DU RUN / Horizon = 8 ==========
+11/10/2021 04:50:48 PM  INFO - Vendre des actions  : -337183.59261917975
+11/10/2021 04:50:48 PM  INFO - Vendre des immo  : -245616.79246603302
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 2092701.2737391703
+11/10/2021 04:50:48 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2779031.5018768595, 'somme_vm_oblig': 22232252.015014876, 'somme_vm_immo': 1389515.7509384295, 'somme_vm_treso': 1389515.7509384295, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 27790315.018768597} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:48 PM  INFO - Acheter des immo  : 4.656612873077393e-10
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:48 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2779031.50187686, 'somme_vm_oblig': 22232252.01501488, 'somme_vm_immo': 1389515.7509384302, 'somme_vm_treso': 1389515.75093843, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 27790315.0187686} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Describe passif : {'anc': 8.0, 'age': 46.97, 'nb_contr_fin': 71.14128858570456, 'pm_fin_ap_pb': 14167132.119858835} 
+11/10/2021 04:50:48 PM  INFO - ========== FIN DU RUN / Horizon = 8 ==========
+11/10/2021 04:50:48 PM  INFO - ========== DEBUT DU RUN / Horizon = 9 ==========
+11/10/2021 04:50:48 PM  INFO - Vendre des actions  : -797682.2164234361
+11/10/2021 04:50:48 PM  INFO - Vendre des immo  : -64528.66034353059
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 2497890.741447758
+11/10/2021 04:50:48 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2813270.7414129665, 'somme_vm_oblig': 22506165.93130373, 'somme_vm_immo': 1406635.370706483, 'somme_vm_treso': 1406635.370706483, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 28132707.414129663} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:48 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:48 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2813270.7414129665, 'somme_vm_oblig': 22506165.93130373, 'somme_vm_immo': 1406635.3707064835, 'somme_vm_treso': 1406635.3707064833, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 28132707.414129663} 
+11/10/2021 04:50:48 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:48 PM  INFO - Describe passif : {'anc': 9.0, 'age': 47.97, 'nb_contr_fin': 68.19584242069497, 'pm_fin_ap_pb': 14181308.339234157} 
+11/10/2021 04:50:48 PM  INFO - ========== FIN DU RUN / Horizon = 9 ==========
+11/10/2021 04:50:48 PM  INFO - ========== DEBUT DU RUN / Horizon = 10 ==========
+11/10/2021 04:50:49 PM  INFO - Acheter des actions  : 398203.5647499268
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -689845.2922502891
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 1947939.8563784063
+11/10/2021 04:50:49 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2810142.1192605654, 'somme_vm_oblig': 22481136.95408452, 'somme_vm_immo': 1405071.0596302827, 'somme_vm_treso': 1405071.0596302827, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 28101421.19260565} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:49 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2810142.119260565, 'somme_vm_oblig': 22481136.95408452, 'somme_vm_immo': 1405071.0596302825, 'somme_vm_treso': 1405071.0596302825, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 28101421.19260565} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Describe passif : {'anc': 10.0, 'age': 48.97, 'nb_contr_fin': 65.23135967913827, 'pm_fin_ap_pb': 14183371.292032335} 
+11/10/2021 04:50:49 PM  INFO - ========== FIN DU RUN / Horizon = 10 ==========
+11/10/2021 04:50:49 PM  INFO - ========== DEBUT DU RUN / Horizon = 11 ==========
+11/10/2021 04:50:49 PM  INFO - Vendre des actions  : -606757.910608435
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -465094.20499727386
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 2654035.9678489305
+11/10/2021 04:50:49 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2926119.8073159126, 'somme_vm_oblig': 23408958.4585273, 'somme_vm_immo': 1463059.903657956, 'somme_vm_treso': 1463059.903657956, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 29261198.07315913} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:49 PM  INFO - Acheter des immo  : 4.656612873077393e-10
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:49 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2926119.807315913, 'somme_vm_oblig': 23408958.458527304, 'somme_vm_immo': 1463059.9036579565, 'somme_vm_treso': 1463059.9036579565, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 29261198.073159132} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Describe passif : {'anc': 11.0, 'age': 49.97, 'nb_contr_fin': 62.283822228352484, 'pm_fin_ap_pb': 14176848.666921161} 
+11/10/2021 04:50:49 PM  INFO - ========== FIN DU RUN / Horizon = 11 ==========
+11/10/2021 04:50:49 PM  INFO - ========== DEBUT DU RUN / Horizon = 12 ==========
+11/10/2021 04:50:49 PM  INFO - Acheter des actions  : 545704.3278499958
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -486728.31996302493
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 1709241.6567192823
+11/10/2021 04:50:49 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2760641.151757407, 'somme_vm_oblig': 22085129.214059263, 'somme_vm_immo': 1380320.5758787042, 'somme_vm_treso': 1380320.5758787037, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 27606411.51757408} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Acheter des actions  : 9.313225746154785e-10
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:49 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2760641.151757408, 'somme_vm_oblig': 22085129.214059263, 'somme_vm_immo': 1380320.5758787042, 'somme_vm_treso': 1380320.575878704, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 27606411.51757408} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Describe passif : {'anc': 12.0, 'age': 50.97, 'nb_contr_fin': 59.31992101560887, 'pm_fin_ap_pb': 14156121.647895912} 
+11/10/2021 04:50:49 PM  INFO - ========== FIN DU RUN / Horizon = 12 ==========
+11/10/2021 04:50:49 PM  INFO - ========== DEBUT DU RUN / Horizon = 13 ==========
+11/10/2021 04:50:49 PM  INFO - Vendre des actions  : -1220511.2131178062
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -20167.15313967457
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 2770697.9577021003
+11/10/2021 04:50:49 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2843874.49638113, 'somme_vm_oblig': 22750995.97104903, 'somme_vm_immo': 1421937.2481905653, 'somme_vm_treso': 1421937.248190565, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.050000000000000024, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 28438744.963811293} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:49 PM  INFO - Vendre des immo  : -4.656612873077393e-10
+11/10/2021 04:50:49 PM  INFO - Acheter des obligations  : 7.450580596923828e-09
+11/10/2021 04:50:49 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2843874.4963811296, 'somme_vm_oblig': 22750995.97104904, 'somme_vm_immo': 1421937.2481905646, 'somme_vm_treso': 1421937.2481905648, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 28438744.963811297} 
+11/10/2021 04:50:49 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:49 PM  INFO - Describe passif : {'anc': 13.0, 'age': 51.97, 'nb_contr_fin': 56.37213821139645, 'pm_fin_ap_pb': 14115940.952702973} 
+11/10/2021 04:50:49 PM  INFO - ========== FIN DU RUN / Horizon = 13 ==========
+11/10/2021 04:50:49 PM  INFO - ========== DEBUT DU RUN / Horizon = 14 ==========
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 188116.10061063617
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -401744.1548242711
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 1861122.0894228853
+11/10/2021 04:50:50 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2701658.692370573, 'somme_vm_oblig': 21613269.538964584, 'somme_vm_immo': 1350829.3461852865, 'somme_vm_treso': 1350829.3461852868, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 27016586.923705727} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2701658.692370573, 'somme_vm_oblig': 21613269.538964584, 'somme_vm_immo': 1350829.3461852865, 'somme_vm_treso': 1350829.3461852865, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 27016586.923705727} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Describe passif : {'anc': 14.0, 'age': 52.97, 'nb_contr_fin': 53.439960817076276, 'pm_fin_ap_pb': 14037234.280246599} 
+11/10/2021 04:50:50 PM  INFO - ========== FIN DU RUN / Horizon = 14 ==========
+11/10/2021 04:50:50 PM  INFO - ========== DEBUT DU RUN / Horizon = 15 ==========
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 161928.24369848892
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -907112.5030820521
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 2191822.218535874
+11/10/2021 04:50:50 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2733053.0711667184, 'somme_vm_oblig': 21864424.569333743, 'somme_vm_immo': 1366526.5355833594, 'somme_vm_treso': 1366526.5355833594, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 27330530.71166718} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:50 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2733053.0711667184, 'somme_vm_oblig': 21864424.569333747, 'somme_vm_immo': 1366526.5355833592, 'somme_vm_treso': 1366526.5355833592, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 27330530.71166718} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Describe passif : {'anc': 15.0, 'age': 53.97, 'nb_contr_fin': 50.57137072926516, 'pm_fin_ap_pb': 13923106.729342079} 
+11/10/2021 04:50:50 PM  INFO - ========== FIN DU RUN / Horizon = 15 ==========
+11/10/2021 04:50:50 PM  INFO - ========== DEBUT DU RUN / Horizon = 16 ==========
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 6528.875602032524
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -148851.53640784486
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 1633793.031889461
+11/10/2021 04:50:50 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2633751.996486661, 'somme_vm_oblig': 21070015.97189328, 'somme_vm_immo': 1316875.9982433303, 'somme_vm_treso': 1316875.9982433303, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 26337519.964866605} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:50 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2633751.9964866606, 'somme_vm_oblig': 21070015.971893292, 'somme_vm_immo': 1316875.9982433303, 'somme_vm_treso': 1316875.9982433303, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999998, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 26337519.964866616} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Describe passif : {'anc': 16.0, 'age': 54.97, 'nb_contr_fin': 47.79079907183466, 'pm_fin_ap_pb': 13769406.983990733} 
+11/10/2021 04:50:50 PM  INFO - ========== FIN DU RUN / Horizon = 16 ==========
+11/10/2021 04:50:50 PM  INFO - ========== DEBUT DU RUN / Horizon = 17 ==========
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 671664.2256199522
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -61163.746183657786
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 812017.62837312
+11/10/2021 04:50:50 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2511833.7116115005, 'somme_vm_oblig': 20094669.692892015, 'somme_vm_immo': 1255916.8558057502, 'somme_vm_treso': 1255916.8558057505, 'propor_action': 0.09999999999999995, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999975, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 25118337.11611502} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 1.3969838619232178e-09
+11/10/2021 04:50:50 PM  INFO - Acheter des immo  : 6.984919309616089e-10
+11/10/2021 04:50:50 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2511833.711611502, 'somme_vm_oblig': 20094669.692892015, 'somme_vm_immo': 1255916.855805751, 'somme_vm_treso': 1255916.855805751, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 25118337.11611502} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:50 PM  INFO - Describe passif : {'anc': 17.0, 'age': 55.97, 'nb_contr_fin': 45.10459166997619, 'pm_fin_ap_pb': 13585521.244889164} 
+11/10/2021 04:50:50 PM  INFO - ========== FIN DU RUN / Horizon = 17 ==========
+11/10/2021 04:50:50 PM  INFO - ========== DEBUT DU RUN / Horizon = 18 ==========
+11/10/2021 04:50:50 PM  INFO - Acheter des actions  : 467108.11080391635
+11/10/2021 04:50:50 PM  INFO - Vendre des immo  : -265247.3574007801
+11/10/2021 04:50:50 PM  INFO - Acheter des obligations  : 1096445.1032292582
+11/10/2021 04:50:50 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2506520.172086465, 'somme_vm_oblig': 20052161.37669172, 'somme_vm_immo': 1253260.0860432326, 'somme_vm_treso': 1253260.0860432326, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 25065201.72086465} 
+11/10/2021 04:50:50 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2506520.172086465, 'somme_vm_oblig': 20052161.37669172, 'somme_vm_immo': 1253260.0860432326, 'somme_vm_treso': 1253260.0860432326, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 25065201.72086465} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Describe passif : {'anc': 18.0, 'age': 56.97, 'nb_contr_fin': 42.55951388003824, 'pm_fin_ap_pb': 13396397.811397266} 
+11/10/2021 04:50:51 PM  INFO - ========== FIN DU RUN / Horizon = 18 ==========
+11/10/2021 04:50:51 PM  INFO - ========== DEBUT DU RUN / Horizon = 19 ==========
+11/10/2021 04:50:51 PM  INFO - Vendre des actions  : -1342626.0710211531
+11/10/2021 04:50:51 PM  INFO - Vendre des immo  : -22105.39980241959
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 2568702.881857794
+11/10/2021 04:50:51 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2689064.09619027, 'somme_vm_oblig': 21512512.76952217, 'somme_vm_immo': 1344532.0480951357, 'somme_vm_treso': 1344532.0480951355, 'propor_action': 0.09999999999999995, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 26890640.961902715} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Acheter des actions  : 1.862645149230957e-09
+11/10/2021 04:50:51 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:51 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2689064.096190272, 'somme_vm_oblig': 21512512.769522175, 'somme_vm_immo': 1344532.048095136, 'somme_vm_treso': 1344532.048095136, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26890640.961902723} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Describe passif : {'anc': 19.0, 'age': 57.97, 'nb_contr_fin': 40.120581819057726, 'pm_fin_ap_pb': 13202831.955214666} 
+11/10/2021 04:50:51 PM  INFO - ========== FIN DU RUN / Horizon = 19 ==========
+11/10/2021 04:50:51 PM  INFO - ========== DEBUT DU RUN / Horizon = 20 ==========
+11/10/2021 04:50:51 PM  INFO - Acheter des actions  : 560608.5199155351
+11/10/2021 04:50:51 PM  INFO - Vendre des immo  : -20015.27223215974
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 953735.0486284643
+11/10/2021 04:50:51 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2477697.6285690195, 'somme_vm_oblig': 19821581.028552152, 'somme_vm_immo': 1238848.8142845095, 'somme_vm_treso': 1238848.8142845095, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 24776976.285690192} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:51 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2477697.6285690195, 'somme_vm_oblig': 19821581.028552152, 'somme_vm_immo': 1238848.8142845097, 'somme_vm_treso': 1238848.8142845097, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 24776976.285690192} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Describe passif : {'anc': 20.0, 'age': 58.97, 'nb_contr_fin': 37.72313351150211, 'pm_fin_ap_pb': 12995020.585179461} 
+11/10/2021 04:50:51 PM  INFO - ========== FIN DU RUN / Horizon = 20 ==========
+11/10/2021 04:50:51 PM  INFO - ========== DEBUT DU RUN / Horizon = 21 ==========
+11/10/2021 04:50:51 PM  INFO - Vendre des actions  : -321338.02174221445
+11/10/2021 04:50:51 PM  INFO - Vendre des immo  : -19676.214713055408
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 1573699.8871313967
+11/10/2021 04:50:51 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2547670.2113292664, 'somme_vm_oblig': 20381361.69063413, 'somme_vm_immo': 1273835.1056646337, 'somme_vm_treso': 1273835.1056646332, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 25476702.113292664} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Vendre des immo  : -4.656612873077393e-10
+11/10/2021 04:50:51 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2547670.2113292664, 'somme_vm_oblig': 20381361.69063413, 'somme_vm_immo': 1273835.1056646332, 'somme_vm_treso': 1273835.1056646332, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 25476702.113292664} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Describe passif : {'anc': 21.0, 'age': 59.97, 'nb_contr_fin': 35.38780710209527, 'pm_fin_ap_pb': 12774977.035298545} 
+11/10/2021 04:50:51 PM  INFO - ========== FIN DU RUN / Horizon = 21 ==========
+11/10/2021 04:50:51 PM  INFO - ========== DEBUT DU RUN / Horizon = 22 ==========
+11/10/2021 04:50:51 PM  INFO - Acheter des actions  : 216541.858710852
+11/10/2021 04:50:51 PM  INFO - Vendre des immo  : -262524.3004604229
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 1251967.656659402
+11/10/2021 04:50:51 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2670014.9548004535, 'somme_vm_oblig': 21360119.638403628, 'somme_vm_immo': 1335007.4774002265, 'somme_vm_treso': 1335007.4774002265, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 26700149.548004538} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:51 PM  INFO - Acheter des immo  : 4.656612873077393e-10
+11/10/2021 04:50:51 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:51 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2670014.9548004535, 'somme_vm_oblig': 21360119.63840363, 'somme_vm_immo': 1335007.4774002274, 'somme_vm_treso': 1335007.477400227, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26700149.54800454} 
+11/10/2021 04:50:51 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:51 PM  INFO - Describe passif : {'anc': 22.0, 'age': 60.97, 'nb_contr_fin': 33.053367905517476, 'pm_fin_ap_pb': 12507421.335295167} 
+11/10/2021 04:50:51 PM  INFO - ========== FIN DU RUN / Horizon = 22 ==========
+11/10/2021 04:50:51 PM  INFO - ========== DEBUT DU RUN / Horizon = 23 ==========
+11/10/2021 04:50:52 PM  INFO - Vendre des actions  : -625155.8490418959
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -499038.6604068058
+11/10/2021 04:50:52 PM  INFO - Acheter des obligations  : 2452808.398947004
+11/10/2021 04:50:52 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2665663.548843045, 'somme_vm_oblig': 21325308.390744355, 'somme_vm_immo': 1332831.7744215224, 'somme_vm_treso': 1332831.7744215222, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05, 'total_vm_portfi': 26656635.48843044} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:52 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2665663.5488430443, 'somme_vm_oblig': 21325308.390744355, 'somme_vm_immo': 1332831.7744215222, 'somme_vm_treso': 1332831.7744215222, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 26656635.48843044} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Describe passif : {'anc': 23.0, 'age': 61.97, 'nb_contr_fin': 30.812800036624886, 'pm_fin_ap_pb': 12221630.040321177} 
+11/10/2021 04:50:52 PM  INFO - ========== FIN DU RUN / Horizon = 23 ==========
+11/10/2021 04:50:52 PM  INFO - ========== DEBUT DU RUN / Horizon = 24 ==========
+11/10/2021 04:50:52 PM  INFO - Acheter des actions  : 7866.872834377922
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -110896.32425381732
+11/10/2021 04:50:52 PM  INFO - Acheter des obligations  : 1532627.5072462596
+11/10/2021 04:50:52 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2469424.710654387, 'somme_vm_oblig': 19755397.685235098, 'somme_vm_immo': 1234712.3553271934, 'somme_vm_treso': 1234712.3553271934, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 24694247.10654387} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Vendre des obligations  : -3.725290298461914e-09
+11/10/2021 04:50:52 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2469424.710654387, 'somme_vm_oblig': 19755397.685235094, 'somme_vm_immo': 1234712.3553271934, 'somme_vm_treso': 1234712.3553271934, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 24694247.106543865} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Describe passif : {'anc': 24.0, 'age': 62.97, 'nb_contr_fin': 28.687730881226656, 'pm_fin_ap_pb': 11932549.464707231} 
+11/10/2021 04:50:52 PM  INFO - ========== FIN DU RUN / Horizon = 24 ==========
+11/10/2021 04:50:52 PM  INFO - ========== DEBUT DU RUN / Horizon = 25 ==========
+11/10/2021 04:50:52 PM  INFO - Vendre des actions  : -7874.563438705169
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -70211.88719984051
+11/10/2021 04:50:52 PM  INFO - Acheter des obligations  : 1432471.019498555
+11/10/2021 04:50:52 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2264921.1004544697, 'somme_vm_oblig': 18119368.803635757, 'somme_vm_immo': 1132460.5502272346, 'somme_vm_treso': 1132460.5502272348, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 22649211.004544698} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:52 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2264921.1004544697, 'somme_vm_oblig': 18119368.803635757, 'somme_vm_immo': 1132460.550227235, 'somme_vm_treso': 1132460.5502272348, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 22649211.004544698} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Describe passif : {'anc': 25.0, 'age': 63.97, 'nb_contr_fin': 26.720070806488966, 'pm_fin_ap_pb': 11661508.923286391} 
+11/10/2021 04:50:52 PM  INFO - ========== FIN DU RUN / Horizon = 25 ==========
+11/10/2021 04:50:52 PM  INFO - ========== DEBUT DU RUN / Horizon = 26 ==========
+11/10/2021 04:50:52 PM  INFO - Vendre des actions  : -291532.1411823975
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -70713.22063715081
+11/10/2021 04:50:52 PM  INFO - Acheter des obligations  : 1522499.6236429624
+11/10/2021 04:50:52 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2311378.8550257706, 'somme_vm_oblig': 18491030.84020616, 'somme_vm_immo': 1155689.4275128853, 'somme_vm_treso': 1155689.427512885, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 23113788.5502577} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:52 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:52 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2311378.85502577, 'somme_vm_oblig': 18491030.84020616, 'somme_vm_immo': 1155689.427512885, 'somme_vm_treso': 1155689.427512885, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 23113788.550257698} 
+11/10/2021 04:50:52 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:52 PM  INFO - Describe passif : {'anc': 26.0, 'age': 64.97, 'nb_contr_fin': 24.92534909409979, 'pm_fin_ap_pb': 11424906.771819245} 
+11/10/2021 04:50:52 PM  INFO - ========== FIN DU RUN / Horizon = 26 ==========
+11/10/2021 04:50:52 PM  INFO - ========== DEBUT DU RUN / Horizon = 27 ==========
+11/10/2021 04:50:53 PM  INFO - Acheter des actions  : 138486.54582207557
+11/10/2021 04:50:53 PM  INFO - Acheter des immo  : 92902.49709918699
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 992952.9644584656
+11/10/2021 04:50:53 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2360761.002771296, 'somme_vm_oblig': 18886088.022170376, 'somme_vm_immo': 1180380.5013856485, 'somme_vm_treso': 1180380.5013856483, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 23607610.027712967} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Acheter des actions  : 9.313225746154785e-10
+11/10/2021 04:50:53 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2360761.002771297, 'somme_vm_oblig': 18886088.022170376, 'somme_vm_immo': 1180380.5013856485, 'somme_vm_treso': 1180380.5013856485, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 23607610.027712967} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Describe passif : {'anc': 27.0, 'age': 65.97, 'nb_contr_fin': 23.268946449602062, 'pm_fin_ap_pb': 11220114.598420857} 
+11/10/2021 04:50:53 PM  INFO - ========== FIN DU RUN / Horizon = 27 ==========
+11/10/2021 04:50:53 PM  INFO - ========== DEBUT DU RUN / Horizon = 28 ==========
+11/10/2021 04:50:53 PM  INFO - Vendre des actions  : -31157.739033706486
+11/10/2021 04:50:53 PM  INFO - Acheter des immo  : 192643.0412960729
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 1116011.6490300596
+11/10/2021 04:50:53 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2427918.5544040245, 'somme_vm_oblig': 19423348.435232192, 'somme_vm_immo': 1213959.2772020123, 'somme_vm_treso': 1213959.277202012, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 24279185.54404024} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:53 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:53 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2427918.5544040245, 'somme_vm_oblig': 19423348.435232192, 'somme_vm_immo': 1213959.2772020118, 'somme_vm_treso': 1213959.277202012, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.05, 'total_vm_portfi': 24279185.54404024} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Describe passif : {'anc': 28.0, 'age': 66.97, 'nb_contr_fin': 21.74225405424495, 'pm_fin_ap_pb': 11043512.973473212} 
+11/10/2021 04:50:53 PM  INFO - ========== FIN DU RUN / Horizon = 28 ==========
+11/10/2021 04:50:53 PM  INFO - ========== DEBUT DU RUN / Horizon = 29 ==========
+11/10/2021 04:50:53 PM  INFO - Vendre des actions  : -478108.05250386894
+11/10/2021 04:50:53 PM  INFO - Acheter des immo  : 225640.76833757386
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 1520113.2180824913
+11/10/2021 04:50:53 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2629022.5195318433, 'somme_vm_oblig': 21032180.156254753, 'somme_vm_immo': 1314511.259765922, 'somme_vm_treso': 1314511.259765922, 'propor_action': 0.09999999999999996, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 26290225.19531844} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Acheter des actions  : 9.313225746154785e-10
+11/10/2021 04:50:53 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2629022.519531844, 'somme_vm_oblig': 21032180.156254753, 'somme_vm_immo': 1314511.259765922, 'somme_vm_treso': 1314511.259765922, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26290225.195318446} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Describe passif : {'anc': 29.0, 'age': 67.97, 'nb_contr_fin': 20.314671217680317, 'pm_fin_ap_pb': 10881705.553554783} 
+11/10/2021 04:50:53 PM  INFO - ========== FIN DU RUN / Horizon = 29 ==========
+11/10/2021 04:50:53 PM  INFO - ========== DEBUT DU RUN / Horizon = 30 ==========
+11/10/2021 04:50:53 PM  INFO - Vendre des actions  : -46600.0113328509
+11/10/2021 04:50:53 PM  INFO - Vendre des immo  : -258622.5392913348
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 1817578.6082201116
+11/10/2021 04:50:53 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2584485.18209021, 'somme_vm_oblig': 20675881.456721675, 'somme_vm_immo': 1292242.5910451058, 'somme_vm_treso': 1292242.5910451051, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.050000000000000044, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 25844851.820902094} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Vendre des immo  : -9.313225746154785e-10
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:53 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2584485.18209021, 'somme_vm_oblig': 20675881.456721682, 'somme_vm_immo': 1292242.5910451044, 'somme_vm_treso': 1292242.591045105, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999975, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 25844851.8209021} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:53 PM  INFO - Describe passif : {'anc': 30.0, 'age': 68.97, 'nb_contr_fin': 18.956899902979007, 'pm_fin_ap_pb': 10726278.266942162} 
+11/10/2021 04:50:53 PM  INFO - ========== FIN DU RUN / Horizon = 30 ==========
+11/10/2021 04:50:53 PM  INFO - ========== DEBUT DU RUN / Horizon = 31 ==========
+11/10/2021 04:50:53 PM  INFO - Acheter des actions  : 358412.8971990191
+11/10/2021 04:50:53 PM  INFO - Vendre des immo  : -229352.6572140972
+11/10/2021 04:50:53 PM  INFO - Acheter des obligations  : 1425838.7468702048
+11/10/2021 04:50:53 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2394567.7707042377, 'somme_vm_oblig': 19156542.165633906, 'somme_vm_immo': 1197283.8853521184, 'somme_vm_treso': 1197283.8853521186, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.049999999999999975, 'propor_treso': 0.04999999999999998, 'total_vm_portfi': 23945677.70704238} 
+11/10/2021 04:50:53 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:54 PM  INFO - Acheter des immo  : 6.984919309616089e-10
+11/10/2021 04:50:54 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2394567.770704238, 'somme_vm_oblig': 19156542.165633906, 'somme_vm_immo': 1197283.885352119, 'somme_vm_treso': 1197283.885352119, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 23945677.707042385} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Describe passif : {'anc': 31.0, 'age': 69.97, 'nb_contr_fin': 17.653793119949665, 'pm_fin_ap_pb': 10561109.74978698} 
+11/10/2021 04:50:54 PM  INFO - ========== FIN DU RUN / Horizon = 31 ==========
+11/10/2021 04:50:54 PM  INFO - ========== DEBUT DU RUN / Horizon = 32 ==========
+11/10/2021 04:50:54 PM  INFO - Vendre des actions  : -321207.6965489094
+11/10/2021 04:50:54 PM  INFO - Acheter des immo  : 5030.0379623644985
+11/10/2021 04:50:54 PM  INFO - Acheter des obligations  : 1532860.6133196726
+11/10/2021 04:50:54 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2600160.368973343, 'somme_vm_oblig': 20801282.951786745, 'somme_vm_immo': 1300080.1844866716, 'somme_vm_treso': 1300080.1844866716, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 26001603.689733434} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Acheter des actions  : 4.656612873077393e-10
+11/10/2021 04:50:54 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:54 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:54 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2600160.3689733436, 'somme_vm_oblig': 20801282.951786745, 'somme_vm_immo': 1300080.184486672, 'somme_vm_treso': 1300080.1844866718, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05, 'total_vm_portfi': 26001603.689733434} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Describe passif : {'anc': 32.0, 'age': 70.97, 'nb_contr_fin': 16.361988397252446, 'pm_fin_ap_pb': 10354968.816115532} 
+11/10/2021 04:50:54 PM  INFO - ========== FIN DU RUN / Horizon = 32 ==========
+11/10/2021 04:50:54 PM  INFO - ========== DEBUT DU RUN / Horizon = 33 ==========
+11/10/2021 04:50:54 PM  INFO - Vendre des actions  : -592520.0466737407
+11/10/2021 04:50:54 PM  INFO - Acheter des immo  : 123521.44710704591
+11/10/2021 04:50:54 PM  INFO - Acheter des obligations  : 1890414.1893850677
+11/10/2021 04:50:54 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2363278.772516378, 'somme_vm_oblig': 18906230.180131022, 'somme_vm_immo': 1181639.3862581889, 'somme_vm_treso': 1181639.3862581886, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.04999999999999999, 'total_vm_portfi': 23632787.725163776} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:54 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2363278.772516378, 'somme_vm_oblig': 18906230.180131022, 'somme_vm_immo': 1181639.3862581889, 'somme_vm_treso': 1181639.3862581889, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 23632787.725163776} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Describe passif : {'anc': 33.0, 'age': 71.97, 'nb_contr_fin': 14.970944374622192, 'pm_fin_ap_pb': 10007692.53014956} 
+11/10/2021 04:50:54 PM  INFO - ========== FIN DU RUN / Horizon = 33 ==========
+11/10/2021 04:50:54 PM  INFO - ========== DEBUT DU RUN / Horizon = 34 ==========
+11/10/2021 04:50:54 PM  INFO - Acheter des actions  : 108129.75366021041
+11/10/2021 04:50:54 PM  INFO - Acheter des immo  : 46660.7430742085
+11/10/2021 04:50:54 PM  INFO - Acheter des obligations  : 936343.408349216
+11/10/2021 04:50:54 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2393782.4000973064, 'somme_vm_oblig': 19150259.200778447, 'somme_vm_immo': 1196891.2000486532, 'somme_vm_treso': 1196891.2000486532, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05000000000000002, 'total_vm_portfi': 23937824.000973057} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:54 PM  INFO - Vendre des immo  : -2.3283064365386963e-10
+11/10/2021 04:50:54 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2393782.400097306, 'somme_vm_oblig': 19150259.200778447, 'somme_vm_immo': 1196891.200048653, 'somme_vm_treso': 1196891.200048653, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 23937824.000973057} 
+11/10/2021 04:50:54 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:54 PM  INFO - Describe passif : {'anc': 34.0, 'age': 72.97, 'nb_contr_fin': 13.583002588844616, 'pm_fin_ap_pb': 9576943.988605026} 
+11/10/2021 04:50:54 PM  INFO - ========== FIN DU RUN / Horizon = 34 ==========
+11/10/2021 04:50:54 PM  INFO - ========== DEBUT DU RUN / Horizon = 35 ==========
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -130732.90964502003
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -520715.6553366005
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 1790032.1661853269
+11/10/2021 04:50:55 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2318216.6947656786, 'somme_vm_oblig': 18545733.55812542, 'somme_vm_immo': 1159108.347382839, 'somme_vm_treso': 1159108.347382839, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999998, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 23182166.94765678} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 3.725290298461914e-09
+11/10/2021 04:50:55 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2318216.6947656786, 'somme_vm_oblig': 18545733.558125425, 'somme_vm_immo': 1159108.347382839, 'somme_vm_treso': 1159108.347382839, 'propor_action': 0.1, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.049999999999999996, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 23182166.947656784} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Describe passif : {'anc': 35.0, 'age': 73.97, 'nb_contr_fin': 12.255486154683853, 'pm_fin_ap_pb': 9100871.329443771} 
+11/10/2021 04:50:55 PM  INFO - ========== FIN DU RUN / Horizon = 35 ==========
+11/10/2021 04:50:55 PM  INFO - ========== DEBUT DU RUN / Horizon = 36 ==========
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -282111.11927136686
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -238655.7425319564
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 1601250.9188372307
+11/10/2021 04:50:55 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2363220.0323528154, 'somme_vm_oblig': 18905760.258822516, 'somme_vm_immo': 1181610.0161764072, 'somme_vm_treso': 1181610.0161764075, 'propor_action': 0.10000000000000003, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 23632200.323528145} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -9.313225746154785e-10
+11/10/2021 04:50:55 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2363220.032352814, 'somme_vm_oblig': 18905760.258822516, 'somme_vm_immo': 1181610.0161764072, 'somme_vm_treso': 1181610.0161764072, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8000000000000002, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 23632200.32352814} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Describe passif : {'anc': 36.0, 'age': 74.97, 'nb_contr_fin': 11.058953092218879, 'pm_fin_ap_pb': 8644567.523645977} 
+11/10/2021 04:50:55 PM  INFO - ========== FIN DU RUN / Horizon = 36 ==========
+11/10/2021 04:50:55 PM  INFO - ========== DEBUT DU RUN / Horizon = 37 ==========
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -1752844.0469354382
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -242774.04035662394
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 3290801.5288312044
+11/10/2021 04:50:55 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 2200054.0307037607, 'somme_vm_oblig': 17600432.24563008, 'somme_vm_immo': 1100027.0153518806, 'somme_vm_treso': 1100027.0153518803, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05000000000000002, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 22000540.307037603} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -4.656612873077393e-10
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -4.656612873077393e-10
+11/10/2021 04:50:55 PM  INFO - allocation_courante après pb : {'somme_vm_action': 2200054.0307037607, 'somme_vm_oblig': 17600432.24563008, 'somme_vm_immo': 1100027.0153518799, 'somme_vm_treso': 1100027.01535188, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.049999999999999996, 'total_vm_portfi': 22000540.307037603} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Describe passif : {'anc': 37.0, 'age': 75.97, 'nb_contr_fin': 10.023595927362065, 'pm_fin_ap_pb': 8251442.598735787} 
+11/10/2021 04:50:55 PM  INFO - ========== FIN DU RUN / Horizon = 37 ==========
+11/10/2021 04:50:55 PM  INFO - ========== DEBUT DU RUN / Horizon = 38 ==========
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -1600590.3746920498
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -190932.70077708014
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 3114553.44034791
+11/10/2021 04:50:55 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 1968769.1800611685, 'somme_vm_oblig': 15750153.44048935, 'somme_vm_immo': 984384.5900305845, 'somme_vm_treso': 984384.5900305845, 'propor_action': 0.09999999999999999, 'propor_oblig': 0.8, 'propor_immo': 0.05000000000000001, 'propor_treso': 0.05000000000000001, 'total_vm_portfi': 19687691.800611686} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Acheter des actions  : 2.3283064365386963e-10
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -1.1641532182693481e-10
+11/10/2021 04:50:55 PM  INFO - allocation_courante après pb : {'somme_vm_action': 1968769.1800611687, 'somme_vm_oblig': 15750153.44048935, 'somme_vm_immo': 984384.5900305844, 'somme_vm_treso': 984384.5900305844, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 19687691.800611686} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:55 PM  INFO - Describe passif : {'anc': 38.0, 'age': 76.97, 'nb_contr_fin': 9.130459378049261, 'pm_fin_ap_pb': 7923994.689718562} 
+11/10/2021 04:50:55 PM  INFO - ========== FIN DU RUN / Horizon = 38 ==========
+11/10/2021 04:50:55 PM  INFO - ========== DEBUT DU RUN / Horizon = 39 ==========
+11/10/2021 04:50:55 PM  INFO - Vendre des actions  : -593719.7177115877
+11/10/2021 04:50:55 PM  INFO - Vendre des immo  : -140758.1623857884
+11/10/2021 04:50:55 PM  INFO - Acheter des obligations  : 1947721.4895590693
+11/10/2021 04:50:55 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 1818622.816138353, 'somme_vm_oblig': 14548982.529106816, 'somme_vm_immo': 909311.4080691761, 'somme_vm_treso': 909311.4080691761, 'propor_action': 0.10000000000000005, 'propor_oblig': 0.7999999999999999, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 18186228.16138352} 
+11/10/2021 04:50:55 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:56 PM  INFO - Vendre des actions  : -6.984919309616089e-10
+11/10/2021 04:50:56 PM  INFO - Acheter des obligations  : 1.862645149230957e-09
+11/10/2021 04:50:56 PM  INFO - allocation_courante après pb : {'somme_vm_action': 1818622.8161383518, 'somme_vm_oblig': 14548982.529106818, 'somme_vm_immo': 909311.4080691761, 'somme_vm_treso': 909311.4080691761, 'propor_action': 0.09999999999999998, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 18186228.16138352} 
+11/10/2021 04:50:56 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:56 PM  INFO - Describe passif : {'anc': 39.0, 'age': 77.97, 'nb_contr_fin': 8.342339948789178, 'pm_fin_ap_pb': 7640264.348000657} 
+11/10/2021 04:50:56 PM  INFO - ========== FIN DU RUN / Horizon = 39 ==========
+11/10/2021 04:50:56 PM  INFO - ========== DEBUT DU RUN / Horizon = 40 ==========
+11/10/2021 04:50:56 PM  INFO - Vendre des actions  : -331586.3460630481
+11/10/2021 04:50:56 PM  INFO - Vendre des immo  : -367344.6531179794
+11/10/2021 04:50:56 PM  INFO - Acheter des obligations  : 1819263.8857790846
+11/10/2021 04:50:56 PM  INFO - allocation_courante avant pb : {'somme_vm_action': 1742259.7019100923, 'somme_vm_oblig': 13938077.615280736, 'somme_vm_immo': 871129.8509550458, 'somme_vm_treso': 871129.850955046, 'propor_action': 0.10000000000000002, 'propor_oblig': 0.8, 'propor_immo': 0.04999999999999999, 'propor_treso': 0.05, 'total_vm_portfi': 17422597.01910092} 
+11/10/2021 04:50:56 PM  INFO - allocation_cible avant pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:56 PM  INFO - Vendre des actions  : -2.3283064365386963e-10
+11/10/2021 04:50:56 PM  INFO - Acheter des immo  : 2.3283064365386963e-10
+11/10/2021 04:50:56 PM  INFO - allocation_courante après pb : {'somme_vm_action': 1742259.701910092, 'somme_vm_oblig': 13938077.615280736, 'somme_vm_immo': 871129.850955046, 'somme_vm_treso': 871129.850955046, 'propor_action': 0.1, 'propor_oblig': 0.8, 'propor_immo': 0.05, 'propor_treso': 0.05, 'total_vm_portfi': 17422597.01910092} 
+11/10/2021 04:50:56 PM  INFO - allocation_cible après pb : {'propor_action_cible': 0.1, 'propor_oblig_cible': 0.8, 'propor_immo_cible': 0.05, 'propor_treso_cible': 0.05} 
+11/10/2021 04:50:56 PM  INFO - Describe passif : {'anc': 40.0, 'age': 78.97, 'nb_contr_fin': 7.623185792892779, 'pm_fin_ap_pb': 7369932.818237325} 
+11/10/2021 04:50:56 PM  INFO - ========== FIN DU RUN / Horizon = 40 ==========

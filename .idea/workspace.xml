@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- Debug et correction de la fonction : vendre_des_actions()">
+    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alm_actif/model_actif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_actif/model_actif.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gse/.Rhistory" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" afterDir="false" />
@@ -99,7 +99,9 @@
       <workItem from="1628768034771" duration="43000" />
       <workItem from="1630741689137" duration="25000" />
       <workItem from="1631695686378" duration="33510000" />
-      <workItem from="1632496474031" duration="65705000" />
+      <workItem from="1632496474031" duration="71959000" />
+      <workItem from="1635067797607" duration="327000" />
+      <workItem from="1636537053428" duration="5570000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB">
       <created>1632596273853</created>
@@ -129,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633988309001</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)">
+      <created>1634903506515</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634903506515</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,33 +172,10 @@
     <MESSAGE value="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB" />
     <MESSAGE value="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction..." />
     <MESSAGE value="- Debug et correction de la fonction : vendre_des_actions()" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Debug et correction de la fonction : vendre_des_actions()" />
+    <MESSAGE value="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/alm_actif/model_actif.py</url>
-          <line>213</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/alm_actif/model_actif.py</url>
-          <line>185</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/alm_actif/model_actif.py</url>
-          <line>196</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/alm_actif/model_actif.py</url>
-          <line>211</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self.allocation_courante['somme_vm_action']-calcul_operation_alm_vm['action'] " language="Python" />
@@ -198,6 +184,6 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1634901086071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1636539299338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

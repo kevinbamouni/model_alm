@@ -1,4 +1,4 @@
-Prototype modèle ALM an assurance vie épargne Euro
+Prototype modèle ALM en assurance vie épargne Euro
 
 Python version : 3.8.3
 

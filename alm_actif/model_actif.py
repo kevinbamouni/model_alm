@@ -2,6 +2,7 @@
 from numpy.lib.function_base import place
 import numpy as np
 from  alm_actif.fonctionsfinance import valeur_marche_oblig, duration_obligatioin
+import logging
 
 
 class portefeuille_financier():
@@ -239,14 +240,13 @@ class portefeuille_financier():
             face à ses engagements dans le cas de moins-value de certains actifs (C. assur., art. R. 332-20). 
             Une moins-value latente nette globale des placements concernés (action et immobilier) est constatée lorsque la valeur nette 
             comptable de ces placements est supérieure à leur valeur globale.
-
             La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.
         
             :param t: (Int) année t de projection
 
-            :returns: None, mise à jour de  provision pour risque d'exigibilite de l'objet portefeuille financier en cours.
+            :returns: None, mise à jour de  provision pour risque d'exigibilite de l'objet portefeuille financier.
         """
-        self.provision_risque_exigibilite = max(np.sum(self.portefeuille_action['pvl'] + self.portefeuille_immo['pvl'] + self.portefeuille_action['mvl'] + self.portefeuille_immo['mvl']), 0)
+        self.provision_risque_exigibilite = np.minimum(np.sum(self.portefeuille_action['pvl'] + self.portefeuille_action['mvl']) + np.sum(self.portefeuille_immo['pvl'] + self.portefeuille_immo['mvl']),0)
 
     def acheter_des_actions(self, montant_a_acheter):
         """
@@ -257,6 +257,7 @@ class portefeuille_financier():
             :returns: None, modification du portefeuille action de l'objet courant
         """
         # 2 - Calcul du nombre a acheter
+        logging.info('Acheter des actions  : %s', montant_a_acheter)
         self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche_fin"] / np.sum(self.portefeuille_action["val_marche_fin"])
         self.portefeuille_action["nb_unit_achat"] = montant_a_acheter * self.portefeuille_action["alloc"] / (self.portefeuille_action["val_marche_fin"]/self.portefeuille_action["nb_unit"])
         self.portefeuille_action["val_nc_fin"] = self.portefeuille_action["val_nc"] + montant_a_acheter *  self.portefeuille_action["alloc"]
@@ -273,6 +274,7 @@ class portefeuille_financier():
             :returns: None, modificaiton du portefeuille immobilier
         """
         # 2 - Calcul du nombre a acheter
+        logging.info('Acheter des immo  : %s', montant_a_acheter)
         self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche_fin"] / np.sum(self.portefeuille_immo["val_marche_fin"])
         self.portefeuille_immo["nb_unit_achat"] = montant_a_acheter * self.portefeuille_immo["alloc"] / (self.portefeuille_immo["val_marche_fin"] / self.portefeuille_immo["nb_unit"])
         self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + montant_a_acheter * self.portefeuille_immo["alloc"]
@@ -289,13 +291,12 @@ class portefeuille_financier():
             :returns: None, modificaiton du portefeuille obligation
         """
         # 2 - Calcul du nombre a acheter
+        logging.info('Acheter des obligations  : %s', montant_a_acheter)
         self.portefeuille_oblig["nb_unit_achat"] = montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"] / (self.portefeuille_oblig["val_marche_fin"] /self.portefeuille_oblig["nb_unit"])
         self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
         self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
         self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche_fin"] + montant_a_acheter * self.portefeuille_oblig["nb_unit_ref"]
         self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] + self.portefeuille_oblig["nb_unit_achat"]
-
-
 
     def calcul_des_pvl_action(self):
         """
@@ -354,10 +355,11 @@ class portefeuille_financier():
 
             :returns: None, modificaiton du portefeuille actions
         """
+        logging.info('Vendre des actions  : %s', montant_a_vendre)
         self.portefeuille_action["alloc"] = self.portefeuille_action["val_marche_fin"] / np.sum(self.portefeuille_action["val_marche_fin"])
         self.portefeuille_action["nb_to_sold"] = (self.portefeuille_action["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_action["val_marche_fin"] / self.portefeuille_action["nb_unit"])
         #self.portefeuille_action["pct_to_sold"] = self.portefeuille_action["nb_to_sold"] / self.portefeuille_action["nb_unit"]
-        self.plus_moins_value_realised_action = np.sum((self.portefeuille_action["val_achat"] - self.portefeuille_action["val_nc"]) * self.portefeuille_action["alloc"])
+        self.plus_moins_value_realised_action = np.sum((self.portefeuille_action["mvl"] - self.portefeuille_action["pvl"]) * self.portefeuille_action["alloc"])
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_action
         # Actualisation des données de portefeuille
         self.portefeuille_action["val_achat_fin"] = self.portefeuille_action["val_achat"] + montant_a_vendre * self.portefeuille_action["alloc"]
@@ -375,16 +377,17 @@ class portefeuille_financier():
 
             :returns: None, modificaiton du portefeuille immobilier
         """
+        logging.info('Vendre des immo  : %s', montant_a_vendre)
         self.portefeuille_immo["alloc"] = self.portefeuille_immo["val_marche_fin"] / np.sum(self.portefeuille_immo["val_marche_fin"])
         self.portefeuille_immo["nb_to_sold"] = (self.portefeuille_immo["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_immo["val_marche_fin"] / self.portefeuille_immo["nb_unit"])
         #self.portefeuille_immo["pct_to_sold"] = self.portefeuille_immo["nb_to_sold"] / self.portefeuille_immo["nb_unit"]
-        self.plus_moins_value_realised_immo = np.sum((self.portefeuille_immo["val_achat"] - self.portefeuille_immo["val_nc"]) * self.portefeuille_immo["alloc"])
+        self.plus_moins_value_realised_immo = np.sum((self.portefeuille_immo["pvl"]+self.portefeuille_immo["mvl"])*self.portefeuille_immo["alloc"])
         self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
         # Actualisation des données de portefeuille
         self.portefeuille_immo["val_achat_fin"] = self.portefeuille_immo["val_achat"] + montant_a_vendre * self.portefeuille_immo["alloc"]
         self.portefeuille_immo["val_marche_fin"] = self.portefeuille_immo["val_marche_fin"] + montant_a_vendre * self.portefeuille_immo["alloc"]
         self.portefeuille_immo["val_nc_fin"] = self.portefeuille_immo["val_nc"] + montant_a_vendre * self.portefeuille_immo["alloc"]
-        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] * (1 - self.portefeuille_immo["alloc"])
+        self.portefeuille_immo["nb_unit_fin"] = self.portefeuille_immo["nb_unit"] - self.portefeuille_immo["nb_to_sold"]
         #self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.abs(montant_a_vendre)
 
     def vendre_des_oblig(self, montant_a_vendre):
@@ -396,16 +399,17 @@ class portefeuille_financier():
 
             :returns: None, modificaiton du portefeuille obligation
         """
+        logging.info('Vendre des obligations  : %s', montant_a_vendre)
         self.portefeuille_oblig["alloc"] = self.portefeuille_oblig["val_marche_fin"] / np.sum(self.portefeuille_oblig["val_marche_fin"])
         self.portefeuille_oblig["nb_to_sold"] = (self.portefeuille_oblig["alloc"] * -1 * montant_a_vendre) / (self.portefeuille_oblig["val_marche_fin"] / self.portefeuille_oblig["nb_unit"])
         #self.portefeuille_oblig["pct_to_sold"] = self.portefeuille_oblig["nb_to_sold"] / self.portefeuille_oblig["nb_unit"]
-        self.plus_moins_value_realised_oblig = np.sum((self.portefeuille_oblig["val_achat"] - self.portefeuille_oblig["val_nc"]) * self.portefeuille_oblig["alloc"])
-        self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_immo
+        self.plus_moins_value_realised_oblig = np.sum((self.portefeuille_oblig["pvl"]+self.portefeuille_oblig["mvl"]) * self.portefeuille_oblig["alloc"])
+        self.plus_moins_value_realised_total = self.plus_moins_value_realised_total + self.plus_moins_value_realised_oblig
         # Actualisation des données de portefeuille
         self.portefeuille_oblig["val_achat_fin"] = self.portefeuille_oblig["val_achat"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
         self.portefeuille_oblig["val_marche_fin"] = self.portefeuille_oblig["val_marche_fin"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
         self.portefeuille_oblig["val_nc_fin"] = self.portefeuille_oblig["val_nc"] + montant_a_vendre * self.portefeuille_oblig["alloc"]
-        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] * (1 - self.portefeuille_oblig["alloc"])
+        self.portefeuille_oblig["nb_unit_fin"] = self.portefeuille_oblig["nb_unit"] - self.portefeuille_oblig["nb_to_sold"]
         #self.portefeuille_treso["val_marche"] = self.portefeuille_treso["val_marche"] + np.abs(montant_a_vendre)
 
     def calcul_resultat_financier(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
@@ -468,3 +472,6 @@ class portefeuille_financier():
        'nb_unit_fin', 'dur_det', 'nominal', 'tx_coupon', 'par', 'mat_res', 'type', 'rating', 'zspread', 'cc', 'sd', 'nb_unit_ref']]
         self.portefeuille_oblig = self.portefeuille_oblig.rename(columns={"val_marche_fin": "val_marche", "val_nc_fin": "val_nc",
         "val_achat_fin": "val_achat", "nb_unit_fin": "nb_unit"})
+        # initialisation treso
+        self.portefeuille_treso = self.portefeuille_treso[['num_mp', 'val_nc', 'val_marche_fin', 't', 'rdt']]
+        self.portefeuille_treso = self.portefeuille_treso.rename(columns={"val_marche_fin": "val_marche"})
