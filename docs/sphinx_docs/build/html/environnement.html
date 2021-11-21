@@ -2,9 +2,10 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="2. Configuration et Run du modèle" href="modele_alm.html" /><link rel="prev" title="Welcome to ALM Epargne Euro Individuel’s documentation!" href="index.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="2. Configuration et Run du modèle" href="modele_alm.html" /><link rel="prev" title="Welcome to ALM Epargne Euro Individuel’s documentation!" href="index.html" />
 
-    <meta name="generator" content="sphinx-3.1.2, furo 2021.04.11.beta34"/>
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.04.11.beta34"/>
         <title>1. Configuration de l’environnement de developpement et de python - Documentation ALM Epargne Euro Individuel 0.1</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=59ab60ac09ea94ccfe6deddff6d715cce948a6fc">
     <link rel="stylesheet" href="_static/pygments.css">
@@ -37,7 +38,9 @@
   --color-code-foreground: #f8f8f2;
   
   }
-</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+</style><link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css" />
+    <link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
   <body dir="">
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -116,6 +119,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="alm_passif.html">4. Module alm_passif pour la modélisation du passif</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sphynx.html">5. Document python package with Sphynx.</a></li>
 </ul>
 
 </div>
@@ -130,14 +134,14 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="configuration-de-l-environnement-de-developpement-et-de-python">
+        <section id="configuration-de-l-environnement-de-developpement-et-de-python">
 <h1><span class="section-number">1. </span>Configuration de l’environnement de developpement et de python<a class="headerlink" href="#configuration-de-l-environnement-de-developpement-et-de-python" title="Lien permanent vers ce titre">¶</a></h1>
-<div class="section" id="installer-python-3-x">
+<section id="installer-python-3-x">
 <h2><span class="section-number">1.1. </span>Installer Python 3.x<a class="headerlink" href="#installer-python-3-x" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Pour installer python (Version 3.x) sur votre ordinateur vous avez le choix entre deux méthodes :
 1. Télécharger et installer Python à partir du site officiel de la Python Software Foundation
 2. Installer le bundle python Anaconda</p>
-<div class="section" id="installation-via-la-python-software-foundation">
+<section id="installation-via-la-python-software-foundation">
 <h3><span class="section-number">1.1.1. </span>Installation via la Python Software Foundation<a class="headerlink" href="#installation-via-la-python-software-foundation" title="Lien permanent vers ce titre">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Télécharger la dernière version de python qui est (3.9) à ce jour ici : <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>. (Ne pas prendre de version 2.x, elle n’est plus supportée à ce jour)</p></li>
@@ -152,35 +156,35 @@
 </dl>
 </li>
 </ol>
-</div>
-<div class="section" id="installation-anaconda">
+</section>
+<section id="installation-anaconda">
 <h3><span class="section-number">1.1.2. </span>Installation Anaconda<a class="headerlink" href="#installation-anaconda" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Anaconda est une distribution python intégrant tout un ensemble de packages prêts à être utilisés pour la data science. (Anaconda = Python + packages de data science)</p>
 <ol class="arabic simple">
 <li><p>Télécharger Anaconda ici : <a class="reference external" href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a></p></li>
 <li><p>Installer Anaconda</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition">
+</section>
+</section>
+<section id="installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition">
 <h2><span class="section-number">1.2. </span>Installer un environnement de developpement intégré : Microsoft Visual Studio Code ou Pycharm Comunity Edition<a class="headerlink" href="#installer-un-environnement-de-developpement-integre-microsoft-visual-studio-code-ou-pycharm-comunity-edition" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Pour le developper/Exécuter/debugger le code python l’EDI qui a été utilisé est Visual Studio Code avec des Extensions utiles au developpement python.</p>
-<div class="section" id="installation-de-visual-studio-code">
+<section id="installation-de-visual-studio-code">
 <h3><span class="section-number">1.2.1. </span>Installation de Visual Studio Code<a class="headerlink" href="#installation-de-visual-studio-code" title="Lien permanent vers ce titre">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Télécharger Visual Studio Code ici : <a class="reference external" href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a></p></li>
 <li><p>Se reférer au manuel de visual studio code pour configurer un environnement de developpement python pour la data science. (<a class="reference external" href="https://code.visualstudio.com/docs/languages/python">https://code.visualstudio.com/docs/languages/python</a>)</p></li>
 </ol>
-</div>
-<div class="section" id="installation-de-pycharm">
+</section>
+<section id="installation-de-pycharm">
 <h3><span class="section-number">1.2.2. </span>Installation de Pycharm<a class="headerlink" href="#installation-de-pycharm" title="Lien permanent vers ce titre">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Télécharger Pycharm Comunity Edition (qui est gratuite) ici :  <a class="reference external" href="https://www.jetbrains.com/fr-fr/pycharm/">https://www.jetbrains.com/fr-fr/pycharm/</a></p></li>
 <li><p>Installer Pycharm Community Edition.</p></li>
 </ol>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
       </article>
       <footer>
@@ -260,10 +264,10 @@
   </main>
 </div>
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script src="_static/translations.js"></script>
     <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

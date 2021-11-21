@@ -97,7 +97,7 @@ if __name__ == "__main__":
     param_revalo = pd.read_csv(param_revalo)
     taux_pb = pd.read_csv(taux_pb)
     ppe = np.array([]) #initialisation de la ppe
-    ppbe = ppb.ppb(np.array([0]))
+    ppbe = ppb.ppb(np.array([1000000]))
 
     ############################################################################################################
     # Projection : run BE

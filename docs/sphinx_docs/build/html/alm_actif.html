@@ -2,9 +2,10 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="4. Module alm_passif pour la modélisation du passif" href="alm_passif.html" /><link rel="prev" title="2. Configuration et Run du modèle" href="modele_alm.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" /><link rel="next" title="4. Module alm_passif pour la modélisation du passif" href="alm_passif.html" /><link rel="prev" title="2. Configuration et Run du modèle" href="modele_alm.html" />
 
-    <meta name="generator" content="sphinx-3.1.2, furo 2021.04.11.beta34"/>
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.04.11.beta34"/>
         <title>3. Module alm_actif pour la modélisation de l’actif - Documentation ALM Epargne Euro Individuel 0.1</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=59ab60ac09ea94ccfe6deddff6d715cce948a6fc">
     <link rel="stylesheet" href="_static/pygments.css">
@@ -37,7 +38,9 @@
   --color-code-foreground: #f8f8f2;
   
   }
-</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+</style><link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css" />
+    <link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
   <body dir="">
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -131,22 +134,22 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="module-alm-actif-pour-la-modelisation-de-l-actif">
+        <section id="module-alm-actif-pour-la-modelisation-de-l-actif">
 <h1><span class="section-number">3. </span>Module alm_actif pour la modélisation de l’actif<a class="headerlink" href="#module-alm-actif-pour-la-modelisation-de-l-actif" title="Lien permanent vers ce titre">¶</a></h1>
 <p>alm_actif est le module permettant de modéliser l’actif.</p>
 <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="model-actif">
+<section id="model-actif">
 <h2><span class="section-number">3.1. </span>model_actif<a class="headerlink" href="#model-actif" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Bibliothèque contenant la classe portefeuille_financier permettant de modéliser les l’actifs par ses attributs et ses méthodes.</p>
 <span class="target" id="module-alm_actif.model_actif"></span><dl class="py class">
-<dt id="alm_actif.model_actif.portefeuille_financier">
-<em class="property">class </em><code class="sig-prename descclassname">alm_actif.model_actif.</code><code class="sig-name descname">portefeuille_financier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">portefeuille_action</span></em>, <em class="sig-param"><span class="n">portefeuille_oblig</span></em>, <em class="sig-param"><span class="n">portefeuille_immo</span></em>, <em class="sig-param"><span class="n">portefeuille_treso</span></em>, <em class="sig-param"><span class="n">scena_eco_action</span></em>, <em class="sig-param"><span class="n">scena_eco_oblig</span></em>, <em class="sig-param"><span class="n">scena_eco_immo</span></em>, <em class="sig-param"><span class="n">scena_eco_treso</span></em>, <em class="sig-param"><span class="n">alloc_strat_cible_portfi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">alm_actif.model_actif.</span></span><span class="sig-name descname"><span class="pre">portefeuille_financier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">portefeuille_action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portefeuille_oblig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portefeuille_immo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portefeuille_treso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scena_eco_action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scena_eco_oblig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scena_eco_immo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scena_eco_treso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alloc_strat_cible_portfi</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Classe representant le portefeuille financier pour la modelisation de l’actif, sa projection et ses interactions.
 Cette classe permet d’instancier et d’utiliser un objet representant l’actif avec ses différents type d’actifs et ses fonctions.</p>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.acheter_des_actions">
-<code class="sig-name descname">acheter_des_actions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_acheter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_actions" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.acheter_des_actions">
+<span class="sig-name descname"><span class="pre">acheter_des_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_acheter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_actions" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant d’acheter des actions et de mettre le portfeuille action automatiquement à jour.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -158,8 +161,8 @@ Cette classe permet d’instancier et d’utiliser un objet representant l’act
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.acheter_des_immo">
-<code class="sig-name descname">acheter_des_immo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_acheter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_immo" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.acheter_des_immo">
+<span class="sig-name descname"><span class="pre">acheter_des_immo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_acheter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_immo" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant d’acheter des actions et de mettre le portfeuille action automatiquement à jour.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -171,8 +174,8 @@ Cette classe permet d’instancier et d’utiliser un objet representant l’act
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.acheter_des_oblig">
-<code class="sig-name descname">acheter_des_oblig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_acheter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_oblig" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.acheter_des_oblig">
+<span class="sig-name descname"><span class="pre">acheter_des_oblig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_acheter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.acheter_des_oblig" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant d’acheter des actions et de mettre le portfeuille action automatiquement à jour.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -184,8 +187,8 @@ Cette classe permet d’instancier et d’utiliser un objet representant l’act
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.allocation_strategique">
-<code class="sig-name descname">allocation_strategique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.allocation_strategique" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.allocation_strategique">
+<span class="sig-name descname"><span class="pre">allocation_strategique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.allocation_strategique" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>L’allocation stratégique vise à créer une clé de répartition sur différentes classes d’actifs : actions, obligations, liquidités, etc</p>
 <p>Cette fonction permet de faire l’allocation strategique du portefeuille suite à l’evolution des valeurs de marchés des actifs à l’an t en fonction
 de l’allocation strategique cible. Après évaluation des écarts par rapport à l’allocation cible des opérations d’achats-ventes sont effectuées afin
@@ -200,8 +203,8 @@ de correspondre à l’allocation cible</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_alloc_strateg_crt">
-<code class="sig-name descname">calcul_alloc_strateg_crt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_alloc_strateg_crt" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_alloc_strateg_crt">
+<span class="sig-name descname"><span class="pre">calcul_alloc_strateg_crt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_alloc_strateg_crt" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul allocation courante du portefeuille financier</p>
 <p>:param : None</p>
 <dl class="field-list simple">
@@ -211,8 +214,8 @@ de correspondre à l’allocation cible</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_assiette_tresorerie">
-<code class="sig-name descname">calcul_assiette_tresorerie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">flux</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_assiette_tresorerie" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_assiette_tresorerie">
+<span class="sig-name descname"><span class="pre">calcul_assiette_tresorerie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flux</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_assiette_tresorerie" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul de l’assiette de treso =
 (dividendes + coupons + remboursement de nominal + loyer immo + interets monetaires)
 - (frais de l’actif + frais du passif + prestations rachats + prestations deces + revalorisation de prestations)</p>
@@ -229,37 +232,37 @@ de correspondre à l’allocation cible</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_action">
-<code class="sig-name descname">calcul_des_pvl_action</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_action" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_action">
+<span class="sig-name descname"><span class="pre">calcul_des_pvl_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_action" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul des plus values latentes sur les actions</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_immo">
-<code class="sig-name descname">calcul_des_pvl_immo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_immo" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_immo">
+<span class="sig-name descname"><span class="pre">calcul_des_pvl_immo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_des_pvl_immo" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul des plus values latentes sur l’immobilier</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_provision_risque_exigibilite">
-<code class="sig-name descname">calcul_provision_risque_exigibilite</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_provision_risque_exigibilite" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_provision_risque_exigibilite">
+<span class="sig-name descname"><span class="pre">calcul_provision_risque_exigibilite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_provision_risque_exigibilite" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction qui permet de calculer la provision pour risque d’exigibilite aka P.R.E.
 copy-paste de « argus de l’assurance »
 La provision pour risque d’exigibilité (PRE) a pour fonction de permettre à l’entreprise d’assurance de faire 
 face à ses engagements dans le cas de moins-value de certains actifs (C. assur., art. R. 332-20). 
 Une moins-value latente nette globale des placements concernés (action et immobilier) est constatée lorsque la valeur nette 
-comptable de ces placements est supérieure à leur valeur globale.</p>
-<p>La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.</p>
+comptable de ces placements est supérieure à leur valeur globale.
+La PRE est la moins value latente des actifs non ammortissables, dans ce modele : action et immobilier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><p><strong>t</strong> – (Int) année t de projection</p>
 </dd>
 <dt class="field-even">Renvoie</dt>
-<dd class="field-even"><p>None, mise à jour de  provision pour risque d’exigibilite de l’objet portefeuille financier en cours.</p>
+<dd class="field-even"><p>None, mise à jour de  provision pour risque d’exigibilite de l’objet portefeuille financier.</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_reserve_capitation">
-<code class="sig-name descname">calcul_reserve_capitation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">plus_ou_moins_value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_reserve_capitation" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_reserve_capitation">
+<span class="sig-name descname"><span class="pre">calcul_reserve_capitation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plus_ou_moins_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_reserve_capitation" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction qui permet de calculer la reserve capitalisation après la vente d’obligations.
 Definition : <a class="reference external" href="https://assurance-vie.ooreka.fr/astuce/voir/503241/reserve-de-capitalisation">https://assurance-vie.ooreka.fr/astuce/voir/503241/reserve-de-capitalisation</a> (24/01/2021)
 La réserve de capitalisation est une réserve obligatoirement mise en place par les organismes d’assurance.
@@ -277,9 +280,9 @@ Cette réserve est alimentée par les plus-values constatées lors de la cession
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_resultat_financier">
-<code class="sig-name descname">calcul_resultat_financier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tx_frais_val_marche</span></em>, <em class="sig-param"><span class="n">tx_frais_produits</span></em>, <em class="sig-param"><span class="n">tx_charges_reserve_capi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_resultat_financier" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Fonction de calcul du resultat financier</p>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_resultat_financier">
+<span class="sig-name descname"><span class="pre">calcul_resultat_financier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tx_frais_val_marche</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tx_frais_produits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tx_charges_reserve_capi</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_resultat_financier" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de calcul du resultat financier : revenu + produit - frais_fin - var_rc</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><ul class="simple">
@@ -294,13 +297,13 @@ Cette réserve est alimentée par les plus-values constatées lors de la cession
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.calcul_tra">
-<code class="sig-name descname">calcul_tra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_tra" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.calcul_tra">
+<span class="sig-name descname"><span class="pre">calcul_tra</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.calcul_tra" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul du taux de rendement financier</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.debit_credit_tresorerie">
-<code class="sig-name descname">debit_credit_tresorerie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.debit_credit_tresorerie" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.debit_credit_tresorerie">
+<span class="sig-name descname"><span class="pre">debit_credit_tresorerie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.debit_credit_tresorerie" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><p><strong>montant</strong> – (Numeric) Montant à debiter ou à créditer à la tresorerie.</p>
@@ -311,8 +314,8 @@ Cette réserve est alimentée par les plus-values constatées lors de la cession
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.initialisation_ptf_financier">
-<code class="sig-name descname">initialisation_ptf_financier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.initialisation_ptf_financier" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.initialisation_ptf_financier">
+<span class="sig-name descname"><span class="pre">initialisation_ptf_financier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.initialisation_ptf_financier" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Initialise le portefeuille financier pour une projection de l’année N.
 Le portefeuille en fin d’année de projection N-1 devient le portefeuille input pour la projection de l’année N</p>
 <p>:param : None</p>
@@ -323,20 +326,20 @@ Le portefeuille en fin d’année de projection N-1 devient le portefeuille inpu
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_action">
-<code class="sig-name descname">realiser_les_pvl_action</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_vendre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_action" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_action">
+<span class="sig-name descname"><span class="pre">realiser_les_pvl_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_vendre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_action" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Cette fonction permet de réaliser les PVL action pour honorer le TMG, dans le cas ou le résultat total n’est pas 
 suffisant. Les flux de réalisation sont directement crédités à la trésorerie.</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_immo">
-<code class="sig-name descname">realiser_les_pvl_immo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_vendre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_immo" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_immo">
+<span class="sig-name descname"><span class="pre">realiser_les_pvl_immo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_vendre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.realiser_les_pvl_immo" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Cette fonction permet de réaliser les PVL immo pour honorer le TMG, dans le cas ou le résultat total n’est pas 
 suffisant. Les flux de réalisation sont directement crédités à la trésorerie.</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.veillissement_action">
-<code class="sig-name descname">veillissement_action</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_action" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.veillissement_action">
+<span class="sig-name descname"><span class="pre">veillissement_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_action" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Vieillisement du portefeuille action par projection sur un an avec calcul des dividendes versées et des du rendement
 :param t: (Int) année t de projection</p>
 <dl class="field-list simple">
@@ -346,8 +349,8 @@ suffisant. Les flux de réalisation sont directement crédités à la trésoreri
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.veillissement_immo">
-<code class="sig-name descname">veillissement_immo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_immo" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.veillissement_immo">
+<span class="sig-name descname"><span class="pre">veillissement_immo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_immo" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Vieillisement du portefeuille immobilier par projection sur un an avec calcul des loyers versés et du rendement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -359,8 +362,8 @@ suffisant. Les flux de réalisation sont directement crédités à la trésoreri
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.veillissement_obligation">
-<code class="sig-name descname">veillissement_obligation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scenario</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_obligation" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.veillissement_obligation">
+<span class="sig-name descname"><span class="pre">veillissement_obligation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_obligation" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Vieillisement du portefeuille obligation par projection sur un an avec calcul des coupons versés et du rendement
 :param t: (Int) année t de projection</p>
 <dl class="field-list simple">
@@ -370,19 +373,19 @@ suffisant. Les flux de réalisation sont directement crédités à la trésoreri
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.veillissement_treso">
-<code class="sig-name descname">veillissement_treso</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">maturite</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_treso" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.veillissement_treso">
+<span class="sig-name descname"><span class="pre">veillissement_treso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturite</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.veillissement_treso" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Vieillisement du portefeuille de trésorerie par projection 
 sur un an avec calcul du rendement</p>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.vendres_des_actions">
-<code class="sig-name descname">vendres_des_actions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_vendre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendres_des_actions" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.vendre_des_actions">
+<span class="sig-name descname"><span class="pre">vendre_des_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_vendre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendre_des_actions" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant de vendre des actions et de mettre le portefeuille action automatiquement à jour.
 TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nombre d’actifs disponible</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>montant_a_vendre</strong> – (Float) montant total à vendre</p>
+<dd class="field-odd"><p><strong>montant_a_vendre</strong> – (Float) montant négatif représentant le montant de vente des actions</p>
 </dd>
 <dt class="field-even">Renvoie</dt>
 <dd class="field-even"><p>None, modificaiton du portefeuille actions</p>
@@ -390,8 +393,8 @@ TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nomb
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.vendres_des_immo">
-<code class="sig-name descname">vendres_des_immo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_vendre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendres_des_immo" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.vendre_des_immo">
+<span class="sig-name descname"><span class="pre">vendre_des_immo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_vendre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendre_des_immo" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
 TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nombre d’actifs disponible</p>
 <dl class="field-list simple">
@@ -404,8 +407,8 @@ TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nomb
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt id="alm_actif.model_actif.portefeuille_financier.vendres_des_oblig">
-<code class="sig-name descname">vendres_des_oblig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">montant_a_vendre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendres_des_oblig" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.model_actif.portefeuille_financier.vendre_des_oblig">
+<span class="sig-name descname"><span class="pre">vendre_des_oblig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montant_a_vendre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.model_actif.portefeuille_financier.vendre_des_oblig" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction permettant de vendre des immo et de mettre le portefeuille action automatiquement à jour.
 TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nombre d’actifs disponible</p>
 <dl class="field-list simple">
@@ -418,13 +421,13 @@ TODO : gérer le cas où le le nombre d’actif à vendre est supérieur au nomb
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="fonctionsfinance">
+</section>
+<section id="fonctionsfinance">
 <h2><span class="section-number">3.2. </span>fonctionsfinance<a class="headerlink" href="#fonctionsfinance" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Bibliothèque de fonctions permettant d’effectuer des calculs financiers</p>
 <span class="target" id="module-alm_actif.fonctionsfinance"></span><dl class="py function">
-<dt id="alm_actif.fonctionsfinance.duration_obligatioin">
-<code class="sig-prename descclassname">alm_actif.fonctionsfinance.</code><code class="sig-name descname">duration_obligatioin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tx_coupon</span></em>, <em class="sig-param"><span class="n">nominal</span></em>, <em class="sig-param"><span class="n">courbe</span></em>, <em class="sig-param"><span class="n">maturite</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.duration_obligatioin" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.fonctionsfinance.duration_obligatioin">
+<span class="sig-prename descclassname"><span class="pre">alm_actif.fonctionsfinance.</span></span><span class="sig-name descname"><span class="pre">duration_obligatioin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tx_coupon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nominal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">courbe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.duration_obligatioin" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul de la duration de l’obligation, avec interpolation de la courbe taux zero par spline cubique.
 Utilise la fonction <em>valeur_marche_oblig</em></p>
 <dl class="field-list simple">
@@ -443,8 +446,8 @@ Utilise la fonction <em>valeur_marche_oblig</em></p>
 </dl>
 </dd></dl>
 <dl class="py function">
-<dt id="alm_actif.fonctionsfinance.valeur_marche_oblig">
-<code class="sig-prename descclassname">alm_actif.fonctionsfinance.</code><code class="sig-name descname">valeur_marche_oblig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tx_coupon</span></em>, <em class="sig-param"><span class="n">nominal</span></em>, <em class="sig-param"><span class="n">courbe</span></em>, <em class="sig-param"><span class="n">maturite</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.valeur_marche_oblig" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="alm_actif.fonctionsfinance.valeur_marche_oblig">
+<span class="sig-prename descclassname"><span class="pre">alm_actif.fonctionsfinance.</span></span><span class="sig-name descname"><span class="pre">valeur_marche_oblig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tx_coupon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nominal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">courbe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#alm_actif.fonctionsfinance.valeur_marche_oblig" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Calcul de la valeur de marche de l’obligation, avec interpolation de la courbe taux zero par spline cubique.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -461,8 +464,8 @@ Utilise la fonction <em>valeur_marche_oblig</em></p>
 </dd>
 </dl>
 </dd></dl>
-</div>
-</div>
+</section>
+</section>
 
       </article>
       <footer>
@@ -534,10 +537,10 @@ Utilise la fonction <em>valeur_marche_oblig</em></p>
   </main>
 </div>
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script src="_static/translations.js"></script>
     <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

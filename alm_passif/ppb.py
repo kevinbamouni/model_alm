@@ -14,7 +14,6 @@ class ppb():
         self.dotations = np.array([])
         self.reprises = np.array([])
         self.consommation = 0
-        # TODO  codeer la consomation de PPB à tout instant depuis le début de l'année
         # TODO corriger les dotations reprises
 
     def reprise_ppb_8ans(self):

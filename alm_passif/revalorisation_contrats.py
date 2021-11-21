@@ -6,6 +6,7 @@ from pandas.core.indexes import base
 def attribution_ppb_8ans(mp, ppb):
     """
     Fonction permet d'attribuer la PPB 8ans reprise au pro rata de la PM
+    mp['ppb8_ind'] = attribution de la PPB dotée il y'a 8 ans
 
     :param mp: (Dataframe) Model point
     :param ppb: (Objet ppb) ppb
@@ -22,7 +23,9 @@ def attribution_ppb_8ans(mp, ppb):
 
 def calcul_base_produit_financier(tra, ppb, mp):
     """
-    Calcul de la base des produits financiers attribuables aux PM. A partir du taux de rendement de l'actif, la fonction calcul le rendement financier des PM. (PM x TRA)
+    Calcul de la base des produits financiers attribuables aux PM et PPB. (Rendement financier des provisions techniques)
+    A partir du taux de rendement de l'actif, la fonction calcul le rendement financier des PM.
+    Formule : (Provisions Mathématiques + PPB) x Taux de Rendement de l'Actif
 
     :param tra: (Float) Taux de rendement de l'actif sur la période
     :param ppb: (Objet ppb) ppb
@@ -30,12 +33,16 @@ def calcul_base_produit_financier(tra, ppb, mp):
 
     :returns: mp (Dataframe).
     """
-    mp['base_prod_fi'] = (mp['pm_moy'] + np.sum(ppb.ppb_historique)*(mp['pm_moy']/np.sum(mp['pm_moy']))) * tra
+    mp['base_prod_fi'] = ((mp['pm_moy']) + (np.sum(ppb.ppb_historique) * (mp['pm_moy']/np.sum(mp['pm_moy'])))) * tra
     return mp
 
 def calcul_marge_financiere(mp, ppb):
     """
     Fonction qui permet de calculer la marge financière de l'assureur.
+    Marge financière = production financière
+                        - revalorisation nette des prestations + besoin de revalo des prestations au TMG
+                        - revalorisation nette des stock + besoin de revalo des stock au TMG
+                        + Reprise de la PPB proportionnelle à la PM
 
     :param mp: (Dataframe) Model point
     :param ppb: (Objet ppb) ppb
@@ -47,13 +54,13 @@ def calcul_marge_financiere(mp, ppb):
     # Ajout du financement venant de la PPB sur les TMG du stock et reprise pour taux cible
     mp['marge_fi'] = mp['base_prod_fi'] - \
                     mp['rev_prest_nette'] + mp['bes_tmg_prest'] - \
-                    mp['rev_stock_nette'] + mp['bes_tmg_stock'] + np.sum(ppb.reprises)
+                    mp['rev_stock_nette'] + mp['bes_tmg_stock'] + ((mp['pm_moy']/np.sum(mp['pm_moy']))*np.sum(ppb.reprises))
     return mp
 
 def get_taux_pb(mp, df_ref_taux_pb):
     """
     Fonction qui permet de recupérer les taux de pb par produit à partir du référentiel de pb par produit.
-    Ceci se fait par une jointure sur le num produit.
+    Ceci se fait par une jointure sur le numero du produit. (taux de PB déclinée par produit)
 
     :param df_mp: (Dataframe) model points passif
     :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
@@ -81,7 +88,12 @@ def get_param_revalo(mp, df_ref_revalo):
 def calcul_pb_contractuelle(mp, ref_taux_pb):
     """
     Fonction qui recupere les taux de pb contractuel par produit du referentiel de taux de pb puis calcul les taux de pb
-    par ligne de mp.
+    contractuel par ligne de mp. La PB contractuelle représente la part du rendement (TRA) des PM à reverser aux contrats.
+    Ce taux de PB contractuel est récupéré via un référentiel qui contient les taux par produit.
+    A la PB contractuelle attribuée au contrat s'ajoute le financement additionnel permettant d'atteindre éventuellement
+    le taux minimum garanti.
+
+    PB contractuelle = Production financière de base * taux de PB
 
     :param df_mp: (Dataframe) model points passif
     :param df_ref_taux_pb: (Dataframe) référentiel des taux de pb (plusieurs type de pb) par produit
@@ -91,7 +103,7 @@ def calcul_pb_contractuelle(mp, ref_taux_pb):
     mp = get_taux_pb(mp, ref_taux_pb)
     mp['pb_contract'] = np.maximum(0, mp['base_prod_fi']) * mp['tx_pb']
     # Calcul du supplement de revalorisation par produit : difference entre la pb contract et la revalo TMG
-    mp['add_pb_contract'] = np.maximum(0, mp['pb_contract'] - mp['rev_stock_brut'])
+    mp.loc[:,'add_pb_contract'] = np.maximum(0, mp['pb_contract'] - mp['rev_stock_brut'])
     # Chargements sur encours
     # Calcul des chargements sur encours theoriques par produit
     mp['ch_enc_th'] = mp['enc_charg_base_th'] + mp['enc_charg_rmin_th']
@@ -104,7 +116,7 @@ def calcul_pb_contractuelle(mp, ref_taux_pb):
 
 def finance_tx_cible_ppb(mp, ppb):
     """
-    Fonction qui permet de fianancier le besoin de revalorisation au taux cible par reprise de la PPB
+    Fonction qui permet de financer le besoin de revalorisation au taux cible par reprise de la PPB
 
     :param df_mp: (Dataframe) model points passif
     :param ppb: (Objet ppb) Objet provision pour participation au bénéfice
@@ -117,7 +129,7 @@ def finance_tx_cible_ppb(mp, ppb):
     if (bes_add<0):
         ppb.dotation_ppb(-bes_add)
         # Application de la revalorisation par produit
-        mp['rev_stock_nette_cible'] = np.maximum(mp['bes_tx_cible'], mp['ppb8_ind'])
+        mp.loc[:,'rev_stock_nette_cible'] = np.maximum(mp['bes_tx_cible'], mp['ppb8_ind'])
     else:
         ppb.reprise_ppb(bes_add)
         # Application de la revalorisation par produit
@@ -137,7 +149,7 @@ def finance_tx_cible_margefi(mp, df_ref_revalo):
     # Calcul du besoin additionnelle à la ppb 8 ans individuelle pour atteindre la revalorisation au taux cible
     bes_add_ind = mp['bes_tx_cible'] - mp['rev_stock_nette_cible']
     bes_add = np.sum(bes_add_ind)
-    mp['marge_min'] = mp['pm_moy'] * mp['tx_marge_min']
+    mp.loc[:,'marge_min'] = mp['pm_moy'] * mp['tx_marge_min']
     # Evaluation du montant que peut financer la marge de l'assureur
     finance_marg = np.maximum(0, mp['marge_fi'] - mp['marge_min']) # Montant pouvant etre utilise pour financer le besoin supplementaire de revalorisation
     if (bes_add<0):
@@ -149,7 +161,7 @@ def finance_tx_cible_margefi(mp, df_ref_revalo):
         bes_finance = np.minimum(finance_marg, bes_add_ind)
         # Application de la revalorisation par produit
         mp['rev_stock_nette_cible'] = mp['rev_stock_nette_cible']
-    mp['marge_fi'] = mp['marge_fi'] - bes_finance
+    mp.loc[:,'marge_fi'] = mp['marge_fi'] - bes_finance
     return mp
 
 def finance_tx_cible_pmvl_action(mp, portefeuille_financier):
@@ -198,11 +210,11 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     :returns df_ref_revalo (Dataframe): référentiel des taux de pb (plusieurs type de pb) par produit
     :returns ppb (Objet ppb):
     """
-    mp['ind_result_tech'] = (mp['resultat_technique'] > 0)
-    mp['solde_pb'] = mp['taux_pb_fi'] * mp['base_prod_fi'] + mp['taux_pb_tech'] * mp['resultat_technique'] * mp['ind_result_tech'] + \
+    mp.loc[:,'ind_result_tech'] = (mp['resultat_technique'] > 0)
+    mp.loc[:,'solde_pb'] = mp['taux_pb_fi'] * mp['base_prod_fi'] + mp['taux_pb_tech'] * mp['resultat_technique'] * mp['ind_result_tech'] + \
             mp['resultat_technique'] * (1 - mp['ind_result_tech']) - mp['it_tech_stock']
     # Report du solde negatif
-    mp['solde_pb'] = mp['solde_pb'] + mp['solde_pb_regl']*(mp['solde_pb']/np.sum(mp['solde_pb']))
+    mp['solde_pb'] = mp['solde_pb'] + mp['solde_pb_regl']*(mp.loc[:,'solde_pb']/np.sum(mp['solde_pb']))
     # Mise a jour du solde de PB minimale
     if(np.sum(mp['solde_pb']) < 0):
         df_ref_revalo['solde_pb_regl'] = np.sum(mp['solde_pb'])
@@ -215,7 +227,7 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     # Reprise additionnelle
     suppl = np.maximum(0, (np.sum(rev_reg) - tot_rev_assure))
     # Marge financier finale
-    mp['marge_fi'] = mp['marge_fi'] - suppl * mp['marge_fi']/np.sum(mp['marge_fi'])
+    mp.loc[:,'marge_fi'] = mp['marge_fi'] - suppl * mp['marge_fi']/np.sum(mp['marge_fi'])
     # Dotation
     ppb.dotation_ppb(suppl)
     # Revalorisation residuelle du stock
@@ -224,14 +236,14 @@ def finance_contrainte_legale(mp,df_ref_revalo,ppb):
     # L'attribution s'effectue uniquement sur les produits modelises.
     sum_base_fin = np.sum(mp['base_prod_fi'])
     if sum_base_fin != 0:
-        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * mp['base_prod_fi'] / sum_base_fin
+        mp.loc[:,'rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * mp['base_prod_fi'] / sum_base_fin
     else: # Repartition au prorara si la base financiere est nulle
-        mp['rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * 1 / len(mp['base_prod_fi'])
+        mp.loc[:,'rev_stock_nette_regl'] = mp['rev_stock_nette_cible'] + add_rev_regl * 1 / len(mp['base_prod_fi'])
     # On calcule le montant de revalorisation nette au dela de la revalorisation nette au taux minimum.
-    mp['add_rev_nette_stock'] = mp['rev_stock_nette_cible'] - (mp['rev_stock_brut'] - mp['ch_enc_th'])
+    mp.loc[:,'add_rev_nette_stock'] = mp['rev_stock_nette_cible'] - mp['rev_stock_brut'] - mp['ch_enc_th']
     # Permet de gerer le cas ou la revalo nette apres PB est positive et la revalo nette avant est negative
     ind = ((mp['rev_stock_brut'] - mp['ch_enc_th']) <= 0) & (mp['rev_stock_nette_cible'] > 0)
-    mp['add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_cible'] * ind
+    mp.loc[:,'add_rev_nette_stock'] = np.maximum(0, mp['add_rev_nette_stock']) * (1 - ind) + mp['rev_stock_nette_cible'] * ind
     return mp, df_ref_revalo, ppb
 
 def moteur_politique_revalo(mp, df_ref_revalo, ref_taux_pb, ppb, portefeuille_financier):

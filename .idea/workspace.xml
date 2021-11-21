@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)">
+    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- Ajout de la log dans la classe portefeuille_actif">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alm_actif/model_actif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_actif/model_actif.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alm_passif/model_passif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_passif/model_passif.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alm_passif/ppb.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_passif/ppb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alm_passif/revalorisation_contrats.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_passif/revalorisation_contrats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_actif.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_actif.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environnement.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environnement.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/modele_alm.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/modele_alm.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/sphynx.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/sphynx.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/.buildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/.buildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/basic.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/basic.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/doctools.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/doctools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/language_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/language_data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/pygments.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/pygments.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/pygments_dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/pygments_dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/searchtools.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/searchtools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/translations.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/translations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/underscore.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/_static/underscore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_actif.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_actif.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/environnement.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/environnement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/modele_alm.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/modele_alm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/sphynx.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/sphynx.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection_reporting.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection_reporting.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +70,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.run">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Modele_ALM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -55,6 +85,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="reporting" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Modele_ALM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run_tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run_tools/reporting.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -85,6 +134,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.run" />
+        <item itemvalue="Python.reporting" />
       </list>
     </recent_temporary>
   </component>
@@ -101,7 +151,7 @@
       <workItem from="1631695686378" duration="33510000" />
       <workItem from="1632496474031" duration="71959000" />
       <workItem from="1635067797607" duration="327000" />
-      <workItem from="1636537053428" duration="5570000" />
+      <workItem from="1636537053428" duration="34023000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB">
       <created>1632596273853</created>
@@ -138,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634903506515</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- Ajout de la log dans la classe portefeuille_actif">
+      <created>1636559503007</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1636559503007</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,7 +230,8 @@
     <MESSAGE value="- ajout du readme&#10;- Correction projection ptf_immo et ptf_action&#10;- allocation stratégique en cours de correction..." />
     <MESSAGE value="- Debug et correction de la fonction : vendre_des_actions()" />
     <MESSAGE value="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)" />
+    <MESSAGE value="- Ajout de la log dans la classe portefeuille_actif" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Ajout de la log dans la classe portefeuille_actif" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -184,6 +242,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1636539299338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Modele_ALM$reporting.coverage" NAME="reporting Coverage Results" MODIFIED="1636624813490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/run_tools" />
+    <SUITE FILE_PATH="coverage/Modele_ALM$run.coverage" NAME="run Coverage Results" MODIFIED="1637450688066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -414,7 +414,7 @@ class portefeuille_financier():
 
     def calcul_resultat_financier(self, tx_frais_val_marche, tx_frais_produits, tx_charges_reserve_capi):
         """
-        Fonction de calcul du resultat financier
+        Fonction de calcul du resultat financier : revenu + produit - frais_fin - var_rc
 
         :param tx_frais_val_marche: montant des frais de marché
         :param tx_frais_produits: montant des frais sur les produits financiers
@@ -424,13 +424,12 @@ class portefeuille_financier():
         """
         self.calcul_alloc_strateg_crt()
         self.resultat_financier = np.sum(self.portefeuille_action["val_marche"] * self.portefeuille_action["div"]) \
-                                + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["loyer"]) \
+                                + np.sum(self.portefeuille_immo["val_marche"] * self.portefeuille_immo["tx_loyer"]) \
                                 + np.sum(self.portefeuille_oblig["val_marche"] * self.portefeuille_oblig["tx_coupon"]) \
                                 + np.sum(self.portefeuille_oblig.loc[self.portefeuille_oblig['mat_res'] == 0,'nominal']) \
                                 + self.plus_moins_value_realised_oblig \
                                 + self.plus_moins_value_realised_action \
                                 + self.plus_moins_value_realised_immo \
-                                + (self.portefeuille_oblig["val_nc_fin"] - self.portefeuille_oblig["val_nc"]) \
                                 - tx_frais_val_marche * self.allocation_courante['total_vm_portfi'] \
                                 - tx_charges_reserve_capi * self.reserve_capitalisation \
                                 - tx_frais_produits * 0

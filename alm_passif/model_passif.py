@@ -205,7 +205,7 @@ def calcul_des_taux_min(mp):
 
 def calcul_des_taux_cibles(mp):
     """
-        Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l'assreur souhaite revaloriser sa PM afin de minimiser 
+        Taux optimal de revalorisation (supérieur ou égal au TMG) auquel l'assureur souhaite revaloriser sa PM afin de minimiser
         les effets de rachat dynamiques.
         # TODO : Implémenter le calcul des taux cibles par ligne de MP
 
@@ -373,49 +373,50 @@ def calcul_revalo_pm(mp, rev_brute_alloue_gar):
     :returns: (Dataframe) model point passif enrichi des calculs de participation au bénéfice (pm)
     """
     # chargement theorique avant pb
-    mp['chgt_enc_stock_th_av_pb'] = mp['enc_charg_rmin_th'] + mp['enc_charg_base_th']
+    mp.loc[:,'chgt_enc_stock_th_av_pb'] = mp['enc_charg_rmin_th'] + mp['enc_charg_base_th']
     # Revalorisation nette avant pb
-    mp['rev_stock_nette_av_pb'] = mp['rev_stock_brut'] - mp['chgt_enc_stock_th_av_pb']
+    mp.loc[:,'rev_stock_nette_av_pb'] = mp['rev_stock_brut'] - mp['chgt_enc_stock_th_av_pb']
     # Application de la contrainte de taux negatif
-    mp['rev_stock_nette_av_pb'] = np.maximum(0, mp['rev_stock_nette_av_pb']) * mp['ind_chgt_enc_pos'] + mp['rev_stock_nette_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
+    mp.loc[:,'rev_stock_nette_av_pb'] = np.maximum(0, mp['rev_stock_nette_av_pb']) * mp['ind_chgt_enc_pos'] + mp['rev_stock_nette_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
     # Calcul des chargements et de la revalorisation nette
     # mp['add_rev_nette_stock'] = rev_net_alloue
     if(np.sum(mp['add_rev_nette_stock']) == 0):
         # chargements reels
-        mp['enc_charg_stock_ap_pb'] = mp['rev_stock_brut'] * mp['ind_chgt_enc_pos'] + mp['chgt_enc_stock_th_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
+        mp.loc[:,'enc_charg_stock_ap_pb'] = mp['rev_stock_brut'] * mp['ind_chgt_enc_pos'] + mp['chgt_enc_stock_th_av_pb'] * (1 - mp['ind_chgt_enc_pos'])
         # revaloristation nette
-        mp['rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb']
+        mp.loc[:,'rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb']
     else:
         #allocation de la revalorisation additionnelle selon le taux cible
         if(np.sum(mp['bes_tx_cible']) != 0):
-            mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['bes_tx_cible'] / np.sum(mp['bes_tx_cible']))
+            mp.loc[:,'rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['bes_tx_cible'] / np.sum(mp['bes_tx_cible']))
         else:
             #  Attribution proportionnelle
-            mp['rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
+            mp.loc[:,'rev_net_alloue_mp'] = mp['add_rev_nette_stock'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
         # Revalorisation nette
-        mp['rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb'] * (mp['rev_stock_nette_av_pb']>0) + mp['rev_net_alloue_mp']
+        mp.loc[:,'rev_stock_nette_ap_pb'] = mp['rev_stock_nette_av_pb'] * (mp['rev_stock_nette_av_pb']>0) + mp['rev_net_alloue_mp']
         # Chargements reels
-        mp['enc_charg_stock_ap_pb'] = mp['chgt_enc_stock_th_av_pb'] + mp['rev_net_alloue_mp'] / (1 - mp['chgt_enc']) * mp['chgt_enc']
+        mp.loc[:,'enc_charg_stock_ap_pb'] = mp['chgt_enc_stock_th_av_pb'] + mp['rev_net_alloue_mp'] / (1 - mp['chgt_enc']) * mp['chgt_enc']
         # Revalorisation brute
-        mp['rev_stock_brut_ap_pb'] = mp['rev_stock_brut'] * (mp['rev_stock_nette_av_pb']>0) \
-                                + mp['chgt_enc_stock_th_av_pb'] * (mp['rev_stock_nette_av_pb']<=0) + mp['rev_net_alloue_mp'] / (1-mp['chgt_enc'])
+        mp.loc[:,'rev_stock_brut_ap_pb'] = mp['rev_stock_brut'] * (mp['rev_stock_nette_av_pb']>0) + mp['chgt_enc_stock_th_av_pb'] * (mp['rev_stock_nette_av_pb']<=0) + mp['rev_net_alloue_mp'] / (1-mp['chgt_enc'])
     # Attribution de la revalorisation garantie
     if(rev_brute_alloue_gar != 0):
         # Allocation de la revalorisation additionnelle selon le taux cible
         if(np.sum(mp['bes_tx_cible']) != 0):
-            mp['rev_brute_alloue_gar_mp'] =  rev_brute_alloue_gar * (mp['bes_tx_cible']/np.sum(mp['bes_tx_cible']))
+            mp.loc[:,'rev_brute_alloue_gar_mp'] =  rev_brute_alloue_gar * (mp['bes_tx_cible']/np.sum(mp['bes_tx_cible']))
         else:
             # Attribution proportionnelle
-            mp['rev_brute_alloue_gar_mp'] = mp['rev_brute_alloue_gar_mp'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
+            mp.loc[:,'rev_brute_alloue_gar_mp'] = mp['rev_brute_alloue_gar_mp'] * (mp['nb_contr'] / np.sum(mp['nb_contr']))
     else:
-        mp['rev_brute_alloue_gar_mp'] = 0
+        mp.loc[:,'rev_brute_alloue_gar_mp'] = 0
     #Calcul du taux de revalorisation net
-    mp['tx_rev_net'] = mp['rev_stock_nette_ap_pb'] / (mp['pm_deb'] - mp['prest'] + (0.5 * mp['pri_net']))
+    mp.loc[:,'tx_rev_net'] = mp['rev_stock_nette_ap_pb'] / (mp['pm_deb'] - mp['prest'] + (0.5 * mp['pri_net']))
     mp['tx_rev_net'].fillna(0)
     # Prelevement sociaux 
-    mp['soc_stock_ap_pb'] = np.maximum(0, mp['rev_stock_nette_ap_pb']) * mp['tx_soc']
+    mp.loc[:,'soc_stock_ap_pb'] = np.maximum(0, mp['rev_stock_nette_ap_pb']) * mp['tx_soc']
     # Evaluation des PM avant PB
-    mp['pm_fin_ap_pb'] = mp['pm_deb'] - mp['prest'] + mp['pri_net'] + mp['rev_stock_nette_ap_pb'] - mp['soc_stock'] 
+    mp.loc[:,'pm_fin_ap_pb'] = mp['pm_deb'] - mp['prest'] + mp['pri_net'] + mp['rev_stock_nette_ap_pb'] - mp['soc_stock']
+    #mp['rev_stock_brut_ap_pb'].fillna(0)
+    #mp['rev_net_alloue_mp'].fillna(0)
     # PM garantie
     #mp['pm_gar_ap_pb'] = mp['pm_gar'] + mp['rev_brute_alloue_gar_mp'] * (1 - mp['chgt_enc'] ) * (1-mp['tx_soc'])
     # Application d'un seuil pour eviter les problemes d'arrondi
@@ -459,15 +460,11 @@ def calcul_du_resultat_technique(mp):
     flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
     #  calcul des flux_milieu d'annee : primes - prestation - (charges sur prestations + charges sur primes) 
     # TODO intégrer les flux hors modèle (non modéliser)
-    mp['flux_milieu'] = mp['pri_brut'] - (mp['rev_prest_nette'] + 
-                                        mp['prest']
-                                 ) - \
-                                 (
-                                     mp["frais_var_prime"] + 
-                                    mp["frais_fixe_prime"] + 
-                                    mp["frais_var_prest"] + 
-                                    mp["frais_fixe_prest"]
-                                 )
+    mp['flux_milieu'] = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest']) - \
+                                 (mp["frais_var_prime"] +
+                                  mp["frais_fixe_prime"] +
+                                  mp["frais_var_prest"] +
+                                  mp["frais_fixe_prest"])
     # calcul des flux_fin d'annee :
     mp['flux_fin'] = mp['frais_var_enc'] + mp['frais_fixe_enc']
     mp['resultat_technique'] = mp['pm_deb'] - mp['pm_fin'] +  mp['flux_milieu'] + mp['flux_fin']   #TODO intégrer les flux hors modèle (non modélisé)
