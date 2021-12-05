@@ -457,7 +457,7 @@ def calcul_du_resultat_technique(mp):
     # calcul des flux debut d'annee: rach_mass est le choc de rachat massif non encore implémenter,
     mp['rach_mass'] = 0
     mp['rach_charg_mass'] = 0
-    flux_debut = mp['rach_mass'] - mp['rach_charg_mass'] 
+    mp['flux_debut'] = mp['rach_mass'] - mp['rach_charg_mass']
     #  calcul des flux_milieu d'annee : primes - prestation - (charges sur prestations + charges sur primes) 
     # TODO intégrer les flux hors modèle (non modéliser)
     mp['flux_milieu'] = mp['pri_brut'] - (mp['rev_prest_nette'] + mp['prest']) - \
@@ -469,6 +469,20 @@ def calcul_du_resultat_technique(mp):
     mp['flux_fin'] = mp['frais_var_enc'] + mp['frais_fixe_enc']
     mp['resultat_technique'] = mp['pm_deb'] - mp['pm_fin'] +  mp['flux_milieu'] + mp['flux_fin']   #TODO intégrer les flux hors modèle (non modélisé)
     return mp
+
+def calcul_du_resultat_technique_ap_pb(mp, ppb, var_pre):
+    """
+        Calcul du resultat technique après participation au bénéfices (PB).
+
+        :param mp: (Dataframe) passif après PB .
+        :param ppb: provision pour participation aux bénéfices.
+        :param var_pre: variation de la provision pour risque d'exigibilité
+
+        :returns: (Dataframe) model point passif enrichi du resultat technique
+        """
+    mp['resultat_technique_ap_pb'] = mp['flux_debut'] + mp['flux_milieu'] + mp['flux_fin'] - mp['pm_fin_ap_pb']
+    + mp['pm_deb'] - ((var_pre + ppb.consommation) * (mp['pm_fin']/np.sum(mp['pm_fin'])))
+    return   mp
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
     """ 

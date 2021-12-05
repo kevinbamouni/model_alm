@@ -10,7 +10,7 @@ results_global_projection = pd.read_csv(abs_path / "tests/output_test_data/mp_gl
 report_columns = ['t','pri_brut','pri_chgt','pri_net','enc_charg_stock','rach_charg','prest','dc',
 'ech','rach_part','rach_tot','frais_fixe_enc','frais_fixe_prest','frais_fixe_prime','frais_var_enc',
 'frais_var_prest','frais_var_prime','soc_stock_ap_pb','nb_sortie', 'nb_dc','nb_ech','nb_rach_tot','nb_contr_fin',
-'pm_deb','pm_fin_ap_pb']
+'pm_deb','pm_fin_ap_pb','resultat_technique','resultat_technique_ap_pb']
 
 results_global_projection = results_global_projection.loc[:,report_columns]
 

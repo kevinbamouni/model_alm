@@ -31,25 +31,19 @@ class portefeuille_financier():
         self.portefeuille_oblig = portefeuille_oblig
         self.portefeuille_immo = portefeuille_immo
         self.portefeuille_treso = portefeuille_treso
-
         self.scena_eco_action = scena_eco_action
         self.scena_eco_oblig = scena_eco_oblig
         self.scena_eco_immo = scena_eco_immo
         self.scena_eco_treso = scena_eco_treso
-        
         self.allocation_courante = {}
         self.alloc_strat_cible_portfi = alloc_strat_cible_portfi
-
         self.plus_moins_value_realised_total = 0
         self.plus_moins_value_realised_oblig = 0
         self.plus_moins_value_realised_action = 0
         self.plus_moins_value_realised_immo = 0
-
         self.reserve_capitalisation = 0
         self.provision_risque_exigibilite = 0
-
         self.resultat_financier = 0
-        self.ppb = 0
 
     def veillissement_treso(self, t, maturite):
         """

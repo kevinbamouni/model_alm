@@ -23,5 +23,7 @@
   "nb_rach_tot": "U/          Rachats",
   "nb_contr_fin": "V/ Nombre de contrats en fin de periode",
   "pm_deb": "W/ Provision mathematiques d'ouverture",
-  "pm_fin_ap_pb": "X/ Provision mathematiques de cloture"
+  "pm_fin_ap_pb": "X/ Provision mathematiques de cloture",
+  "resultat_technique": "XX/Resultat technique",
+  "resultat_technique_ap_pb": "XXX/Resultat technique après PB"
 }
