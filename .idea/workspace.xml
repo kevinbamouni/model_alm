@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- Corrections PPB et PB et mise à jour de la documentation!!!">
+    <list default="true" id="79e4b3b0-a152-4e3d-8995-413a8c3ed93f" name="Changes" comment="- implementation du resultat technique apres PB!!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alm_actif/model_actif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_actif/model_actif.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alm_passif/model_passif.py" beforeDir="false" afterPath="$PROJECT_DIR$/alm_passif/model_passif.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/alm_passif.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/doctrees/environment.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/alm_passif.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/genindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/objects.inv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinx_docs/build/html/searchindex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_tools/report.json" beforeDir="false" afterPath="$PROJECT_DIR$/run_tools/report.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_tools/reporting.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_tools/reporting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/modelealmrun.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection_reporting.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/tests/output_test_data/mp_global_projection_reporting.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +36,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
-  <component name="RunManager" selected="Python.reporting">
+  <component name="RunManager" selected="Python.run">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Modele_ALM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,8 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.reporting" />
         <item itemvalue="Python.run" />
+        <item itemvalue="Python.reporting" />
       </list>
     </recent_temporary>
   </component>
@@ -131,7 +118,7 @@
       <workItem from="1632496474031" duration="71959000" />
       <workItem from="1635067797607" duration="327000" />
       <workItem from="1636537053428" duration="35268000" />
-      <workItem from="1638725946303" duration="6269000" />
+      <workItem from="1638725946303" duration="7523000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout : &#10;  - Ajout d'un system de log avec output dans un fichier pour donner de la transparence dans l'exec du           run.(modelealmrun.log)&#10;Correction :&#10;   - Fonction Calcul_revalo_pm&#10;   - Données en input pour ajuster le resultat_technique&#10;Recette : &#10;  - Projection du passif (à faire calcul_revalo_pm)&#10;TODO :&#10;  - Recette et correction de la projection de l'actif : explosion du montant de l'actif à t = 2&#10;  - Recette et correction de la PB">
       <created>1632596273853</created>
@@ -182,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637498526876</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- implementation du resultat technique apres PB!!!">
+      <created>1638732761756</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1638732761756</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +213,8 @@
     <MESSAGE value="- Correction de l'allocation strategique du portefeuille (achat et ventes des actions)" />
     <MESSAGE value="- Ajout de la log dans la classe portefeuille_actif" />
     <MESSAGE value="- Corrections PPB et PB et mise à jour de la documentation!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Corrections PPB et PB et mise à jour de la documentation!!!" />
+    <MESSAGE value="- implementation du resultat technique apres PB!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="- implementation du resultat technique apres PB!!!" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

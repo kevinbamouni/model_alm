@@ -481,7 +481,7 @@ def calcul_du_resultat_technique_ap_pb(mp, ppb, var_pre):
         :returns: (Dataframe) model point passif enrichi du resultat technique
         """
     mp['resultat_technique_ap_pb'] = mp['flux_debut'] + mp['flux_milieu'] + mp['flux_fin'] - mp['pm_fin_ap_pb']
-    + mp['pm_deb'] - ((var_pre + ppb.consommation) * (mp['pm_fin']/np.sum(mp['pm_fin'])))
+    + mp['pm_deb'] - ((var_pre + ppb.consommation) * (mp['pm_fin_ap_pb']/np.sum(mp['pm_fin_ap_pb'])))
     return   mp
 
 def projection_autres_passifs(an, autre_passif, coef_inf):
